@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import AppContextProviders from "./context/AppContextProviders";
 import AppNavigator from "./navigation/AppNavigator";
+import HomeNavigator from "./navigation/HomeNavigator";
 
 // 자주 사용하는 색 지정
 const ColorTheme = {
@@ -116,12 +117,12 @@ export default function App() {
 
     return (
         <View
-            style={{ flex: 1}}
+            style={{ flex: 1, backgroundColor: "pink"}}
             onLayout={onLayoutRootView}>
             <AppContextProviders>
                 <NavigationContainer theme={ColorTheme}>
                     {Platform.OS === 'ios' && <StatusBar barStyle={'dark-content'} />}
-                    <AppNavigator/>
+                    <HomeNavigator/>
                 </NavigationContainer>
             </AppContextProviders>
         </View>
