@@ -3,36 +3,44 @@ import {Platform, View, StatusBar} from 'react-native';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+
 import AppContextProviders from "./context/AppContextProviders";
-import AppNavigator from "./navigation/AppNavigator";
-import HomeNavigator from "./navigation/HomeNavigator";
+import AppStackNavigator from "./navigation/AppStackNavigator";
 
 // 자주 사용하는 색 지정
 const ColorTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        defaultColor : '#FFFFFF',
-        defaultDarkColor : '#000000',
-        mainColor : '#4C648D',
-        backgroundColor : '#FFF8F8',
-        blue : {
-            1 : '#3E557D',
-            2 : '#637DA9',
-            3 : '#7E97C2',
-            4 : '#98B1DA',
-            5 : '#B8CDF0',
-            6 : '#B8CDF0'
+        mainColor : '#606A77',
+        backgroundColor : '#FDF6EC',
+        beige : {
+            1 : '#FDF6EC',
+            2 : '#E3DBD0',
+            3 : '#CAC1B4',
+            4 : '#B0A79A',
+            5 : '#978E81',
+            6 : '#7E7569'
         },
-        red : {
-            1 : '#F74A4A',
-            2 : '#F15B5B',
-            3 : '#F07A7A',
-            4 : '#F39191',
-            5 : '#FDADAD',
-            6 : '#FFC7C7',
-            7 : '#CBB4B4',
-            8 : '#470000'
+        brown : {
+            1 : '#FFFBF6',
+            2 : '#FFEBD0',
+            3 : '#FCD8A7',
+            4 : '#DAB88B',
+            5 : '#B89970',
+            6 : '#967B58',
+            7 : '#745E41',
+            8 : '#52412C'
+        },
+        blue : {
+            1 : '#FDFEFF',
+            2 : '#EBF3FF',
+            3 : '#D4DEEC',
+            4 : '#B5C0CE',
+            5 : '#97A2B1',
+            6 : '#7B8694',
+            7 : '#606A77',
+            8 : '#464F5A'
         },
         gray : {
             1 : '#818792',
@@ -44,25 +52,6 @@ const ColorTheme = {
             7 : '#BDC2CA',
             8 : '#929292',
             9 : '#C4C4C4'
-        },
-        red_gray : {
-            1 : '#BFAFAF',
-            2 : '#CABBBB',
-            3 : '#D5C6C6',
-            4 : '#E0D4D4',
-            5 : '#EAE0E0',
-            6 : '#F0E7E7',
-            7 : '#CBB4B4'
-        },
-        yellow : {
-            1 : '#FFB84B',
-            2 : '#FFC46A',
-            3 : '#FFC978',
-            4 : '#FFD391',
-            5 : '#FFDEAD',
-            6 : '#FFEBCD',
-            7 : '#FCF6F5',
-            8 : '#FEE500'
         }
     }
 };
@@ -122,7 +111,7 @@ export default function App() {
             <AppContextProviders>
                 <NavigationContainer theme={ColorTheme}>
                     {Platform.OS === 'ios' && <StatusBar barStyle={'dark-content'} />}
-                    <HomeNavigator/>
+                    <AppStackNavigator/>
                 </NavigationContainer>
             </AppContextProviders>
         </View>

@@ -5,7 +5,7 @@ const AppText = (props) => {
 
     let fontFamily;
 
-    const fontWeight = props.style && props.style.fontWeight ? props.style.fontWeight : '400';
+    const fontWeight = props.style?.fontWeight ? props.style.fontWeight : '400';
     switch (fontWeight) {
         case '100' :
             fontFamily = 'Pretendard-Thin';

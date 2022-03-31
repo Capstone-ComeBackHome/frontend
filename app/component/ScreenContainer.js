@@ -1,13 +1,16 @@
 import React from 'react'
 import {SafeAreaView, Platform} from "react-native";
+import {useTheme} from "@react-navigation/native";
 
 const ScreenContainer = props => {
+    const {colors} = useTheme();
+
     return (
-        <SafeAreaView style={[{
-            flex: 1,
-            backgroundColor: props.backgroundColor,
+        <SafeAreaView flex={1} style={{
             ...props.style,
-        }, Platform.OS === 'android' ? {paddingTop: 25} : {paddingTop: 0}]}>
+            backgroundColor: props.backgroundColor || colors.backgroundColor,
+            paddingTop: Platform.OS === 'android' ? 25 : 0,
+        }}>
             {props.children}
         </SafeAreaView>
     )
