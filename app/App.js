@@ -1,9 +1,9 @@
 import React, {useEffect, useState, useCallback} from "react";
-import {View} from 'react-native';
-import {DefaultTheme, NavigationContainer, useTheme} from '@react-navigation/native';
-import * as SplashScreen from 'expo-splash-screen';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
+import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import {StatusBar} from "expo-status-bar";
+
 
 import AppContextProviders from "./context/AppContextProviders";
 import AppStackNavigator from "./navigation/AppStackNavigator";
@@ -33,12 +33,8 @@ export default function App() {
 
     const [appIsReady, setAppIsReady] = useState(false);
 
-    function prepare() {
-
-        const splashHidePromise = SplashScreen.preventAutoHideAsync();
-
-        // Pre-load fonts, make any API calls you need to do here
-        const fontPromise = Font.loadAsync({
+    const LoadFonts = async () => {
+        await Font.loadAsync({
             'Pretendard-Thin': require('./assets/fonts/Pretendard-Thin.otf'),
             'Pretendard-ExtraLight': require('./assets/fonts/Pretendard-ExtraLight.otf'),
             'Pretendard-Light': require('./assets/fonts/Pretendard-Light.otf'),
@@ -49,40 +45,23 @@ export default function App() {
             'Pretendard-ExtraBold': require('./assets/fonts/Pretendard-ExtraBold.otf'),
             'Pretendard-Black': require('./assets/fonts/Pretendard-Black.otf'),
         });
-
-        Promise.all([splashHidePromise, fontPromise])
-            .then(() =>
-                setAppIsReady(true)
-            ).catch(error => {
-            prepare();
-        })
     }
 
-    // 폰트 불러오기
-    useEffect(() => {
-        prepare();
-    }, []);
-
-    const onLayoutRootView = useCallback(async () => {
-        if (appIsReady) {
-            await SplashScreen.hideAsync();
-        }
-    }, [appIsReady]);
-
     if (!appIsReady) {
-        return null;
+        return (
+            <AppLoading
+                startAsync={LoadFonts}
+                onFinish={() => setTimeout(() => setAppIsReady(true),2000)}
+                onError={() => {
+                }}
+            />
+        );
     }
 
     return (
-        <View
-            flex={1}
-            onLayout={onLayoutRootView}>
-            <AppContextProviders>
-                <NavigationContainer theme={ColorTheme}>
-                    <StatusBar style={'black'} backgroundColor={'#fff'}/>
-                    <AppStackNavigator/>
-                </NavigationContainer>
-            </AppContextProviders>
-        </View>
+        <NavigationContainer theme={ColorTheme}>
+            <StatusBar style={'black'} backgroundColor={'#fff'}/>
+            <AppStackNavigator/>
+        </NavigationContainer>
     );
 }

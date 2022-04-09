@@ -8,7 +8,7 @@
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "rgba(83,179,238, 1.0)"
     },
     "packagerOpts": {
       "config": "metro.config.js",
