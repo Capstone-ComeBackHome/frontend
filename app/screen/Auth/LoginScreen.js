@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from '@react-navigation/native';
+import {WebView} from 'react-native-webview';
 
 import AppText from '../../component/AppText';
 import ScreenContainer from '../../component/ScreenContainer';
@@ -9,6 +10,7 @@ import ScreenContainerView from '../../component/ScreenContainerView';
 import KakaoLogo from '../../assets/images/login/kakaotalk.svg';
 import NaverLogo from '../../assets/images/login/naver.svg';
 import GoogleLogo from '../../assets/images/login/google.svg';
+
 
 const LoginScreen = ({navigation}) => {
     const {colors} = useTheme();
@@ -52,6 +54,10 @@ const LoginScreen = ({navigation}) => {
         }
     });
 
+    const loginKakao = () => {
+
+    }
+
     return (
         <ScreenContainer>
             <ScreenContainerView flex={1}>
@@ -70,9 +76,10 @@ const LoginScreen = ({navigation}) => {
                             <View style={styles.socialLoginBtnContainer}>
                                 <TouchableOpacity style={{
                                     ...styles.socialLoginBtn,
-                                    backgroundColor: '#FEE500',
-                                    borderColor: colors.backgroundColor
-                                }} activeOpacity={0.8} onPress={() => navigation.navigate('SignInEmail')}>
+                                    backgroundColor: '#FEE500'
+                                }} activeOpacity={0.8} onPress={() => {
+                                    navigation.navigate('KakaoWebview')
+                                }}>
                                     <KakaoLogo style={styles.buttonLogo} width={23} height={23}/>
                                     <AppText style={{...styles.loginText, color: colors.defaultColor}}>카카오로
                                         로그인</AppText>
@@ -81,9 +88,8 @@ const LoginScreen = ({navigation}) => {
                             <View style={styles.socialLoginBtnContainer}>
                                 <TouchableOpacity style={{
                                     ...styles.socialLoginBtn,
-                                    backgroundColor: '#03c75a',
-                                    borderColor: colors.backgroundColor
-                                }} activeOpacity={0.8} onPress={() => navigation.navigate('SignInEmail')}>
+                                    backgroundColor: '#03c75a'
+                                }} activeOpacity={0.8} onPress={() => navigation.navigate('NaverWebview')}>
                                     <NaverLogo style={styles.buttonLogo} width={20} height={20}/>
                                     <AppText style={{...styles.loginText, color: '#fff'}}>네이버로 로그인</AppText>
                                 </TouchableOpacity>
@@ -91,9 +97,8 @@ const LoginScreen = ({navigation}) => {
                             <View style={styles.socialLoginBtnContainer}>
                                 <TouchableOpacity style={{
                                     ...styles.socialLoginBtn,
-                                    backgroundColor: '#fff',
-                                    borderColor: colors.backgroundColor,
-                                }} activeOpacity={0.8} onPress={() => navigation.navigate('SignInEmail')}>
+                                    backgroundColor: '#fff'
+                                }} activeOpacity={0.8} onPress={() => navigation.navigate('GoogleWebview')}>
                                     <GoogleLogo style={styles.buttonLogo} width={20} height={20}/>
                                     <AppText style={{...styles.loginText, color: colors.defaultColor}}>Google로
                                         로그인</AppText>
