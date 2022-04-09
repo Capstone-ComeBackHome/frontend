@@ -13,7 +13,8 @@ const SettingScreen = ({navigation}) => {
         <ScreenContainer>
             <ScrollView>
                 <ScreenContainerView>
-                    <AppText>Setting screen</AppText>
+                    <Button title={'기본 정보'} onPress={() => navigation.navigate('DefaultInfo')}/>
+                    <Button title={'의료 정보'} onPress={() => navigation.navigate('MedicalInfo')}/>
                 </ScreenContainerView>
             </ScrollView>
         </ScreenContainer>

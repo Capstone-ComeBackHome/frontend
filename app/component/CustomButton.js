@@ -18,7 +18,7 @@ const customButton = ({buttonStyle, textStyle, onPress, ...props}) => {
 
                 // 그림자
                 //IOS
-                shadowColor: colors.gray[1], //그림자색
+                shadowColor: colors.black[3], //그림자색
                 shadowOpacity: 0.2,//그림자 투명도
                 shadowRadius : 6,
                 shadowOffset: {width: 0, height: 0}, //그림자 위치

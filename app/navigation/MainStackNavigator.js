@@ -7,6 +7,8 @@ import ChatScreen from "../screen/Main/ChatScreen";
 import ChatResultScreen from "../screen/Main/ChatResultScreen";
 import DiseaseInfoScreen from "../screen/Main/DiseaseInfoScreen";
 
+import DefaultInfoScreen from "../screen/Setting/DefaultInfoScreen";
+import MedicalInfoScreen from "../screen/Setting/MedicalInfoScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +22,8 @@ const MainStackNavigator = () => {
             <Stack.Screen name="DiseaseInfo" component={DiseaseInfoScreen}/>
 
             {/* 캘린더나 설정 관련 페이지 있으면 추가하기. */}
+            <Stack.Screen name="DefaultInfo" component={DefaultInfoScreen} />
+            <Stack.Screen name="MedicalInfo" component={MedicalInfoScreen} />
         </Stack.Navigator>
     );
 };
