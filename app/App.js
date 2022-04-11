@@ -18,7 +18,8 @@ const ColorTheme = {
         blue: {
             1: 'rgba(83,179,238,1.0)',
             2: 'rgba(83,179,238,0.4)',
-            3: 'rgba(83,179,238,0.5)'
+            3: 'rgba(83,179,238,0.5)',
+            4: 'rgba(75,155,204,0.05)',
         },
         black: {
             1: 'rgba(48,48,48,1.0)',
@@ -51,7 +52,7 @@ export default function App() {
         return (
             <AppLoading
                 startAsync={LoadFonts}
-                onFinish={() => setTimeout(() => setAppIsReady(true),2000)}
+                onFinish={() => setTimeout(() => setAppIsReady(true), 2000)}
                 onError={() => {
                 }}
             />

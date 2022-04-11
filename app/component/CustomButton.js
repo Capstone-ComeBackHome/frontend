@@ -4,12 +4,13 @@ import {TouchableOpacity} from "react-native";
 import {useTheme} from "@react-navigation/native";
 
 // buttonStyle, textStyle
-const customButton = ({buttonStyle, textStyle, onPress, ...props}) => {
+const customButton = ({buttonStyle, textStyle, onPress, title, ...props}) => {
     const {colors} = useTheme();
 
     return (
         <TouchableOpacity
             style={{
+                backgroundColor : colors.mainColor,
                 borderRadius : 12,
 
                 // text 가운데로 오게
@@ -22,6 +23,7 @@ const customButton = ({buttonStyle, textStyle, onPress, ...props}) => {
                 shadowOpacity: 0.2,//그림자 투명도
                 shadowRadius : 6,
                 shadowOffset: {width: 0, height: 0}, //그림자 위치
+
                 //ANDROID
                 elevation: 3
                 , ...buttonStyle
@@ -30,13 +32,13 @@ const customButton = ({buttonStyle, textStyle, onPress, ...props}) => {
             activeOpacity={props.activeOpacity || 0.8}
         >
             <AppText style={{
-                textAlign: 'center',
-                padding: 14,
+                marginVertical : 16,
+                fontWeight : '700',
                 fontSize: 16,
-                color: colors.defaultColor,
+                color: "#fff",
                 ...textStyle
             }}>
-                {props.children}
+                {title}
             </AppText>
         </TouchableOpacity>
     )
