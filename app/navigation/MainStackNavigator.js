@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import HomeTabNavigator from "./HomeTabNavigator";
 
+import ChatStartScreen from "../screen/Main/ChatStartScreen";
 import ChatScreen from "../screen/Main/ChatScreen";
 import ChatResultScreen from "../screen/Main/ChatResultScreen";
 import DiseaseInfoScreen from "../screen/Main/DiseaseInfoScreen";
@@ -17,6 +18,7 @@ const MainStackNavigator = () => {
         <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown : false}}>
             <Stack.Screen name="HomeTab" component={HomeTabNavigator}/>
 
+            <Stack.Screen name="ChatStart" component={ChatStartScreen} />
             <Stack.Screen name="Chat" component={ChatScreen}/>
             <Stack.Screen name="ChatResult" component={ChatResultScreen}/>
             <Stack.Screen name="DiseaseInfo" component={DiseaseInfoScreen}/>

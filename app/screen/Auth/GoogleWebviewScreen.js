@@ -12,7 +12,7 @@ const GoogleWebviewScreen = () => {
                 javaScriptEnabled={true}
                 onMessage={(event) => {
                     console.log(event.nativeEvent.url);
-                    fetch(event.nativeEvent.url).then(reponse => JSON.parse(reponse)).then(data => console.log(data)).catch(err => console.error(err))
+                    fetch(event.nativeEvent.url).then(response => JSON.parse(response)).then(data => console.log(data)).catch(err => console.error(err))
                 }}
             />
         </ScreenContainer>

@@ -20,8 +20,9 @@ const KakaoWebviewScreen = ({navigation}) => {
                     if (event.nativeEvent.url.startsWith('http://ec2')) {
                         navigation.navigate('Main', {screen: 'Home'})
                         const data = event.nativeEvent.data;
-                        const token = JSON.parse(data.replace('\\', ""))
+                        const token = data.replace('\\', "")
                         await SecureStore.setItemAsync('token', token);
+                        console.log('save token!')
                     }
                 }}
             />

@@ -42,7 +42,9 @@ const HomeScreen = ({navigation}) => {
                     <View style={{alignItems: 'center'}}>
                         <Image source={mainBanner}/>
                         <CustomButton title={"AI 진료받기"}
-                                      buttonStyle={{position: 'absolute', width: '90%', bottom: 10}}/>
+                                      buttonStyle={{position: 'absolute', width: '90%', bottom: 10}}
+                                      onPress={() => navigation.navigate('ChatStart')}
+                        />
                     </View>
                 </ScreenContainerView>
                 <ScreenDivideLine/>
