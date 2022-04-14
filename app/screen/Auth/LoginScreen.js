@@ -62,7 +62,7 @@ const LoginScreen = ({navigation}) => {
         <ScreenContainer>
             <ScreenContainerView flex={1}>
                 <View>
-                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Main')}>
+                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('HomeTab')}>
                         <AppText style={{color: colors.blue[1]}}>둘러보기</AppText>
                     </TouchableOpacity>
                 </View>
@@ -81,8 +81,7 @@ const LoginScreen = ({navigation}) => {
                                     navigation.navigate('KakaoWebview')
                                 }}>
                                     <KakaoLogo style={styles.buttonLogo} width={23} height={23}/>
-                                    <AppText style={{...styles.loginText, color: colors.defaultColor}}>카카오로
-                                        로그인</AppText>
+                                    <AppText style={{...styles.loginText, color: colors.defaultColor}}>카카오로 로그인</AppText>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.socialLoginBtnContainer}>
@@ -100,8 +99,7 @@ const LoginScreen = ({navigation}) => {
                                     backgroundColor: '#fff'
                                 }} activeOpacity={0.8} onPress={() => navigation.navigate('GoogleWebview')}>
                                     <GoogleLogo style={styles.buttonLogo} width={20} height={20}/>
-                                    <AppText style={{...styles.loginText, color: colors.defaultColor}}>Google로
-                                        로그인</AppText>
+                                    <AppText style={{...styles.loginText, color: colors.defaultColor}}>Google로 로그인</AppText>
                                 </TouchableOpacity>
                             </View>
                         </View>
