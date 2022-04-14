@@ -1,13 +1,15 @@
-import React from "react";
+import React, {useContext} from "react";
 import ScreenContainer from '../../component/ScreenContainer'
 import {WebView} from "react-native-webview";
 import * as SecureStore from 'expo-secure-store';
+import {AuthContext} from "../../context/AppContextProviders";
 
 const INJECTED_JAVASCRIPT = `(function() {
     window.ReactNativeWebView.postMessage(window.document.body.querySelector('pre').innerHTML);
 })();`;
 
 const KakaoWebviewScreen = ({navigation}) => {
+    const { dispatch } = useContext(AuthContext);
     return (
         <ScreenContainer style={{flex: 1}}>
             <WebView
@@ -18,11 +20,12 @@ const KakaoWebviewScreen = ({navigation}) => {
                 injectedJavaScript={INJECTED_JAVASCRIPT}
                 onMessage={async (event) => {
                     if (event.nativeEvent.url.startsWith('http://ec2')) {
-                        navigation.navigate('Main', {screen: 'Home'})
+
                         const data = event.nativeEvent.data;
                         const token = data.replace('\\', "")
-                        await SecureStore.setItemAsync('token', token);
-                        console.log('save token!')
+                        dispatch({type : 'SIGN_IN', token : token});
+                        console.log('save token!');
+                        // navigation.navigate('HomeTab');
                     }
                 }}
             />

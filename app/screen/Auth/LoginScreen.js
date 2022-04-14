@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from '@react-navigation/native';
-import {WebView} from 'react-native-webview';
 
 import AppText from '../../component/AppText';
 import ScreenContainer from '../../component/ScreenContainer';
@@ -53,10 +52,6 @@ const LoginScreen = ({navigation}) => {
             marginLeft: 20
         }
     });
-
-    const loginKakao = () => {
-
-    }
 
     return (
         <ScreenContainer>
