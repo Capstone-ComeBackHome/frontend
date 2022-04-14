@@ -56,11 +56,11 @@ const LoginScreen = ({navigation}) => {
     return (
         <ScreenContainer>
             <ScreenContainerView flex={1}>
-                <View>
-                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('HomeTab')}>
-                        <AppText style={{color: colors.blue[1]}}>둘러보기</AppText>
-                    </TouchableOpacity>
-                </View>
+                {/*<View>*/}
+                {/*    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('HomeTab')}>*/}
+                {/*        <AppText style={{color: colors.blue[1]}}>둘러보기</AppText>*/}
+                {/*    </TouchableOpacity>*/}
+                {/*</View>*/}
                 <View flex={1} style={{justifyContent: 'center'}}>
                     <View style={{height: '60%', justifyContent: 'space-between'}}>
                         <View>

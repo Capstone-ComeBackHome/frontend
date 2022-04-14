@@ -56,27 +56,27 @@ const MainStackNavigator = () => {
                 console.log('[error] secure store 에러 발생!');
                 console.error(e);
             }
-
             dispatch({type: 'RESTORE_TOKEN', token: token});
         };
         getToken();
-    }, []);
+    }, [])
 
     return (
         <Stack.Navigator initialRouteName="Auth" screenOptions={{headerShown: false}}>
-            {state.userToken === null && <Stack.Screen name="Auth" component={AuthStackNavigator}/>}
-            <Stack.Group navigationKey={state.userToken ? 'user' : 'guest'}>
-                <Stack.Screen name="HomeTab" component={HomeTabNavigator}/>
+            {state.userToken === null ? <Stack.Screen name="Auth" component={AuthStackNavigator}/> :
+                <Stack.Group navigationKey={state.userToken ? 'user' : 'guest'}>
+                    <Stack.Screen name="HomeTab" component={HomeTabNavigator}/>
 
-                <Stack.Screen name="ChatStart" component={ChatStartScreen}/>
-                <Stack.Screen name="Chat" component={ChatScreen}/>
-                <Stack.Screen name="ChatResult" component={ChatResultScreen}/>
-                <Stack.Screen name="DiseaseInfo" component={DiseaseInfoScreen}/>
+                    <Stack.Screen name="ChatStart" component={ChatStartScreen}/>
+                    <Stack.Screen name="Chat" component={ChatScreen}/>
+                    <Stack.Screen name="ChatResult" component={ChatResultScreen}/>
+                    <Stack.Screen name="DiseaseInfo" component={DiseaseInfoScreen}/>
 
-                {/* 캘린더나 설정 관련 페이지 있으면 추가하기. */}
-                <Stack.Screen name="DefaultInfo" component={DefaultInfoScreen}/>
-                <Stack.Screen name="MedicalInfo" component={MedicalInfoScreen}/>
-            </Stack.Group>
+                    {/* 캘린더나 설정 관련 페이지 있으면 추가하기. */}
+                    <Stack.Screen name="DefaultInfo" component={DefaultInfoScreen}/>
+                    <Stack.Screen name="MedicalInfo" component={MedicalInfoScreen}/>
+                </Stack.Group>
+            }
         </Stack.Navigator>
     );
 };
