@@ -14,18 +14,16 @@ const KakaoWebviewScreen = ({navigation}) => {
         <ScreenContainer style={{flex: 1}}>
             <WebView
                 originWhitelist={['*']}
-                scalesPageToFit={false}
+                scalesPageToFit={true}
                 source={{uri: 'http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/oauth2/authorization/kakao'}}
                 javaScriptEnabled={true}
                 injectedJavaScript={INJECTED_JAVASCRIPT}
                 onMessage={async (event) => {
                     if (event.nativeEvent.url.startsWith('http://ec2')) {
-
                         const data = event.nativeEvent.data;
                         const token = JSON.parse(data);
                         dispatch({type : 'SIGN_IN', token : token});
                         console.log('save token!');
-                        // navigation.navigate('HomeTab');
                     }
                 }}
             />
