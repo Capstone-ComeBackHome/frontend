@@ -11,12 +11,17 @@ import * as SecureStore from 'expo-secure-store';
 const checkIsFirst = async (navigation) => {
     const token = await SecureStore.getItemAsync('token');
     const {accessToken, refreshToken} = JSON.parse(token);
-    fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/users', {
+    fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/users/essential', {
         headers: {Authorization: `Bearer ${accessToken}`}
     }).then(response => response.json()).then((data) => {
         console.log(data);
+        if(data.sex === null){ // 처음인지 확인
+            navigation.navigate('ChatBasicInfo');
+        }else{
+            navigation.navigate('Chat');
+        }
     }).catch(err => console.error(err))
-    navigation.navigate('Chat');
+
 }
 
 const ChatStartScreen = ({navigation}) => {

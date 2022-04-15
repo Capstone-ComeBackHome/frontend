@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import ScreenContainer from '../../component/ScreenContainer'
 import {WebView} from "react-native-webview";
 import * as SecureStore from 'expo-secure-store';
-import {AuthContext} from "../../context/AppContextProviders";
+import {AuthContext} from "../../context/AuthContextProviders";
 
 const INJECTED_JAVASCRIPT = `(function() {
     window.ReactNativeWebView.postMessage(window.document.body.querySelector('pre').innerHTML);

@@ -6,7 +6,7 @@ import {Icon} from 'react-native-elements';
 import AppText from '../../component/AppText';
 import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
-import {AuthContext} from "../../context/AppContextProviders";
+import {AuthContext} from "../../context/AuthContextProviders";
 
 const SettingScreen = ({navigation, userInfo}) => {
     const {colors} = useTheme();

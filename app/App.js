@@ -3,7 +3,7 @@ import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import {StatusBar} from "expo-status-bar";
-import {AuthContextProviders} from "./context/AppContextProviders";
+import {AuthContextProviders} from "./context/AuthContextProviders";
 import MainStackNavigator from "./navigation/MainStackNavigator";
 
 // 자주 사용하는 색 지정

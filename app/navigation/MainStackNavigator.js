@@ -5,6 +5,7 @@ import HomeTabNavigator from "./HomeTabNavigator";
 
 import ChatStartScreen from "../screen/Main/ChatStartScreen";
 import ChatScreen from "../screen/Main/ChatScreen";
+import ChatBasicInfoScreen from "../screen/Main/ChatBasicInfoScreen";
 import ChatResultScreen from "../screen/Main/ChatResultScreen";
 import DiseaseInfoScreen from "../screen/Main/DiseaseInfoScreen";
 
@@ -12,7 +13,7 @@ import DefaultInfoScreen from "../screen/Setting/DefaultInfoScreen";
 import MedicalInfoScreen from "../screen/Setting/MedicalInfoScreen";
 import AuthStackNavigator from "./AuthStackNavigator";
 import * as SecureStore from "expo-secure-store";
-import {AuthContext} from "../context/AppContextProviders";
+import {AuthContext} from "../context/AuthContextProviders";
 
 const Stack = createNativeStackNavigator();
 
@@ -68,6 +69,7 @@ const MainStackNavigator = () => {
                     <Stack.Screen name="HomeTab" component={HomeTabNavigator}/>
 
                     <Stack.Screen name="ChatStart" component={ChatStartScreen}/>
+                    <Stack.Screen name="ChatBasicInfo" component={ChatBasicInfoScreen} />
                     <Stack.Screen name="Chat" component={ChatScreen}/>
                     <Stack.Screen name="ChatResult" component={ChatResultScreen}/>
                     <Stack.Screen name="DiseaseInfo" component={DiseaseInfoScreen}/>
