@@ -22,7 +22,7 @@ const KakaoWebviewScreen = ({navigation}) => {
                     if (event.nativeEvent.url.startsWith('http://ec2')) {
 
                         const data = event.nativeEvent.data;
-                        const token = data.replace('\\', "")
+                        const token = JSON.parse(data);
                         dispatch({type : 'SIGN_IN', token : token});
                         console.log('save token!');
                         // navigation.navigate('HomeTab');

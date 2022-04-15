@@ -16,7 +16,7 @@ import score4 from '../../assets/images/disease/score4.png';
 import score5 from '../../assets/images/disease/score5.png';
 
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation, userInfo}) => {
     const {colors} = useTheme();
     const [userName, setUserName] = useState('오다혜');
 
@@ -33,7 +33,7 @@ const HomeScreen = ({navigation}) => {
                 borderBottomRightRadius: 12,
             }}>
                 <ScreenContainerView>
-                    <AppText style={{color: "#fff", fontSize: 20}}>{userName + ' 님'}</AppText>
+                    <AppText style={{color: "#fff", fontSize: 20}}>{userInfo.name + ' 님'}</AppText>
                 </ScreenContainerView>
             </View>
             <ScrollView>

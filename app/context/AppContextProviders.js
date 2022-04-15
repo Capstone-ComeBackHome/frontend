@@ -12,6 +12,7 @@ const reducer = (prevState, action) => {
     switch (action.type) {
         case 'RESTORE_TOKEN':
             console.log('reducer restore token!');
+            SecureStore.setItemAsync('token', JSON.stringify(action.token));
             return {
                 ...prevState,
                 userToken: action.token,
@@ -19,7 +20,7 @@ const reducer = (prevState, action) => {
             };
         case 'SIGN_IN':
             console.log('reducer sign in!');
-            SecureStore.setItemAsync('token', action.token);
+            SecureStore.setItemAsync('token', JSON.stringify(action.token));
             return {
                 ...prevState,
                 isSignOut: false,
