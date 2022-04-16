@@ -20,9 +20,6 @@ import NavigationTop from "../../component/NavigationTop";
 import ScreenDivideLineLight from "../../component/ScreenDivideLineLight"
 import CustomButton from '../../component/CustomButton';
 
-{/*Native DatePicker deprecated => use community one(Dev's recommendation)*/
-}
-
 {/*Images*/
 }
 import score1 from '../../assets/images/disease/score1.png';
@@ -30,6 +27,7 @@ import score2 from '../../assets/images/disease/score2.png';
 import score3 from '../../assets/images/disease/score3.png';
 import score4 from '../../assets/images/disease/score4.png';
 import score5 from '../../assets/images/disease/score5.png';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 const HealthDiaryScreen = ({navigation}) => {
@@ -134,7 +132,12 @@ const HealthDiaryScreen = ({navigation}) => {
                 </ScreenContainerView>
                 <ScreenDivideLineLight/>
                 <ScreenContainerView>
-                    <AppText style={styles.inputTitle}>증상부위 및 질환선택</AppText>
+                    <View style={{flexDirection:'row', justifyContent:'space-between',alignItems : 'center'}}>
+                        <AppText style={styles.inputTitle}>증상부위 및 질환선택</AppText>
+                        <TouchableOpacity onPress={() => navigation.navigate('HealthDiaryEdit')}>
+                            <MaterialIcons name="keyboard-arrow-right" size={32} color="#53B3EE"/>
+                        </TouchableOpacity>
+                    </View>
                     <View style={{marginBottom : 17}}/>
                     <FlatList
                         columnWrapperStyle={{justifyContent: 'space-around', marginBottom: 8}}
@@ -169,10 +172,16 @@ const HealthDiaryScreen = ({navigation}) => {
 }
 
 const ImageWithText = ({imageName, text, color, ...props}) => {
+    const [toggle, setToggle] = useState(false);
+    const toggleFunction = () => {
+        setToggle(!toggle);
+    };
     const styles = StyleSheet.create({
         container: {
             alignItems: "center",
-            backgroundColor: color,
+            backgroundColor: toggle  ? color : '#ffffff',
+            borderColor : toggle ? color : '#4D303030',
+            borderWidth: 1,
             width: 60,
             height: 16.9,
             marginTop: 12,
@@ -180,13 +189,13 @@ const ImageWithText = ({imageName, text, color, ...props}) => {
         },
         switchText: {
             fontSize: 11,
-            color: "#ffffff"
+            color: toggle  ? "#ffffff" : "#4D303030"
         },
     })
     return (
         <View style={{flexDirection: "column", alignItems: "center"}}>
             <Image source={imageName}/>
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity style={styles.container} onPress={() => toggleFunction()}>
                 <AppText style={styles.switchText}>{text}</AppText>
             </TouchableOpacity>
         </View>

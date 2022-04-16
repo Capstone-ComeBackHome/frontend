@@ -9,7 +9,8 @@ import DiseaseInfoScreen from "../screen/Main/DiseaseInfoScreen";
 
 import DefaultInfoScreen from "../screen/Setting/DefaultInfoScreen";
 import MedicalInfoScreen from "../screen/Setting/MedicalInfoScreen";
-import HealthDiaryScreen from "../screen/HealthDiary/HealthDiaryScreen"
+import HealthDiaryScreen from "../screen/HealthDiary/HealthDiaryScreen";
+import HealthDiaryEditScreen from "../screen/HealthDiary/HealthDiaryEditScreen"
 const Stack = createNativeStackNavigator();
 
 const MainStackNavigator = () => {
@@ -27,6 +28,7 @@ const MainStackNavigator = () => {
 
             {/*건강일기 페이지*/}
             <Stack.Screen name="HealthDiary" component={HealthDiaryScreen}/>
+            <Stack.Screen name="HealthDiaryEdit" component={HealthDiaryEditScreen}/>
         </Stack.Navigator>
     );
 };
