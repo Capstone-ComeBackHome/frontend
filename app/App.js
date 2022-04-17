@@ -1,12 +1,10 @@
-import React, {useEffect, useState, useCallback} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import {StatusBar} from "expo-status-bar";
-
-
-import AppContextProviders from "./context/AppContextProviders";
-import AppStackNavigator from "./navigation/AppStackNavigator";
+import {AuthContextProviders} from "./context/AuthContextProviders";
+import MainStackNavigator from "./navigation/MainStackNavigator";
 
 
 // 자주 사용하는 색 지정
@@ -48,22 +46,22 @@ export default function App() {
             'Pretendard-Black': require('./assets/fonts/Pretendard-Black.otf'),
         });
     }
-
     if (!appIsReady) {
         return (
             <AppLoading
                 startAsync={LoadFonts}
                 onFinish={() => setTimeout(() => setAppIsReady(true), 2000)}
-                onError={() => {
-                }}
+                onError={() => {}}
             />
         );
     }
 
     return (
-        <NavigationContainer theme={ColorTheme}>
-            <StatusBar style={'black'} backgroundColor={'#fff'}/>
-            <AppStackNavigator/>
-        </NavigationContainer>
+        <AuthContextProviders>
+            <NavigationContainer theme={ColorTheme}>
+                <StatusBar style={'black'} backgroundColor={'#fff'}/>
+                <MainStackNavigator />
+            </NavigationContainer>
+        </AuthContextProviders>
     );
 }

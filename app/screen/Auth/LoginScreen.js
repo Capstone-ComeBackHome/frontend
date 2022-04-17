@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from '@react-navigation/native';
-import {WebView} from 'react-native-webview';
 
 import AppText from '../../component/AppText';
 import ScreenContainer from '../../component/ScreenContainer';
@@ -54,18 +53,14 @@ const LoginScreen = ({navigation}) => {
         }
     });
 
-    const loginKakao = () => {
-
-    }
-
     return (
         <ScreenContainer>
             <ScreenContainerView flex={1}>
-                <View>
-                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Main')}>
-                        <AppText style={{color: colors.blue[1]}}>둘러보기</AppText>
-                    </TouchableOpacity>
-                </View>
+                {/*<View>*/}
+                {/*    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('HomeTab')}>*/}
+                {/*        <AppText style={{color: colors.blue[1]}}>둘러보기</AppText>*/}
+                {/*    </TouchableOpacity>*/}
+                {/*</View>*/}
                 <View flex={1} style={{justifyContent: 'center'}}>
                     <View style={{height: '60%', justifyContent: 'space-between'}}>
                         <View>
@@ -81,8 +76,7 @@ const LoginScreen = ({navigation}) => {
                                     navigation.navigate('KakaoWebview')
                                 }}>
                                     <KakaoLogo style={styles.buttonLogo} width={23} height={23}/>
-                                    <AppText style={{...styles.loginText, color: colors.defaultColor}}>카카오로
-                                        로그인</AppText>
+                                    <AppText style={{...styles.loginText, color: colors.defaultColor}}>카카오로 로그인</AppText>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.socialLoginBtnContainer}>
@@ -100,8 +94,7 @@ const LoginScreen = ({navigation}) => {
                                     backgroundColor: '#fff'
                                 }} activeOpacity={0.8} onPress={() => navigation.navigate('GoogleWebview')}>
                                     <GoogleLogo style={styles.buttonLogo} width={20} height={20}/>
-                                    <AppText style={{...styles.loginText, color: colors.defaultColor}}>Google로
-                                        로그인</AppText>
+                                    <AppText style={{...styles.loginText, color: colors.defaultColor}}>Google로 로그인</AppText>
                                 </TouchableOpacity>
                             </View>
                         </View>

@@ -17,7 +17,7 @@ import score4 from '../../assets/images/disease/score4.png';
 import score5 from '../../assets/images/disease/score5.png';
 
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation, userInfo}) => {
     const {colors} = useTheme();
     const [userName, setUserName] = useState('오다혜');
 
@@ -34,7 +34,7 @@ const HomeScreen = ({navigation}) => {
                 borderBottomRightRadius: 12,
             }}>
                 <ScreenContainerView>
-                    <AppText style={{color: "#fff", fontSize: 20}}>{userName + ' 님'}</AppText>
+                    <AppText style={{color: "#fff", fontSize: 20}}>{userInfo.name + ' 님'}</AppText>
                 </ScreenContainerView>
             </View>
             <ScrollView>
@@ -43,7 +43,9 @@ const HomeScreen = ({navigation}) => {
                     <View style={{alignItems: 'center'}}>
                         <Image source={mainBanner}/>
                         <CustomButton title={"AI 진료받기"}
-                                      buttonStyle={{position: 'absolute', width: '90%', bottom: 10}}/>
+                                      buttonStyle={{position: 'absolute', width: '90%', bottom: 10}}
+                                      onPress={() => navigation.navigate('ChatStart')}
+                        />
                     </View>
                 </ScreenContainerView>
                 <ScreenDivideLine/>
