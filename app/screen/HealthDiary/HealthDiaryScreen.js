@@ -8,7 +8,7 @@ import {
     ScrollView,
     Text,
     FlatList,
-    SafeAreaView
+    LogBox
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
 
@@ -28,7 +28,6 @@ import score3 from '../../assets/images/disease/score3.png';
 import score4 from '../../assets/images/disease/score4.png';
 import score5 from '../../assets/images/disease/score5.png';
 import { MaterialIcons } from '@expo/vector-icons';
-
 
 const HealthDiaryScreen = ({navigation}) => {
     const {colors} = useTheme();

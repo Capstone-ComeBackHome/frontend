@@ -8,6 +8,7 @@ import {StatusBar} from "expo-status-bar";
 import AppContextProviders from "./context/AppContextProviders";
 import AppStackNavigator from "./navigation/AppStackNavigator";
 
+
 // 자주 사용하는 색 지정
 const ColorTheme = {
     ...DefaultTheme,
