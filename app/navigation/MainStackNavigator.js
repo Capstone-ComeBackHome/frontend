@@ -11,6 +11,8 @@ import DiseaseInfoScreen from "../screen/Main/DiseaseInfoScreen";
 
 import DefaultInfoScreen from "../screen/Setting/DefaultInfoScreen";
 import MedicalInfoScreen from "../screen/Setting/MedicalInfoScreen";
+import HealthDiaryScreen from "../screen/HealthDiary/HealthDiaryScreen";
+import HealthDiaryEditScreen from "../screen/HealthDiary/HealthDiaryEditScreen"
 import AuthStackNavigator from "./AuthStackNavigator";
 import * as SecureStore from "expo-secure-store";
 import {AuthContext} from "../context/AuthContextProviders";
@@ -69,7 +71,7 @@ const MainStackNavigator = () => {
                     <Stack.Screen name="HomeTab" component={HomeTabNavigator}/>
 
                     <Stack.Screen name="ChatStart" component={ChatStartScreen}/>
-                    <Stack.Screen name="ChatBasicInfo" component={ChatBasicInfoScreen} />
+                    <Stack.Screen name="ChatBasicInfo" component={ChatBasicInfoScreen}/>
                     <Stack.Screen name="Chat" component={ChatScreen}/>
                     <Stack.Screen name="ChatResult" component={ChatResultScreen}/>
                     <Stack.Screen name="DiseaseInfo" component={DiseaseInfoScreen}/>
@@ -77,6 +79,10 @@ const MainStackNavigator = () => {
                     {/* 캘린더나 설정 관련 페이지 있으면 추가하기. */}
                     <Stack.Screen name="DefaultInfo" component={DefaultInfoScreen}/>
                     <Stack.Screen name="MedicalInfo" component={MedicalInfoScreen}/>
+
+                    {/*건강일기 페이지*/}
+                    <Stack.Screen name="HealthDiary" component={HealthDiaryScreen}/>
+                    <Stack.Screen name="HealthDiaryEdit" component={HealthDiaryEditScreen}/>
                 </Stack.Group>
             }
         </Stack.Navigator>

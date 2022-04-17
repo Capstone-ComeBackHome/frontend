@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Image, ScrollView, StyleSheet, TouchableOpacity, View} from "react-native";
+import {Image, ScrollView, StyleSheet, TouchableOpacity, View,Button} from "react-native";
 import {useTheme} from '@react-navigation/native';
 
 import ScreenContainer from '../../component/ScreenContainer';
@@ -8,6 +8,7 @@ import CustomButton from '../../component/CustomButton';
 import AppText from "../../component/AppText";
 import ScreenDivideLine from "../../component/ScreenDivideLine";
 
+import { AntDesign } from '@expo/vector-icons';
 import mainBanner from '../../assets/images/main/banner.jpg';
 import score1 from '../../assets/images/disease/score1.png';
 import score2 from '../../assets/images/disease/score2.png';
@@ -49,8 +50,14 @@ const HomeScreen = ({navigation, userInfo}) => {
                 </ScreenContainerView>
                 <ScreenDivideLine/>
                 <ScreenContainerView>
-                    <AppText style={{color: colors.mainColor, fontSize: 16, marginVertical: 20}}>건강일기</AppText>
-                    <View style={{alignItems: 'center'}}>
+                    <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                        <AppText style={{color: colors.mainColor, fontSize: 16}}>건강일기</AppText>
+                        {/* 안드로이드의 경우 화면 전환시 너무 안이쁜데요?*/}
+                        <TouchableOpacity onPress={() => navigation.navigate('HealthDiary')}>
+                            <AntDesign name="plus" size={16} color="#53B3EE"/>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{alignItems: 'center',marginTop:18}}>
                         <View style={{
                             backgroundColor: colors.blue[4],
                             width: '100%',
@@ -64,7 +71,7 @@ const HomeScreen = ({navigation, userInfo}) => {
                                 <View flex={1}>
                                     <View style={{flexDirection: 'row', flexWrap : 'wrap', marginBottom : 20}}>
                                         <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
+                                            style={{color: '#fff', fontWeight: '700'}}>아파용</AppText></View>
                                         <View style={styles.diseaseTag}><AppText
                                             style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
                                         <View style={styles.diseaseTag}><AppText

@@ -6,6 +6,7 @@ import {StatusBar} from "expo-status-bar";
 import {AuthContextProviders} from "./context/AuthContextProviders";
 import MainStackNavigator from "./navigation/MainStackNavigator";
 
+
 // 자주 사용하는 색 지정
 const ColorTheme = {
     ...DefaultTheme,
