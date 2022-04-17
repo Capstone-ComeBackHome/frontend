@@ -4,7 +4,7 @@ import {TouchableOpacity} from "react-native";
 import {useTheme} from "@react-navigation/native";
 
 // buttonStyle, textStyle
-const customButton = ({buttonStyle, textStyle, onPress, title, ...props}) => {
+const CustomButton = ({buttonStyle, textStyle, onPress, title, ...props}) => {
     const {colors} = useTheme();
 
     return (
@@ -44,4 +44,4 @@ const customButton = ({buttonStyle, textStyle, onPress, title, ...props}) => {
     )
 };
 
-export default customButton;
+export default CustomButton;
