@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+//test
 import HomeTabNavigator from "./HomeTabNavigator";
 
 import ChatScreen from "../screen/Main/ChatScreen";
@@ -9,7 +9,8 @@ import DiseaseInfoScreen from "../screen/Main/DiseaseInfoScreen";
 
 import DefaultInfoScreen from "../screen/Setting/DefaultInfoScreen";
 import MedicalInfoScreen from "../screen/Setting/MedicalInfoScreen";
-
+import HealthDiaryScreen from "../screen/HealthDiary/HealthDiaryScreen";
+import HealthDiaryEditScreen from "../screen/HealthDiary/HealthDiaryEditScreen"
 const Stack = createNativeStackNavigator();
 
 const MainStackNavigator = () => {
@@ -24,6 +25,10 @@ const MainStackNavigator = () => {
             {/* 캘린더나 설정 관련 페이지 있으면 추가하기. */}
             <Stack.Screen name="DefaultInfo" component={DefaultInfoScreen} />
             <Stack.Screen name="MedicalInfo" component={MedicalInfoScreen} />
+
+            {/*건강일기 페이지*/}
+            <Stack.Screen name="HealthDiary" component={HealthDiaryScreen}/>
+            <Stack.Screen name="HealthDiaryEdit" component={HealthDiaryEditScreen}/>
         </Stack.Navigator>
     );
 };

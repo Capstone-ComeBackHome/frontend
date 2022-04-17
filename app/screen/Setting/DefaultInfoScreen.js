@@ -107,4 +107,5 @@ const DefaultInfoScreen = ({navigation}) => {
 }
 
 
+
 export default DefaultInfoScreen;
