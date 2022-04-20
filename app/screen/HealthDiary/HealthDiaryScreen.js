@@ -29,6 +29,8 @@ import score4 from '../../assets/images/disease/score4.png';
 import score5 from '../../assets/images/disease/score5.png';
 import { MaterialIcons } from '@expo/vector-icons';
 
+
+
 const HealthDiaryScreen = ({navigation}) => {
     const {colors} = useTheme();
     const [text, onChangeText] = React.useState("시간이 줄줄 흐른다");
@@ -109,6 +111,9 @@ const HealthDiaryScreen = ({navigation}) => {
     const renderItem = ({item}) => (
         <Item title={item.title}/>
     );
+    useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    }, [])
     return (
         <ScreenContainer backgroundColor={colors.backgroundColor}>
             <NavigationTop navigation={navigation} title={"건강일기"}/>
@@ -146,6 +151,7 @@ const HealthDiaryScreen = ({navigation}) => {
                         keyExtractor={item => item.id}
                         scrollEnabled={false}
                         numColumns={2}
+                        ListEmptyComponent={null}
                     />
                 </ScreenContainerView>
                 <ScreenDivideLineLight/>
@@ -168,6 +174,12 @@ const HealthDiaryScreen = ({navigation}) => {
 }
 
 {/*토글 기능을 쓰려면 뭘로 바꿔야 하나요? 우선은 TouchableOpacity로 사용해봤습니다 (껍데기만 만드려고 해서)*/
+}
+
+const EmptySpace =() => {
+    return(
+        <View/>
+    )
 }
 
 const ImageWithText = ({imageName, text, color, ...props}) => {
