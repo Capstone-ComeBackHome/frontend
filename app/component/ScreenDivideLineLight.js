@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from "react-native";
 import {useTheme} from "@react-navigation/native";
 
-const ScreenDivideLine = (props) => {
+const ScreenDivideLineLight = (props) => {
     const {colors} = useTheme();
 
     return (
@@ -10,9 +10,9 @@ const ScreenDivideLine = (props) => {
             height: 1,
             backgroundColor: colors.black[3],
             marginVertical: props?.style?.marginVertical ? props.style.marginVertical : 26,
-            marginHorizontal : props?.style?.marginVertical ? props.style.marginVertical : 20,
+            flex : 1
         }}/>
     )
 }
 
-export default ScreenDivideLine;
+export default ScreenDivideLineLight;

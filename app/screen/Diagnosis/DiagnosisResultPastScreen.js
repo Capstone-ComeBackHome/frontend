@@ -6,20 +6,9 @@ import AppText from '../../component/AppText';
 import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
 import NavigationTop from "../../component/NavigationTop";
-import NavigationTopWhite from "../../component/NavigationTop";
 import ScreenDivideLineLight from "../../component/ScreenDivideLineLight";
-import CustomButton from "../../component/CustomButton";
 
-const diseaseExample = [
-    {
-        symptoms : "너무 너무 아프다 너무 아프다 진짜 아프다 거짓말 아니다",
-        cause : "모른다",
-        cure : "불치병이다",
-    }
-]
-
-
-const DiagnosisDetailScreen = ({navigation}) => {
+const DiagnosisResultPastScreen = ({navigation}) => {
     const {colors} = useTheme();
     const styles = StyleSheet.create({
         inputTitle: {
@@ -28,17 +17,18 @@ const DiagnosisDetailScreen = ({navigation}) => {
             fontSize: 16,
             paddingBottom: 21
         },
-        titleText: {
-            color: "#303030", fontSize: 16, fontWeight: '700'
-        },
         otherText: {
             color: colors.mainColor,
             fontWeight: '700',
             fontSize: 16,
             paddingBottom: 21
         },
-        boxText:{
-            color: "#303030", fontSize: 11, fontWeight: '400'
+        textInput: {
+            fontSize: 16,
+            borderBottomWidth: 1,
+            borderBottomColor: colors.mainColor,
+            marginBottom: 6,
+            paddingBottom: 11
         },
         submitBtn: {
             backgroundColor: colors.mainColor,
@@ -50,7 +40,7 @@ const DiagnosisDetailScreen = ({navigation}) => {
     })
     return (
         <ScreenContainer backgroundColor={colors.backgroundColor}>
-            <NavigationTop navigation={navigation} title={"질환 상세 정보"} backgroundColor={"#ffffff"} textColor={"#53B3EE"}/>
+            <NavigationTop navigation={navigation} title={"진단 결과"} />
             <ScreenContainerView flex={1} style={{marginTop: 31, justifyContent: 'space-between'}}>
                 <ScrollView>
                     <View>
@@ -60,30 +50,17 @@ const DiagnosisDetailScreen = ({navigation}) => {
                         </View>
                         <BlueDivideLine/>
                     </View>
-                    <View style={{flexDirection: "column", marginTop: 34}}>
+                    <View style={{flexDirection: "column", marginTop: 24}}>
                         {/*space for disease info*/}
                         <DiseaseTouchable disease={"부정맥"} percentage={"100"}
                                           information={"너무 아프다. 진짜 너무 아프다 왜 아픈지 모르겠지만 진짜 너무너무 아프다"}
                                           department1={"저세상"}
                                           department2={"이승"}
+                                          navigation={navigation}
+                                          testDisease={"DiagnosisDetail"}
                         />
                     </View>
                     <ScreenDivideLineLight/>
-                    <AppText style={styles.titleText}>증상</AppText>
-                    <View style={{marginTop:8}}/>
-                    <AppText style={styles.boxText}>{diseaseExample[0].symptoms}</AppText>
-                    <ScreenDivideLineLight/>
-                    <AppText style={styles.titleText}>원인</AppText>
-                    <View style={{marginTop:8}}/>
-                    <AppText style={styles.boxText}>{diseaseExample[0].cause}</AppText>
-                    <ScreenDivideLineLight/>
-                    <AppText style={styles.titleText}>치료</AppText>
-                    <View style={{marginTop:8}}/>
-                    <AppText style={styles.boxText}>{diseaseExample[0].cure}</AppText>
-                    <View style={{marginTop : 108}}/>
-                    <CustomButton title={"네, 다 읽었어요"}
-                                  buttonStyle={{width: '100%', bottom: 0}}/>
-                    <View style={{marginTop : 38}}/>
                 </ScrollView>
             </ScreenContainerView>
         </ScreenContainer>
@@ -104,7 +81,7 @@ const BlueDivideLine = (props) => {
     )
 }
 
-const DiseaseTouchable = ({information, department1, department2}) => {
+const DiseaseTouchable = ({disease, percentage, information, department1, department2,navigation,testDisease}) => {
     const styles = StyleSheet.create({
         container: {
             backgroundColor: "rgba(75, 155, 204, 0.05)",
@@ -115,6 +92,7 @@ const DiseaseTouchable = ({information, department1, department2}) => {
         titleText: {
             color: "#303030", fontSize: 16, fontWeight: '700'
         },
+        nonTitleText: {},
         box: {
             flex: 1,
             height: 40,
@@ -129,15 +107,19 @@ const DiseaseTouchable = ({information, department1, department2}) => {
         }
     })
     return (
-        <View>
-            <View>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(testDisease)}>
+            <View style={{flexDirection: "row", justifyContent: "space-between", marginTop: 24}}>
+                <AppText style={styles.titleText}>{disease}</AppText>
+                <AppText style={{color: "#53B3EE", fontWeight: '700'}}>{percentage}%</AppText>
+            </View>
+            <View style={{marginVertical: 16}}>
                 <AppText style={styles.titleText}>정의</AppText>
                 <AppText style={{
                     color: "#303030",
                     fontSize: 11,
                     fontWeight: '400',
                     marginTop: 8,
-                    marginBottom: 21
+                    marginBottom: 16
                 }}>{information}</AppText>
             </View>
             <View>
@@ -152,8 +134,8 @@ const DiseaseTouchable = ({information, department1, department2}) => {
                     </View>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 };
 
-export default DiagnosisDetailScreen;
+export default DiagnosisResultPastScreen;

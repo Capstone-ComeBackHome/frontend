@@ -154,7 +154,7 @@ const HealthDiaryEditScreen = ({navigation}) => {
 
     return (
         <ScreenContainer backgroundColor={colors.backgroundColor}>
-            <NavigationTopWhite navigation={navigation} title={"증상부위 및 질환 선택"}/>
+            <NavigationTopWhite navigation={navigation} title={"증상부위 및 질환 선택"} backgroundColor={"#ffffff"} textColor={"#53B3EE"}/>
             <ScrollView>
                 <ScreenContainerView>
                     <View style={{

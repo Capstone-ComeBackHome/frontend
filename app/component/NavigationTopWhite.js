@@ -7,6 +7,8 @@ import {StatusBar} from "expo-status-bar";
 // ** customize 한 스택 네비게이션 헤더 입니다.
 // ** props 로 navigation(navigation 객체), title(String) 을 받습니다.
 
+
+// ** 이거 없어져야 합니다.
 const NavigationTopWhite = props => {
     const {colors} = useTheme();
     const navigation = useNavigation();

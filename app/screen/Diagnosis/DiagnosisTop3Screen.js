@@ -3,11 +3,10 @@ import {View, TouchableOpacity, StyleSheet, ScrollView, Image} from 'react-nativ
 import {useTheme} from '@react-navigation/native';
 
 import AppText from '../../component/AppText';
-import CustomTextInput from "../../component/CustomTextInput";
 import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
 import NavigationTop from "../../component/NavigationTop";
-import ScreenDivideLine from "../../../frontend/app/component/ScreenDivideLine";
+import ScreenDivideLineLight from "../../component/ScreenDivideLineLight";
 
 const DiagnosisTop3Screen = ({navigation}) => {
     const {colors} = useTheme();
@@ -41,7 +40,7 @@ const DiagnosisTop3Screen = ({navigation}) => {
     })
     return (
         <ScreenContainer backgroundColor={colors.backgroundColor}>
-            <NavigationTop navigation={navigation} title={"진단 결과"}/>
+            <NavigationTop navigation={navigation} title={"진단 결과"} />
             <ScreenContainerView flex={1} style={{marginTop: 31, justifyContent: 'space-between'}}>
                 <ScrollView>
                     <View>
@@ -53,12 +52,15 @@ const DiagnosisTop3Screen = ({navigation}) => {
                     </View>
                     <View style={{flexDirection: "column", marginTop: 24}}>
                         {/*space for disease info*/}
-                        <DiseaseTouchable disease={"일단 아픔"} percentage={"100"}
+                        <DiseaseTouchable disease={"부정맥"} percentage={"100"}
                                           information={"너무 아프다. 진짜 너무 아프다 왜 아픈지 모르겠지만 진짜 너무너무 아프다"}
                                           department1={"저세상"}
                                           department2={"이승"}
+                                          navigation={navigation}
+                                          testDisease={"DiagnosisDetail"}
                         />
                     </View>
+                    <ScreenDivideLineLight/>
                 </ScrollView>
             </ScreenContainerView>
         </ScreenContainer>
@@ -79,7 +81,7 @@ const BlueDivideLine = (props) => {
     )
 }
 
-const DiseaseTouchable = ({disease, percentage, information, department1, department2}) => {
+const DiseaseTouchable = ({disease, percentage, information, department1, department2,navigation,testDisease}) => {
     const styles = StyleSheet.create({
         container: {
             backgroundColor: "rgba(75, 155, 204, 0.05)",
@@ -105,7 +107,7 @@ const DiseaseTouchable = ({disease, percentage, information, department1, depart
         }
     })
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(testDisease)}>
             <View style={{flexDirection: "row", justifyContent: "space-between", marginTop: 24}}>
                 <AppText style={styles.titleText}>{disease}</AppText>
                 <AppText style={{color: "#53B3EE", fontWeight: '700'}}>{percentage}%</AppText>
