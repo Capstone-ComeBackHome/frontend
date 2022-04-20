@@ -4,10 +4,24 @@ import {useTheme} from '@react-navigation/native';
 import {Icon} from 'react-native-elements';
 
 import HomeScreen from "../screen/Main/HomeScreen";
-import CalenderScreen from "../screen/Calender/CalenderScreen";
+import HealthDiaryScreen from "../screen/HealthDiary/HealthDiaryScreen";
 import SettingScreen from "../screen/Setting/SettingScreen";
+import HistoryScreen from "../screen/History/HistoryScreen";
+
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContextProviders";
+
+
+import AIIcon from '../assets/images/tab-icon/ai.svg';
+import AIIconSelectedIcon from '../assets/images/tab-icon/ai_selected.svg';
+import HistoryIcon from '../assets/images/tab-icon/history.svg';
+import HistorySelectedIcon from '../assets/images/tab-icon/history_selected.svg';
+import DiaryIcon from '../assets/images/tab-icon/diary.svg';
+import DiarySelectedIcon from '../assets/images/tab-icon/diary_seleted.svg';
+import SettingIcon from '../assets/images/tab-icon/setting.svg';
+import SettingSelectedIcon from '../assets/images/tab-icon/setting_seleted.svg';
+
+
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +51,7 @@ const HomeTabNavigator = () => {
                         console.log('3. 바뀐 토큰 저장!');
                     }
                 })
-            }else{
+            } else {
                 console.log('userInfo : ', response);
                 setUserInfo(() => response);
             }
@@ -53,31 +67,34 @@ const HomeTabNavigator = () => {
             <Tab.Screen
                 name="Home"
                 options={{
-                    tabBarIcon: ({focused}) => (
-                        <Icon type="ionicon" name={focused ? 'home' : 'home-outline'} size={26}
-                              color={colors.mainColor}/>),
+                    tabBarIcon: ({focused}) => (focused ? <AIIconSelectedIcon/> : <AIIcon/>),
                     tabBarLabel: () => null
                 }}
             >
                 {props => <HomeScreen {...props} userInfo={userInfo}/>}
             </Tab.Screen>
             <Tab.Screen
-                name="Calender"
+                name="History"
                 options={{
-                    tabBarIcon: ({focused}) => (
-                        <Icon type="ionicon" name={focused ? 'today' : 'today-outline'} size={26}
-                              color={colors.mainColor}/>),
+                    tabBarIcon: ({focused}) => (focused ? <HistorySelectedIcon/> : <HistoryIcon/>),
                     tabBarLabel: () => null
                 }}
             >
-                {props => <CalenderScreen {...props} userInfo={userInfo}/>}
+                {props => <HistoryScreen {...props} userInfo={userInfo}/>}
+            </Tab.Screen>
+            <Tab.Screen
+                name="Diary"
+                options={{
+                    tabBarIcon: ({focused}) => (focused ? <DiarySelectedIcon/> : <DiaryIcon/>),
+                    tabBarLabel: () => null
+                }}
+            >
+                {props => <HealthDiaryScreen {...props} userInfo={userInfo}/>}
             </Tab.Screen>
             <Tab.Screen
                 name="Setting"
                 options={{
-                    tabBarIcon: ({focused}) => (
-                        <Icon type="ionicon" name={focused ? 'ellipsis-horizontal' : 'ellipsis-horizontal-outline'}
-                              size={26} color={colors.mainColor}/>),
+                    tabBarIcon: ({focused}) => (focused ? <SettingSelectedIcon/> : <SettingIcon/>),
                     tabBarLabel: () => null
                 }}
                 userInfo={userInfo}
