@@ -53,6 +53,9 @@ const HomeScreen = ({navigation, userInfo}) => {
                     <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                         <AppText style={{color: colors.mainColor, fontSize: 16}}>건강일기</AppText>
                         {/* 안드로이드의 경우 화면 전환시 너무 안이쁜데요?*/}
+                        <TouchableOpacity onPress={() => navigation.navigate('DiagnosisTop3')}>
+                            <AppText style={{color: colors.mainColor, fontSize: 16}}>AI 진단결과 테스트용 버튼(날 눌러)</AppText>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={() => navigation.navigate('HealthDiary')}>
                             <AntDesign name="plus" size={16} color="#53B3EE"/>
                         </TouchableOpacity>

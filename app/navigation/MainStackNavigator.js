@@ -14,6 +14,8 @@ import MedicalInfoScreen from "../screen/Setting/MedicalInfoScreen";
 import HealthDiaryScreen from "../screen/HealthDiary/HealthDiaryScreen";
 import HealthDiaryEditScreen from "../screen/HealthDiary/HealthDiaryEditScreen"
 import AuthStackNavigator from "./AuthStackNavigator";
+import DiagnosisTop3Screen from "../screen/Diagnosis/DiagnosisTop3Screen";
+import DiagnosisDetailScreen from "../screen/Diagnosis/DiagnosisDetailScreen";
 import * as SecureStore from "expo-secure-store";
 import {AuthContext} from "../context/AuthContextProviders";
 
@@ -83,6 +85,10 @@ const MainStackNavigator = () => {
                     {/*건강일기 페이지*/}
                     <Stack.Screen name="HealthDiary" component={HealthDiaryScreen}/>
                     <Stack.Screen name="HealthDiaryEdit" component={HealthDiaryEditScreen}/>
+
+                    {/*AI 진단 페이지*/}
+                    <Stack.Screen name="DiagnosisTop3" component={DiagnosisTop3Screen}/>
+                    <Stack.Screen name="DiagnosisDetail" component={DiagnosisDetailScreen}/>
                 </Stack.Group>
             }
         </Stack.Navigator>
