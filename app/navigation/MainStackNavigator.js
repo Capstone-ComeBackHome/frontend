@@ -11,8 +11,8 @@ import DiseaseInfoScreen from "../screen/Main/DiseaseInfoScreen";
 
 import DefaultInfoScreen from "../screen/Setting/DefaultInfoScreen";
 import MedicalInfoScreen from "../screen/Setting/MedicalInfoScreen";
-import HealthDiaryScreen from "../screen/HealthDiary/HealthDiaryScreen";
-import HealthDiaryEditScreen from "../screen/HealthDiary/HealthDiaryEditScreen"
+import HealthDiaryCreateScreen from "../screen/HealthDiary/HealthDiaryCreateScreen";
+import HealthDiarySelectPain from "../screen/HealthDiary/HealthDiarySelectPain"
 import AuthStackNavigator from "./AuthStackNavigator";
 import DiagnosisTop3Screen from "../screen/Diagnosis/DiagnosisTop3Screen";
 import DiagnosisDetailScreen from "../screen/Diagnosis/DiagnosisDetailScreen";
@@ -83,8 +83,8 @@ const MainStackNavigator = () => {
                     <Stack.Screen name="MedicalInfo" component={MedicalInfoScreen}/>
 
                     {/*건강일기 페이지*/}
-                    <Stack.Screen name="HealthDiary" component={HealthDiaryScreen}/>
-                    <Stack.Screen name="HealthDiaryEdit" component={HealthDiaryEditScreen}/>
+                    <Stack.Screen name="HealthDiaryCreate" component={HealthDiaryCreateScreen}/>
+                    <Stack.Screen name="HealthDiarySelectPain" component={HealthDiarySelectPain}/>
 
                     {/*AI 진단 페이지*/}
                     <Stack.Screen name="DiagnosisTop3" component={DiagnosisTop3Screen}/>

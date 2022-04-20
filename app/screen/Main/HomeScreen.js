@@ -34,12 +34,12 @@ const HomeScreen = ({navigation, userInfo}) => {
                 borderBottomRightRadius: 12,
             }}>
                 <ScreenContainerView>
-                    <AppText style={{color: "#fff", fontSize: 20}}>{userInfo.name + ' 님'}</AppText>
+                    <AppText style={{color: "#fff", fontSize: 20, fontWeight : '700'}}>{userInfo.name + ' 님'}</AppText>
                 </ScreenContainerView>
             </View>
             <ScrollView>
                 <ScreenContainerView style={{marginVertical: 10}}>
-                    <AppText style={{color: colors.mainColor, fontSize: 16, marginVertical: 20}}>AI 진료실</AppText>
+                    <AppText style={{color: colors.mainColor, fontSize: 18, marginVertical: 20, fontWeight : '700'}}>AI 진료실</AppText>
                     <View style={{alignItems: 'center'}}>
                         <Image source={mainBanner}/>
                         <CustomButton title={"AI 진료받기"}
@@ -51,104 +51,15 @@ const HomeScreen = ({navigation, userInfo}) => {
                 <ScreenDivideLine/>
                 <ScreenContainerView>
                     <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                        <AppText style={{color: colors.mainColor, fontSize: 16}}>건강일기</AppText>
                         {/* 안드로이드의 경우 화면 전환시 너무 안이쁜데요?*/}
-                        <TouchableOpacity onPress={() => navigation.navigate('DiagnosisTop3')}>
-                            <AppText style={{color: colors.mainColor, fontSize: 16}}>AI 진단결과 테스트용 버튼(날 눌러)</AppText>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('HealthDiary')}>
-                            <AntDesign name="plus" size={16} color="#53B3EE"/>
-                        </TouchableOpacity>
+                        <AppText style={{color: colors.mainColor, fontSize: 18, fontWeight : '700'}}>최근 진단 내역</AppText>
+                        {/*<TouchableOpacity onPress={() => navigation.navigate('HealthDiary')}>*/}
+                        {/*    <AntDesign name="plus" size={16} color="#53B3EE"/>*/}
+                        {/*</TouchableOpacity>*/}
                     </View>
                     <View style={{alignItems: 'center',marginTop:18}}>
-                        <View style={{
-                            backgroundColor: colors.blue[4],
-                            width: '100%',
-                            borderRadius: 10,
-                            padding: 20,
-                            marginBottom : 20
-                        }}>
-                            <AppText style={{fontWeight: '700', fontSize: 20, paddingBottom: 20}}>13일</AppText>
-                            <View style={{flexDirection: 'row'}}>
-                                <Image source={score1} style={{marginRight: 20}}/>
-                                <View flex={1}>
-                                    <View style={{flexDirection: 'row', flexWrap : 'wrap', marginBottom : 20}}>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>아파용</AppText></View>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                    </View>
-                                    <View>
-                                        <AppText>오늘은 적당히 아파요</AppText>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={{
-                            backgroundColor: colors.blue[4],
-                            width: '100%',
-                            borderRadius: 10,
-                            padding: 20,
-                            marginBottom : 20
-                        }}>
-                            <AppText style={{fontWeight: '700', fontSize: 20, paddingBottom: 20}}>13일</AppText>
-                            <View style={{flexDirection: 'row'}}>
-                                <Image source={score1} style={{marginRight: 20}}/>
-                                <View flex={1}>
-                                    <View style={{flexDirection: 'row', flexWrap : 'wrap', marginBottom : 20}}>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                    </View>
-                                    <View>
-                                        <AppText>오늘은 적당히 아파요</AppText>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={{
-                            backgroundColor: colors.blue[4],
-                            width: '100%',
-                            borderRadius: 10,
-                            padding: 20,
-                            marginBottom : 20
-                        }}>
-                            <AppText style={{fontWeight: '700', fontSize: 20, paddingBottom: 20}}>13일</AppText>
-                            <View style={{flexDirection: 'row'}}>
-                                <Image source={score1} style={{marginRight: 20}}/>
-                                <View flex={1}>
-                                    <View style={{flexDirection: 'row', flexWrap : 'wrap', marginBottom : 20}}>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                        <View style={styles.diseaseTag}><AppText
-                                            style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                    </View>
-                                    <View>
-                                        <AppText>오늘은 적당히 아파요</AppText>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-                        <CustomButton title={"건강일기 쓰기"} buttonStyle={{width: '90%', marginVertical : 20}}/>
+
+
                     </View>
                 </ScreenContainerView>
             </ScrollView>
@@ -161,19 +72,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: 300,
         height: '20%'
-    },
-    textStyle: {
-        fontSize: 18,
-    },
-    diseaseTag: {
-        borderRadius: 6,
-        backgroundColor: '#13540f',
-        height: 24,
-        width: 60,
-        alignItems: "center",
-        justifyContent: 'center',
-        marginRight : 10,
-        marginBottom : 6
     }
 })
 
