@@ -151,6 +151,9 @@ const HealthDiarySelectPain = ({navigation}) => {
             </TouchableOpacity>
         );
     };
+    useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    }, [])
 
     return (
         <ScreenContainer backgroundColor={colors.backgroundColor}>

@@ -51,7 +51,7 @@ const DiagnosisDetailScreen = ({navigation}) => {
     return (
         <ScreenContainer backgroundColor={colors.backgroundColor}>
             <NavigationTop navigation={navigation} title={"질환 상세 정보"} backgroundColor={"#ffffff"} textColor={"#53B3EE"}/>
-            <ScreenContainerView flex={1} style={{marginTop: 31, justifyContent: 'space-between'}}>
+            <ScreenContainerView flex={1} style={{justifyContent: 'space-between'}}>
                 <ScrollView>
                     <View>
                         <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
