@@ -20,7 +20,7 @@ const SettingScreen = ({navigation, userInfo}) => {
                 borderBottomRightRadius: 12,
             }}>
                 <ScreenContainerView>
-                    <AppText style={{color: "#fff", fontSize: 20}}>{userInfo.name + ' 님'}</AppText>
+                    <AppText style={{color: "#fff", fontSize: 20, fontWeight : '700'}}>{userInfo.name + ' 님'}</AppText>
                 </ScreenContainerView>
             </View>
             <ScreenContainerView>
