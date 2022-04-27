@@ -5,7 +5,8 @@ import {
     View,
     Image,
     ScrollView,
-    ImageBackground, Platform, Alert, Text, Button
+    ImageBackground, Platform, Alert, Text, Button,
+    SafeAreaView
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
 import {Calendar} from "react-native-calendars";
@@ -23,12 +24,11 @@ const HealthDiaryScreen = ({navigation, userInfo}) => {
         <ScreenContainer>
             <View style={{
                 backgroundColor: colors.mainColor,
-                paddingVertical: 20,
                 borderBottomLeftRadius: 12,
                 borderBottomRightRadius: 12,
             }}>
-                <ScreenContainerView>
-                    <AppText style={{color: "#fff", fontSize: 20, fontWeight : '700'}}>{userInfo.name + ' 님의 건강일기'}</AppText>
+                <ScreenContainerView style={{height : 101,marginBottom : 23,}}>
+                    <AppText style={{marginTop : 70,color: "#fff", fontSize: 20, fontWeight : '700'}}>{userInfo.name + ' 님의 건강일기'}</AppText>
                 </ScreenContainerView>
             </View>
             <ScrollView>
