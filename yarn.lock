@@ -1515,6 +1515,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@callstack/react-theme-provider@npm:^3.0.7":
+  version: 3.0.7
+  resolution: "@callstack/react-theme-provider@npm:3.0.7"
+  dependencies:
+    deepmerge: ^3.2.0
+    hoist-non-react-statics: ^3.3.0
+  peerDependencies:
+    react: ">=16.3.0"
+  checksum: a39524d2bbc29b66d77d30ab4c169ae57fa5a435a2447febb4643d7431d525ca6025acebf1fcdbebd761f54f16f1e40f6745cf60acd5776851e8c1d546a1f32f
+  languageName: node
+  linkType: hard
+
 "@cnakazawa/watch@npm:^1.0.3":
   version: 1.0.4
   resolution: "@cnakazawa/watch@npm:1.0.4"
@@ -2488,6 +2500,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"accordion-collapse-react-native@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "accordion-collapse-react-native@npm:1.1.0"
+  dependencies:
+    lodash.get: 4.4.2
+  peerDependencies:
+    react: ">=16.9.0"
+    react-native: ">=0.61.5"
+  checksum: 60d42568ca5f653ac8cd7404b56ec110fc901409b03593840af780469bdab1e8b7241e53673d2064a26995f11383a4d1170dc188183adce2f3b322011d45d2c8
+  languageName: node
+  linkType: hard
+
 "agent-base@npm:6, agent-base@npm:^6.0.2":
   version: 6.0.2
   resolution: "agent-base@npm:6.0.2"
@@ -3159,6 +3183,7 @@ __metadata:
     "@react-navigation/bottom-tabs": ^6.2.0
     "@react-navigation/native": ^6.0.8
     "@react-navigation/native-stack": ^6.5.0
+    accordion-collapse-react-native: ^1.1.0
     expo: ~44.0.0
     expo-app-loading: ~1.3.0
     expo-font: ~10.0.4
@@ -3171,6 +3196,7 @@ __metadata:
     react-native-calendars: ^1.1280.0
     react-native-elements: ^3.4.2
     react-native-gesture-handler: ~2.1.0
+    react-native-paper: ^4.12.0
     react-native-reanimated: ~2.3.1
     react-native-safe-area-context: 3.3.2
     react-native-screens: ~3.10.1
@@ -5649,6 +5675,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.get@npm:4.4.2":
+  version: 4.4.2
+  resolution: "lodash.get@npm:4.4.2"
+  checksum: e403047ddb03181c9d0e92df9556570e2b67e0f0a930fcbbbd779370972368f5568e914f913e93f3b08f6d492abc71e14d4e9b7a18916c31fa04bd2306efe545
+  languageName: node
+  linkType: hard
+
 "lodash.isequal@npm:^4.5.0":
   version: 4.5.0
   resolution: "lodash.isequal@npm:4.5.0"
@@ -7240,6 +7273,30 @@ __metadata:
     lodash: ^4.17.21
     prop-types: ^15.7.2
   checksum: 479386ee9814f2e72ebc1cf9494f4a74f3652e87bd79ccf5d78c3dea455d924b3b41016dce3da466155304cd4c1dac019907ca2667e1d9da42ab3f28d4362e29
+  languageName: node
+  linkType: hard
+
+"react-native-iphone-x-helper@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "react-native-iphone-x-helper@npm:1.3.1"
+  peerDependencies:
+    react-native: ">=0.42.0"
+  checksum: 024376646009a966e33e12fc2358751830818b0fb73b1c601a64eb5e490d2dc43eec23668991b985a8c412a84d087f20eb45bb9b593567c08b66e741b7bddda5
+  languageName: node
+  linkType: hard
+
+"react-native-paper@npm:^4.12.0":
+  version: 4.12.1
+  resolution: "react-native-paper@npm:4.12.1"
+  dependencies:
+    "@callstack/react-theme-provider": ^3.0.7
+    color: ^3.1.2
+    react-native-iphone-x-helper: ^1.3.1
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-vector-icons: "*"
+  checksum: 0f570971f57dd490aba204d6ea0426c71d5b3f731e124a2ed6e29e7be61827a0edb1672192dd985c634fc7d8a65bd15ad9dd6f3ed277ee3ad3b5a5e3da8dc4c8
   languageName: node
   linkType: hard
 
