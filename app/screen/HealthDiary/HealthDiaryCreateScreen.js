@@ -40,7 +40,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         {painType: 'BAD', selected: false, color: '#FF7189', text: '너무 아픔', image: score4},
         {painType: 'WORST', selected: false, color: '#CE325B', text: '심한 고통', image: score5},
     ])
-    const [text, onChangeText] = useState("");
+    const [memo, setMemo] = useState("");
 
     const changeConditionState = (index) => {
         setConditionState((state) => {
@@ -153,14 +153,14 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         return [year, month, day].join(delimiter);
     }
 
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate;
-        console.log(toStringByFormatting(selectedDate));
-        setDate(currentDate);
-    };
-
     const saveInfo = () => {
-
+        const data = {
+            diseaseTagRequestList : [],
+            dailyNote : memo,
+            painType : conditionState[painType].painType,
+            localDate : toStringByFormatting(date)
+        }
+        console.log(data);
     }
 
     return (
@@ -169,7 +169,6 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                 <NavigationTop navigation={navigation} title={"건강일기"}/>
                 <KeyboardAvoidingView flex={1} behavior={"padding"}>
                     <ScrollView>
-
                         <ScreenContainerView style={{marginTop: 20}}>
                             <AppText style={styles.inputTitle}>날짜</AppText>
                             <DateTimePicker
@@ -179,7 +178,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                                 mode={'date'}
                                 minimumDate={new Date(2020, 0, 1)}
                                 maximumDate={new Date(2030, 11, 31)}
-                                onChange={onChange}
+                                onChange={(_, selectDate) => setDate(selectDate)}
                             />
                         </ScreenContainerView>
                         <ScreenDivideLineLight/>
@@ -240,7 +239,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                                     color: colors.black[1],
                                     fontWeight: '700',
                                     textAlignVertical: 'top',
-                                }} onChangeText={onChangeText} value={text}/>
+                                }} onChangeText={(text) => {setMemo(text)}} value={memo}/>
                             </View>
                             <CustomButton buttonStyle={{marginVertical: 20}} title={"저정하기"} onPress={saveInfo}/>
                         </ScreenContainerView>
