@@ -7,8 +7,8 @@ import {
     TextInput,
     ScrollView,
     FlatList,
-    Button,
-    Text
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -40,6 +40,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         {painType: 'BAD', selected: false, color: '#FF7189', text: '너무 아픔', image: score4},
         {painType: 'WORST', selected: false, color: '#CE325B', text: '심한 고통', image: score5},
     ])
+    const [text, onChangeText] = useState("");
 
     const changeConditionState = (index) => {
         setConditionState((state) => {
@@ -52,7 +53,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         });
     }
 
-    const [text, onChangeText] = useState("시간이 줄줄 흐른다");
+
     const DATA = [
         {
             id: '0',
@@ -86,25 +87,16 @@ const HealthDiaryCreateScreen = ({navigation}) => {
             fontWeight: '700',
             fontSize: 16
         },
-        inputSubTitle: {
-            color: colors.black[1],
-            fontWeight: '700',
-            fontSize: 14,
-            marginBottom: 14,
-        },
         inputBox: {
-            height: 92,
+            marginTop: 17,
+            height: 100,
             flex: 1,
             borderWidth: 1,
             borderRadius: 5,
             backgroundColor: "#4B9BCC0D",
             borderColor: "#53B3EE",
-            marginBottom: 66,
-            color: colors.black[1],
-            fontWeight: '700',
-            textAlignVertical: 'top',
-            paddingTop: 10,
-            paddingLeft: 16,
+            paddingVertical: 10,
+            paddingHorizontal: 16,
         },
         item: {
             backgroundColor: '#7ACCB5',
@@ -124,7 +116,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         container: {
             alignItems: "center",
             backgroundColor: '#ffffff',
-            borderColor : colors.black[2],
+            borderColor: colors.black[2],
             borderWidth: 1,
             width: 60,
             height: 16.9,
@@ -133,7 +125,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         },
         switchText: {
             fontSize: 12,
-            fontWeight : 'bold'
+            fontWeight: 'bold'
         },
     })
 
@@ -167,81 +159,95 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         setDate(currentDate);
     };
 
+    const saveInfo = () => {
 
+    }
 
     return (
-        <ScreenContainer backgroundColor={colors.backgroundColor}>
-            <NavigationTop navigation={navigation} title={"건강일기"}/>
-            <ScrollView>
-                <ScreenContainerView style={{marginTop: 20}}>
-                    <AppText style={styles.inputTitle}>날짜</AppText>
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        display={"spinner"}
-                        mode={'date'}
-                        minimumDate={new Date(2020, 0, 1)}
-                        maximumDate={new Date(2030, 11, 31)}
-                        onChange={onChange}
-                    />
-                </ScreenContainerView>
-                <ScreenDivideLineLight/>
-                <ScreenContainerView>
-                    <View>
-                        <AppText style={styles.inputTitle}>전반적인 컨디션</AppText>
-                    </View>
-                    <View style={{marginTop: 24, flexDirection: "row", justifyContent: "space-between"}}>
-                        {conditionState.map(({painType, selected, color, text, image}, index) => {
-                            return (
-                                <TouchableOpacity style={{alignItems: "center"}} activeOpacity={0.8}
-                                                  onPress={() => changeConditionState(index)}>
-                                    <Image source={image}/>
-                                    <View
-                                        style={{...styles.container, borderColor: selected ? color : colors.black[2], backgroundColor: selected ? color : '#fff'}}>
-                                        <AppText style={{
-                                            ...styles.switchText,
-                                            color: selected ? '#fff' : colors.black[2]
-                                        }}>{text}</AppText>
-                                    </View>
+        <>
+            <ScreenContainer backgroundColor={colors.backgroundColor}>
+                <NavigationTop navigation={navigation} title={"건강일기"}/>
+                <KeyboardAvoidingView flex={1} behavior={"padding"}>
+                    <ScrollView>
+
+                        <ScreenContainerView style={{marginTop: 20}}>
+                            <AppText style={styles.inputTitle}>날짜</AppText>
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={date}
+                                display={"spinner"}
+                                mode={'date'}
+                                minimumDate={new Date(2020, 0, 1)}
+                                maximumDate={new Date(2030, 11, 31)}
+                                onChange={onChange}
+                            />
+                        </ScreenContainerView>
+                        <ScreenDivideLineLight/>
+                        <ScreenContainerView>
+                            <AppText style={styles.inputTitle}>전반적인 컨디션</AppText>
+                            <View style={{marginTop: 24, flexDirection: "row", justifyContent: "space-between"}}>
+                                {conditionState.map(({painType, selected, color, text, image}, index) => {
+                                    return (
+                                        <TouchableOpacity style={{alignItems: "center"}} activeOpacity={0.8}
+                                                          onPress={() => changeConditionState(index)}>
+                                            <Image source={image}/>
+                                            <View
+                                                style={{
+                                                    ...styles.container,
+                                                    borderColor: selected ? color : colors.black[2],
+                                                    backgroundColor: selected ? color : '#fff'
+                                                }}>
+                                                <AppText style={{
+                                                    ...styles.switchText,
+                                                    color: selected ? '#fff' : colors.black[2]
+                                                }}>{text}</AppText>
+                                            </View>
+                                        </TouchableOpacity>
+                                    )
+                                })}
+                            </View>
+                        </ScreenContainerView>
+                        <ScreenDivideLineLight/>
+                        <ScreenContainerView>
+                            <View style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginBottom: 17
+                            }}>
+                                <AppText style={styles.inputTitle}>증상부위 및 질환선택</AppText>
+                                <TouchableOpacity onPress={() => navigation.navigate('HealthDiarySelectPain')}>
+                                    <MaterialIcons name="keyboard-arrow-right" size={32} color="#53B3EE"/>
                                 </TouchableOpacity>
-                            )
-                        })}
-                    </View>
-                </ScreenContainerView>
-                <ScreenDivideLineLight/>
-                <ScreenContainerView>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                        <AppText style={styles.inputTitle}>증상부위 및 질환선택</AppText>
-                        <TouchableOpacity onPress={() => navigation.navigate('HealthDiarySelectPain')}>
-                            <MaterialIcons name="keyboard-arrow-right" size={32} color="#53B3EE"/>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{marginBottom: 17}}/>
-                    <FlatList
-                        columnWrapperStyle={{justifyContent: 'space-around', marginBottom: 8}}
-                        data={DATA}
-                        renderItem={renderItem}
-                        key={2}
-                        keyExtractor={item => item.id}
-                        scrollEnabled={false}
-                        numColumns={2}
-                    />
-                </ScreenContainerView>
-                <ScreenDivideLineLight/>
-                <ScreenContainerView style={{flexDirection: "column",}}>
-                    <View style={{marginBottom: 14}}>
-                        <AppText style={styles.inputSubTitle}>메모</AppText>
-                        <TextInput
-                            style={styles.inputBox}
-                            onChangeText={onChangeText}
-                            value={text}
-                        />
-                    </View>
-                    <CustomButton title={"수정하기"} buttonStyle={{width: '100%', bottom: 0}}/>
-                    <View style={{marginTop: 38}}/>
-                </ScreenContainerView>
-            </ScrollView>
-        </ScreenContainer>
+                            </View>
+                            <FlatList
+                                columnWrapperStyle={{justifyContent: 'space-around', marginBottom: 8}}
+                                data={DATA}
+                                renderItem={renderItem}
+                                key={2}
+                                keyExtractor={item => item.id}
+                                scrollEnabled={false}
+                                numColumns={2}
+                            />
+                        </ScreenContainerView>
+
+                        <ScreenDivideLineLight/>
+
+                        <ScreenContainerView style={{flexDirection: "column"}}>
+                            <AppText style={styles.inputTitle}>메모</AppText>
+                            <View style={styles.inputBox}>
+                                <TextInput flex={1} multiline={true} style={{
+                                    color: colors.black[1],
+                                    fontWeight: '700',
+                                    textAlignVertical: 'top',
+                                }} onChangeText={onChangeText} value={text}/>
+                            </View>
+                            <CustomButton buttonStyle={{marginVertical: 20}} title={"저정하기"} onPress={saveInfo}/>
+                        </ScreenContainerView>
+                    </ScrollView>
+                </KeyboardAvoidingView>
+            </ScreenContainer>
+        </>
     );
 }
 
