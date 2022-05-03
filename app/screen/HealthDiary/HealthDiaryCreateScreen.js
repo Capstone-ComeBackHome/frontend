@@ -124,6 +124,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         container: {
             alignItems: "center",
             backgroundColor: '#ffffff',
+            borderColor : colors.black[2],
             borderWidth: 1,
             width: 60,
             height: 16.9,
@@ -131,7 +132,8 @@ const HealthDiaryCreateScreen = ({navigation}) => {
             borderRadius: 5,
         },
         switchText: {
-            fontSize: 11,
+            fontSize: 12,
+            fontWeight : 'bold'
         },
     })
 
@@ -195,10 +197,10 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                                                   onPress={() => changeConditionState(index)}>
                                     <Image source={image}/>
                                     <View
-                                        style={{...styles.container, borderColor: selected ? color : colors.black[2]}}>
+                                        style={{...styles.container, borderColor: selected ? color : colors.black[2], backgroundColor: selected ? color : '#fff'}}>
                                         <AppText style={{
                                             ...styles.switchText,
-                                            color: selected ? color : colors.black[2]
+                                            color: selected ? '#fff' : colors.black[2]
                                         }}>{text}</AppText>
                                     </View>
                                 </TouchableOpacity>
