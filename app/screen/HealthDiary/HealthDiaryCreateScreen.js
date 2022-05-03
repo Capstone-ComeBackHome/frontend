@@ -6,14 +6,14 @@ import {
     Image,
     TextInput,
     ScrollView,
-    Text,
     FlatList,
-    LogBox
+    Button,
+    Text
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import AppText from '../../component/AppText';
-
 import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
 import NavigationTop from "../../component/NavigationTop";
@@ -27,11 +27,13 @@ import score2 from '../../assets/images/disease/score2.png';
 import score3 from '../../assets/images/disease/score3.png';
 import score4 from '../../assets/images/disease/score4.png';
 import score5 from '../../assets/images/disease/score5.png';
-import { MaterialIcons } from '@expo/vector-icons';
+import {MaterialIcons} from '@expo/vector-icons';
 
 const HealthDiaryCreateScreen = ({navigation}) => {
     const {colors} = useTheme();
-    const [text, onChangeText] = React.useState("시간이 줄줄 흐른다");
+    const [date, setDate] = useState(new Date());
+
+    const [text, onChangeText] = useState("시간이 줄줄 흐른다");
     const DATA = [
         {
             id: '0',
@@ -87,9 +89,9 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         },
         item: {
             backgroundColor: '#7ACCB5',
-            flex : 1,
-            height : 47,
-            marginHorizontal : 4,
+            flex: 1,
+            height: 47,
+            marginHorizontal: 4,
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 5,
@@ -109,12 +111,42 @@ const HealthDiaryCreateScreen = ({navigation}) => {
     const renderItem = ({item}) => (
         <Item title={item.title}/>
     );
+
+    function leftPad(value) {
+        if (value >= 10) {
+            return value;
+        }
+        return `0${value}`;
+    }
+
+    function toStringByFormatting(source, delimiter = '-') {
+        const year = source.getFullYear();
+        const month = leftPad(source.getMonth() + 1);
+        const day = leftPad(source.getDate());
+        return [year, month, day].join(delimiter);
+    }
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate;
+        console.log(toStringByFormatting(selectedDate));
+        setDate(currentDate);
+    };
+
     return (
         <ScreenContainer backgroundColor={colors.backgroundColor}>
             <NavigationTop navigation={navigation} title={"건강일기"}/>
             <ScrollView>
                 <ScreenContainerView style={{marginTop: 20}}>
                     <AppText style={styles.inputTitle}>날짜</AppText>
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        display={"spinner"}
+                        mode={'date'}
+                        minimumDate={new Date(2020, 0, 1)}
+                        maximumDate={new Date(2030, 11, 31)}
+                        onChange={onChange}
+                    />
                 </ScreenContainerView>
                 <ScreenDivideLineLight/>
                 <ScreenContainerView>
@@ -131,13 +163,13 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                 </ScreenContainerView>
                 <ScreenDivideLineLight/>
                 <ScreenContainerView>
-                    <View style={{flexDirection:'row', justifyContent:'space-between',alignItems : 'center'}}>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                         <AppText style={styles.inputTitle}>증상부위 및 질환선택</AppText>
                         <TouchableOpacity onPress={() => navigation.navigate('HealthDiarySelectPain')}>
                             <MaterialIcons name="keyboard-arrow-right" size={32} color="#53B3EE"/>
                         </TouchableOpacity>
                     </View>
-                    <View style={{marginBottom : 17}}/>
+                    <View style={{marginBottom: 17}}/>
                     <FlatList
                         columnWrapperStyle={{justifyContent: 'space-around', marginBottom: 8}}
                         data={DATA}
@@ -166,9 +198,6 @@ const HealthDiaryCreateScreen = ({navigation}) => {
     );
 }
 
-{/*토글 기능을 쓰려면 뭘로 바꿔야 하나요? 우선은 TouchableOpacity로 사용해봤습니다 (껍데기만 만드려고 해서)*/
-}
-
 const ImageWithText = ({imageName, text, color, ...props}) => {
     const [toggle, setToggle] = useState(false);
     const toggleFunction = () => {
@@ -177,8 +206,8 @@ const ImageWithText = ({imageName, text, color, ...props}) => {
     const styles = StyleSheet.create({
         container: {
             alignItems: "center",
-            backgroundColor: toggle  ? color : '#ffffff',
-            borderColor : toggle ? color : '#4D303030',
+            backgroundColor: toggle ? color : '#ffffff',
+            borderColor: toggle ? color : '#4D303030',
             borderWidth: 1,
             width: 60,
             height: 16.9,
@@ -187,7 +216,7 @@ const ImageWithText = ({imageName, text, color, ...props}) => {
         },
         switchText: {
             fontSize: 11,
-            color: toggle  ? "#ffffff" : "#4D303030"
+            color: toggle ? "#ffffff" : "#4D303030"
         },
     })
     return (
