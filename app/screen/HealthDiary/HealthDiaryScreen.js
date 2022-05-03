@@ -32,40 +32,43 @@ const HealthDiaryScreen = ({navigation, userInfo}) => {
                 </ScreenContainerView>
             </View>
             <ScrollView>
-                <ScreenContainerView>
-                    <View style={{
-                        backgroundColor: colors.blue[4],
-                        width: '100%',
-                        borderRadius: 10,
-                        padding: 20,
-                        marginBottom : 20
-                    }}>
-                        <AppText style={{fontWeight: '700', fontSize: 20, paddingBottom: 20}}>13일</AppText>
-                        <View style={{flexDirection: 'row'}}>
-                            <Image source={score1} style={{marginRight: 20}}/>
-                            <View flex={1}>
-                                <View style={{flexDirection: 'row', flexWrap : 'wrap', marginBottom : 20}}>
-                                    <View style={styles.diseaseTag}><AppText
-                                        style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                    <View style={styles.diseaseTag}><AppText
-                                        style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                    <View style={styles.diseaseTag}><AppText
-                                        style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                    <View style={styles.diseaseTag}><AppText
-                                        style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                    <View style={styles.diseaseTag}><AppText
-                                        style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>
-                                </View>
-                                <View>
-                                    <AppText>오늘은 적당히 아파요</AppText>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                    <CustomButton title={"건강일기 쓰기"} onPress={() => navigation.navigate('HealthDiaryCreate')}/>
+                <ScreenContainerView style={{marginTop : 20}}>
+
+                    {/*<View style={{*/}
+                    {/*    backgroundColor: colors.blue[4],*/}
+                    {/*    width: '100%',*/}
+                    {/*    borderRadius: 10,*/}
+                    {/*    padding: 20,*/}
+                    {/*    marginBottom : 20*/}
+                    {/*}}>*/}
+                    {/*    <AppText style={{fontWeight: '700', fontSize: 20, paddingBottom: 20}}>13일</AppText>*/}
+                    {/*    <View style={{flexDirection: 'row'}}>*/}
+                    {/*        <Image source={score1} style={{marginRight: 20}}/>*/}
+                    {/*        <View flex={1}>*/}
+                    {/*            <View style={{flexDirection: 'row', flexWrap : 'wrap', marginBottom : 20}}>*/}
+                    {/*                <View style={styles.diseaseTag}><AppText*/}
+                    {/*                    style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>*/}
+                    {/*                <View style={styles.diseaseTag}><AppText*/}
+                    {/*                    style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>*/}
+                    {/*                <View style={styles.diseaseTag}><AppText*/}
+                    {/*                    style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>*/}
+                    {/*                <View style={styles.diseaseTag}><AppText*/}
+                    {/*                    style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>*/}
+                    {/*                <View style={styles.diseaseTag}><AppText*/}
+                    {/*                    style={{color: '#fff', fontWeight: '700'}}>후두염</AppText></View>*/}
+                    {/*            </View>*/}
+                    {/*            <View>*/}
+                    {/*                <AppText>오늘은 적당히 아파요</AppText>*/}
+                    {/*            </View>*/}
+                    {/*        </View>*/}
+                    {/*    </View>*/}
+                    {/*</View>*/}
                 </ScreenContainerView>
             </ScrollView>
 
+            <ScreenContainerView style={{marginBottom: 25}}>
+            <CustomButton title={"새로운 건강일기 쓰기"} onPress={() => navigation.navigate('HealthDiaryCreate')}/>
+            </ScreenContainerView>
         </ScreenContainer>
     );
 }
