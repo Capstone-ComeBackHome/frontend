@@ -100,9 +100,10 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         },
         item: {
             backgroundColor: '#7ACCB5',
-            flex: 1,
+            flex: 0.5,
+            width : '45%',
             height: 47,
-            marginHorizontal: 4,
+            marginVertical: 4,
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 5,
@@ -129,14 +130,6 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         },
     })
 
-    const Item = ({title}) => (
-        <View style={styles.item}>
-            <AppText style={styles.title}>{title}</AppText>
-        </View>
-    );
-    const renderItem = ({item}) => (
-        <Item title={item.title}/>
-    );
 
     // 날짜 계산
     function leftPad(value) {
@@ -219,15 +212,17 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                                     <MaterialIcons name="keyboard-arrow-right" size={32} color="#53B3EE"/>
                                 </TouchableOpacity>
                             </View>
-                            <FlatList
-                                columnWrapperStyle={{justifyContent: 'space-around', marginBottom: 8}}
-                                data={DATA}
-                                renderItem={renderItem}
-                                key={2}
-                                keyExtractor={item => item.id}
-                                scrollEnabled={false}
-                                numColumns={2}
-                            />
+
+                            <View style={{justifyContent: 'space-around', marginBottom: 8, flexDirection : 'row', flexWrap: "wrap"}}>
+                                {DATA.map(({title}) => {
+                                    return (
+                                        <View style={styles.item}>
+                                            <AppText style={styles.title}>{title}</AppText>
+                                        </View>
+                                    )
+                                })}
+                            </View>
+
                         </ScreenContainerView>
 
                         <ScreenDivideLineLight/>
