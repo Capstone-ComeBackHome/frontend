@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useMemo} from 'react';
 import {
     View,
     TouchableOpacity,
@@ -32,6 +32,25 @@ import {MaterialIcons} from '@expo/vector-icons';
 const HealthDiaryCreateScreen = ({navigation}) => {
     const {colors} = useTheme();
     const [date, setDate] = useState(new Date());
+    const [painType, setPainType] = useState(0);
+    const [conditionState, setConditionState] = useState([
+        {painType: 'GOOD', selected: true, color: '#7ACCB5', text: '괜찮아짐', image: score1},
+        {painType: 'BETTER', selected: false, color: '#B1E5AA', text: '신경쓰임', image: score2},
+        {painType: 'NORMAL', selected: false, color: '#F7BCD8', text: '아픔', image: score3},
+        {painType: 'BAD', selected: false, color: '#FF7189', text: '너무 아픔', image: score4},
+        {painType: 'WORST', selected: false, color: '#CE325B', text: '심한 고통', image: score5},
+    ])
+
+    const changeConditionState = (index) => {
+        setConditionState((state) => {
+            const nextState = [...state];
+            nextState[painType].selected = false;
+            nextState[index].selected = true;
+            setPainType(index);
+
+            return nextState;
+        });
+    }
 
     const [text, onChangeText] = useState("시간이 줄줄 흐른다");
     const DATA = [
@@ -101,8 +120,21 @@ const HealthDiaryCreateScreen = ({navigation}) => {
             color: "#FFFFFF",
         },
 
-
+        // 컨디션 버튼
+        container: {
+            alignItems: "center",
+            backgroundColor: '#ffffff',
+            borderWidth: 1,
+            width: 60,
+            height: 16.9,
+            marginTop: 12,
+            borderRadius: 5,
+        },
+        switchText: {
+            fontSize: 11,
+        },
     })
+
     const Item = ({title}) => (
         <View style={styles.item}>
             <AppText style={styles.title}>{title}</AppText>
@@ -112,6 +144,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         <Item title={item.title}/>
     );
 
+    // 날짜 계산
     function leftPad(value) {
         if (value >= 10) {
             return value;
@@ -131,6 +164,8 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         console.log(toStringByFormatting(selectedDate));
         setDate(currentDate);
     };
+
+
 
     return (
         <ScreenContainer backgroundColor={colors.backgroundColor}>
@@ -154,11 +189,21 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                         <AppText style={styles.inputTitle}>전반적인 컨디션</AppText>
                     </View>
                     <View style={{marginTop: 24, flexDirection: "row", justifyContent: "space-between"}}>
-                        <ImageWithText imageName={score1} text={"괜찮아짐"} color="#7ACCB5"/>
-                        <ImageWithText imageName={score2} text={"신경쓰임"} color="#B1E5AA"/>
-                        <ImageWithText imageName={score3} text={"아픔"} color="#F7BCD8"/>
-                        <ImageWithText imageName={score4} text={"너무 아픔"} color="#FF7189"/>
-                        <ImageWithText imageName={score5} text={"심한 고통"} color="#CE325B"/>
+                        {conditionState.map(({painType, selected, color, text, image}, index) => {
+                            return (
+                                <TouchableOpacity style={{alignItems: "center"}} activeOpacity={0.8}
+                                                  onPress={() => changeConditionState(index)}>
+                                    <Image source={image}/>
+                                    <View
+                                        style={{...styles.container, borderColor: selected ? color : colors.black[2]}}>
+                                        <AppText style={{
+                                            ...styles.switchText,
+                                            color: selected ? color : colors.black[2]
+                                        }}>{text}</AppText>
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        })}
                     </View>
                 </ScreenContainerView>
                 <ScreenDivideLineLight/>
@@ -198,35 +243,5 @@ const HealthDiaryCreateScreen = ({navigation}) => {
     );
 }
 
-const ImageWithText = ({imageName, text, color, ...props}) => {
-    const [toggle, setToggle] = useState(false);
-    const toggleFunction = () => {
-        setToggle(!toggle);
-    };
-    const styles = StyleSheet.create({
-        container: {
-            alignItems: "center",
-            backgroundColor: toggle ? color : '#ffffff',
-            borderColor: toggle ? color : '#4D303030',
-            borderWidth: 1,
-            width: 60,
-            height: 16.9,
-            marginTop: 12,
-            borderRadius: 5,
-        },
-        switchText: {
-            fontSize: 11,
-            color: toggle ? "#ffffff" : "#4D303030"
-        },
-    })
-    return (
-        <View style={{flexDirection: "column", alignItems: "center"}}>
-            <Image source={imageName}/>
-            <TouchableOpacity style={styles.container} onPress={() => toggleFunction()}>
-                <AppText style={styles.switchText}>{text}</AppText>
-            </TouchableOpacity>
-        </View>
-    )
-};
 
 export default HealthDiaryCreateScreen;
