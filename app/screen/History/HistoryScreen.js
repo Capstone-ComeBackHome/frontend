@@ -57,21 +57,21 @@ const HistoryScreen = ({navigation, userInfo}) => {
     })
     return (
         <ScreenContainer>
+            <View style={{
+                backgroundColor: colors.mainColor,
+                borderBottomLeftRadius: 12,
+                borderBottomRightRadius: 12,
+            }}>
+                <ScreenContainerView style={{height: 101, marginBottom: 23,}}>
+                    <AppText style={{
+                        marginTop: 70,
+                        color: "#fff",
+                        fontSize: 20,
+                        fontWeight: '700',
+                    }}>{userInfo.name + ' 님의 AI 진료 내역'}</AppText>
+                </ScreenContainerView>
+            </View>
             <ScrollView>
-                <View style={{
-                    backgroundColor: colors.mainColor,
-                    borderBottomLeftRadius: 12,
-                    borderBottomRightRadius: 12,
-                }}>
-                    <ScreenContainerView style={{height: 101, marginBottom: 23,}}>
-                        <AppText style={{
-                            marginTop: 70,
-                            color: "#fff",
-                            fontSize: 20,
-                            fontWeight: '700',
-                        }}>{userInfo.name + ' 님의 AI 진료 내역'}</AppText>
-                    </ScreenContainerView>
-                </View>
                 <ScreenContainerView>
                     <View style={{marginVertical: 30}}>
                         <List.Section>
@@ -82,7 +82,7 @@ const HistoryScreen = ({navigation, userInfo}) => {
                                 expanded={expanded}
                                 onPress={handlePress}
                                 style={{backgroundColor: "#ffffff", padding: -10, margin: -8}}>
-                                <DiseasScrollHorizontal DATA={DATA} day={17} time={2}/>
+                                <DiseaseScrollHorizontal DATA={DATA} day={17} time={2}/>
                             </List.Accordion>
                         </List.Section>
                     </View>
@@ -97,7 +97,7 @@ const HistoryScreen = ({navigation, userInfo}) => {
     );
 }
 
-const DiseasScrollHorizontal = ({DATA, day, time}) => {
+const DiseaseScrollHorizontal = ({DATA, day, time}) => {
     const styles = StyleSheet.create({
         item: {
             backgroundColor: 'rgba(75, 155, 204, 0.05)',
