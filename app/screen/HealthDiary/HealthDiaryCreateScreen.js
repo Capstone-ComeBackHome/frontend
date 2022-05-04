@@ -41,6 +41,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         {painType: 'WORST', selected: false, color: '#CE325B', text: '심한 고통', image: score5},
     ])
     const [memo, setMemo] = useState("");
+    const [disease, setDisease] = useState([]);
 
     const changeConditionState = (index) => {
         setConditionState((state) => {
@@ -52,34 +53,6 @@ const HealthDiaryCreateScreen = ({navigation}) => {
             return nextState;
         });
     }
-
-
-    const DATA = [
-        {
-            id: '0',
-            title: '건망증',
-        },
-        {
-            id: '1',
-            title: '기민상태',
-        },
-        {
-            id: '2',
-            title: '재채기',
-        },
-        {
-            id: '3',
-            title: '후두염',
-        },
-        {
-            id: '4',
-            title: '가슴 답답',
-        },
-        {
-            id: '5',
-            title: '속이 쓰림',
-        },
-    ];
 
     const styles = StyleSheet.create({
         inputTitle: {
@@ -100,8 +73,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         },
         item: {
             backgroundColor: '#7ACCB5',
-            flex: 0.5,
-            width : '45%',
+            width: '49%',
             height: 47,
             marginVertical: 4,
             justifyContent: "center",
@@ -148,12 +120,16 @@ const HealthDiaryCreateScreen = ({navigation}) => {
 
     const saveInfo = () => {
         const data = {
-            diseaseTagRequestList : [],
-            dailyNote : memo,
-            painType : conditionState[painType].painType,
-            localDate : toStringByFormatting(date)
+            diseaseTagRequestList: disease,
+            dailyNote: memo,
+            painType: conditionState[painType].painType,
+            localDate: toStringByFormatting(date)
         }
         console.log(data);
+    }
+
+    const getDataFromOtherScreen = (data) => {
+        setDisease(data);
     }
 
     return (
@@ -180,7 +156,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                             <View style={{marginTop: 24, flexDirection: "row", justifyContent: "space-between"}}>
                                 {conditionState.map(({painType, selected, color, text, image}, index) => {
                                     return (
-                                        <TouchableOpacity style={{alignItems: "center"}} activeOpacity={0.8}
+                                        <TouchableOpacity key={index} style={{alignItems: "center"}} activeOpacity={0.8}
                                                           onPress={() => changeConditionState(index)}>
                                             <Image source={image}/>
                                             <View
@@ -208,16 +184,27 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                                 marginBottom: 17
                             }}>
                                 <AppText style={styles.inputTitle}>증상부위 및 질환선택</AppText>
-                                <TouchableOpacity onPress={() => navigation.navigate('HealthDiarySelectPain')}>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate('HealthDiarySelectPain', {
+                                        params: {
+                                            disease,
+                                            goBackFunc: getDataFromOtherScreen
+                                        }
+                                    })}>
                                     <MaterialIcons name="keyboard-arrow-right" size={32} color="#53B3EE"/>
                                 </TouchableOpacity>
                             </View>
 
-                            <View style={{justifyContent: 'space-around', marginBottom: 8, flexDirection : 'row', flexWrap: "wrap"}}>
-                                {DATA.map(({title}) => {
+                            <View style={{
+                                justifyContent: 'space-between',
+                                marginBottom: 8,
+                                flexDirection: 'row',
+                                flexWrap: "wrap"
+                            }}>
+                                {disease.map(({name}, index) => {
                                     return (
-                                        <View style={styles.item}>
-                                            <AppText style={styles.title}>{title}</AppText>
+                                        <View style={styles.item} key={index}>
+                                            <AppText style={styles.title}>{name}</AppText>
                                         </View>
                                     )
                                 })}
@@ -234,9 +221,13 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                                     color: colors.black[1],
                                     fontWeight: '700',
                                     textAlignVertical: 'top',
-                                }} onChangeText={(text) => {setMemo(text)}} value={memo}/>
+                                }} onChangeText={(text) => {
+                                    setMemo(text)
+                                }} value={memo}/>
                             </View>
-                            <CustomButton buttonStyle={{marginVertical: 20}} title={"저정하기"} onPress={saveInfo}/>
+                            <CustomButton buttonStyle={{marginVertical: 20}}
+                                          title={"저정하기"}
+                                          onPress={saveInfo}/>
                         </ScreenContainerView>
                     </ScrollView>
                 </KeyboardAvoidingView>
