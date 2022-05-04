@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useContext, useState} from 'react';
 import {
     View,
     TouchableOpacity,
@@ -6,9 +6,7 @@ import {
     Image,
     TextInput,
     ScrollView,
-    FlatList,
     KeyboardAvoidingView,
-    Platform
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -28,9 +26,12 @@ import score3 from '../../assets/images/disease/score3.png';
 import score4 from '../../assets/images/disease/score4.png';
 import score5 from '../../assets/images/disease/score5.png';
 import {MaterialIcons} from '@expo/vector-icons';
+import {AuthContext} from "../../context/AuthContextProviders";
+import CustomTextInput from "../../component/CustomTextInput";
 
 const HealthDiaryCreateScreen = ({navigation}) => {
     const {colors} = useTheme();
+    const {state, dispatch} = useContext(AuthContext);
     const [date, setDate] = useState(new Date());
     const [painType, setPainType] = useState(0);
     const [conditionState, setConditionState] = useState([
@@ -118,14 +119,30 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         return [year, month, day].join(delimiter);
     }
 
+    // 저장 누르면 fetch
     const saveInfo = () => {
         const data = {
             diseaseTagRequestList: disease,
             dailyNote: memo,
             painType: conditionState[painType].painType,
-            localDate: toStringByFormatting(date)
+            localDate: toStringByFormatting(date),
         }
-        console.log(data);
+        const body = JSON.stringify(data);
+
+        fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/calendars', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${state.userToken.accessToken}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: body
+        }).then(response => JSON.parse(JSON.stringify(response))).then((result) => {
+            if(result.status === 200){
+                console.log('등록 완료!')
+                navigation.pop();
+            }
+        }).catch(err => console.error(err))
     }
 
     const getDataFromOtherScreen = (data) => {
@@ -217,7 +234,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                         <ScreenContainerView style={{flexDirection: "column"}}>
                             <AppText style={styles.inputTitle}>메모</AppText>
                             <View style={styles.inputBox}>
-                                <TextInput flex={1} multiline={true} style={{
+                                <CustomTextInput flex={1} multiline={true} style={{
                                     color: colors.black[1],
                                     fontWeight: '700',
                                     textAlignVertical: 'top',
