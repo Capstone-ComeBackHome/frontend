@@ -39,14 +39,14 @@ const MainStackNavigator = () => {
                 }).then(response => response.json());
 
                 // 토큰 재발급(refresh token)
-                if (response.code === 'LOGIN-401') {
+                if (response.result === 'FAIL') {
                     console.log('2. refresh 토큰 유효성 검증!')
                     const response = await fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/reissue', {
                         method: 'post',
                         headers: {Authorization: `Bearer ${token.refreshToken}`}
                     }).then(response => response.json());
 
-                    if (response.code === 'LOGIN-401') {
+                    if (response.result === 'FAIL') {
                         token = null;
                         console.log('3. 유효하지 않은 토큰!');
                     } else {
