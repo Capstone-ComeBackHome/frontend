@@ -30,6 +30,7 @@ const CustomButton = ({buttonStyle, textStyle, onPress, title, ...props}) => {
             }}
             onPress={onPress}
             activeOpacity={props.activeOpacity || 0.8}
+            disbled={props.disabled || false}
         >
             <AppText style={{
                 marginVertical : 16,
