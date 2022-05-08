@@ -47,6 +47,7 @@ const MainStackNavigator = () => {
                     }).then(response => response.json());
 
                     if (response.result === 'FAIL') {
+                        dispatch({type: 'SIGN_OUT'});
                         token = null;
                         console.log('3. 유효하지 않은 토큰!');
                     } else {
