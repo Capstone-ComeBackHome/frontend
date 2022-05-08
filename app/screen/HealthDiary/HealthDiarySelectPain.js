@@ -48,7 +48,7 @@ const DiseaseButton = ({diseaseType, name: title, selectedSymptoms, setSelectedS
                         setIsSelected(state => !state);
                         setSelectedSymptoms(arr => {
                             const newArr = [...arr];
-                            newArr.push({diseaseType, name: title})
+                            newArr.push({diseaseType : diseaseType.toUpperCase(), name: title})
                             return newArr;
                         });
                     } else {

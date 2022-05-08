@@ -128,7 +128,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
             localDate: toStringByFormatting(date),
         }
         const body = JSON.stringify(data);
-
+        console.log(data);
         fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/calendars', {
             method: 'POST',
             headers: {
@@ -137,9 +137,9 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                 'Content-Type': 'application/json; charset=UTF-8'
             },
             body: body
-        }).then(response => JSON.parse(JSON.stringify(response))).then((result) => {
-            if(result.status === 200){
-                console.log('등록 완료!')
+        }).then(response => response.json()).then((res) => {
+            if(res.result === 'SUCCESS'){
+                console.log('일기 등록 완료!');
                 navigation.pop();
             }
         }).catch(err => console.error(err))
