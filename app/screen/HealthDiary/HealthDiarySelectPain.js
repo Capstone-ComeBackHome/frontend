@@ -37,15 +37,10 @@ const DiseaseButton = ({diseaseType, name: title, selectedSymptoms, setSelectedS
     return (
         <TouchableOpacity
             onPress={() => {
-                const data = {
-                    diseaseType,
-                    name : title
-                }
                 if (isSelected === true) { // 선택 취소
                     setIsSelected(state => !state);
                     setSelectedSymptoms(arr => {
-                        let newArr = [...arr];
-                        newArr = newArr.filter((item) => item.name !== title)
+                        const newArr = arr.filter((item) => item.name !== title);
                         return newArr;
                     });
                 } else { // 선택
@@ -53,7 +48,7 @@ const DiseaseButton = ({diseaseType, name: title, selectedSymptoms, setSelectedS
                         setIsSelected(state => !state);
                         setSelectedSymptoms(arr => {
                             const newArr = [...arr];
-                            newArr.push({diseaseType, name : title})
+                            newArr.push({diseaseType : diseaseType.toUpperCase(), name: title})
                             return newArr;
                         });
                     } else {
@@ -78,10 +73,12 @@ const HealthDiarySelectPain = ({navigation, route}) => {
     useEffect(() => {
         fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/diseaseTags', {
             headers: {Authorization: `Bearer ${state.userToken.accessToken}`}
-        }).then(response => response.json()).then((data) => {
-            data = Object.entries(data);
-            // console.log(data);
-            setSymptom(data);
+        }).then(response => response.json()).then((res) => {
+            if (res.result === 'SUCCESS') {
+                const data = Object.entries(res.data);
+                console.log(data);
+                setSymptom(data);
+            }
         }).catch(err => console.error(err))
 
         // ** 이전 state 복원 (나중에 개발하기)
@@ -104,7 +101,7 @@ const HealthDiarySelectPain = ({navigation, route}) => {
             borderColor: "#53B3EE",
             paddingVertical: 10,
             paddingHorizontal: 16,
-            justifyContent : "center"
+            justifyContent: "center"
         },
         title: {
             fontSize: 14,
@@ -124,16 +121,16 @@ const HealthDiarySelectPain = ({navigation, route}) => {
                 <ScrollView>
                     <ScreenContainerView>
                         {
-                            symptom && symptom.map(([key, value]) => {
+                            symptom && symptom.map(([key, {diseaseTagNameList, diseaseTypeDescription}], index) => {
                                 return (
-                                    <>
+                                    <View key={index}>
                                         <View style={{
                                             flexDirection: "row",
                                             justifyContent: "space-between",
                                             alignItems: "center",
                                             marginTop: 20
                                         }}>
-                                            <AppText style={styles.inputTitle}>{key}</AppText>
+                                            <AppText style={styles.inputTitle}>{diseaseTypeDescription}</AppText>
                                         </View>
                                         <View style={{marginBottom: 17}}/>
                                         <View style={{
@@ -142,16 +139,17 @@ const HealthDiarySelectPain = ({navigation, route}) => {
                                             justifyContent: 'space-around'
                                         }}>
                                             {
-                                                value.map(({diseaseType, name}) => {
-                                                    return <DiseaseButton name={name}
-                                                                          diseaseType={diseaseType}
-                                                                          selectedSymptoms={selectedSymptoms}
-                                                                          setSelectedSymptoms={setSelectedSymptoms}/>
+                                                diseaseTagNameList.map((diseaseName, index) => {
+                                                    return (<DiseaseButton key={index}
+                                                                           name={diseaseName}
+                                                                           diseaseType={key}
+                                                                           selectedSymptoms={selectedSymptoms}
+                                                                           setSelectedSymptoms={setSelectedSymptoms}/>)
                                                 })
                                             }
                                         </View>
 
-                                    </>
+                                    </View>
                                 )
                             })
                         }
@@ -175,7 +173,7 @@ const HealthDiarySelectPain = ({navigation, route}) => {
                             <View style={styles.inputBox}>
                                 <CustomTextInput
                                     style={{
-                                        fontSize : 16,
+                                        fontSize: 16,
                                         color: colors.black[1],
                                         fontWeight: '700',
                                     }}

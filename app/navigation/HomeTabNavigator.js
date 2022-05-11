@@ -22,7 +22,6 @@ import SettingIcon from '../assets/images/tab-icon/setting.svg';
 import SettingSelectedIcon from '../assets/images/tab-icon/setting_seleted.svg';
 
 
-
 const Tab = createBottomTabNavigator();
 
 const HomeTabNavigator = () => {
@@ -34,15 +33,18 @@ const HomeTabNavigator = () => {
         fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/users', {
             headers: {Authorization: `Bearer ${state.userToken.accessToken}`}
         }).then(response => response.json()).then(response => {
-            // 토큰 재발급(refresh token)
             console.log(response);
-            if (response.code === 'LOGIN-401') {
-                console.log('2. refresh 토큰 유효성 검증!')
+            if (response.result === 'SUCCESS') {
+                console.log('1. 유저 데이터 받아오기 성공');
+                setUserInfo(() => response.data);
+            } else { // 토큰 재발급(refresh token)
+                console.log('2. refresh 토큰 유효성 검증!');
                 fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/reissue', {
                     method: 'post',
                     headers: {Authorization: `Bearer ${state.userToken.refreshToken}`}
                 }).then(response => response.json()).then(() => {
-                    if (response.code === 'LOGIN-401') {
+                    if (response.result === 'FAIL') {
+                        dispatch({type: 'SIGN_OUT'});
                         token = null;
                         console.log('3. 유효하지 않은 토큰!');
                     } else {
@@ -51,9 +53,6 @@ const HomeTabNavigator = () => {
                         console.log('3. 바뀐 토큰 저장!');
                     }
                 })
-            } else {
-                console.log('userInfo : ', response);
-                setUserInfo(() => response);
             }
         })
     }, [state]);

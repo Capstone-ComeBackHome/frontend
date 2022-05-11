@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from '@react-navigation/native';
 
@@ -7,25 +7,33 @@ import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
 import CustomButton from "../../component/CustomButton";
 import * as SecureStore from 'expo-secure-store';
+import {AuthContext} from "../../context/AuthContextProviders";
 
-const checkIsFirst = async (navigation) => {
-    const token = await SecureStore.getItemAsync('token');
-    const {accessToken, refreshToken} = JSON.parse(token);
-    fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/users/essential', {
-        headers: {Authorization: `Bearer ${accessToken}`}
-    }).then(response => response.json()).then((data) => {
-        console.log(data);
-        if(data.sex === null){ // 처음인지 확인
-            navigation.navigate('ChatBasicInfo');
-        }else{
-            navigation.navigate('Chat');
-        }
-    }).catch(err => console.error(err))
-
-}
 
 const ChatStartScreen = ({navigation}) => {
     const {colors} = useTheme();
+    const [moveScreen, setMoveScreen] = useState('');
+    const {state, dispatch} = useContext(AuthContext);
+
+    useEffect(() => {
+        fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/users/essential', {
+            headers: {Authorization: `Bearer ${state.userToken.accessToken}`}
+        }).then(response => response.json()).then((res) => {
+            if(res.result === 'SUCCESS'){
+                if (res.data.age === 0) { // 처음인지 확인
+                    setMoveScreen('ChatBasicInfo');
+                } else {
+                    setMoveScreen('Chat');
+                }
+            }
+        }).catch(err => console.error(err))
+    }, [])
+
+    const checkIsFirst = async (navigation) => {
+        const token = await SecureStore.getItemAsync('token');
+        const {accessToken, refreshToken} = JSON.parse(token);
+        navigation.navigate('ChatBasicInfo');
+    }
 
     return (
         <ScreenContainer backgroundColor={colors.mainColor}>
@@ -38,9 +46,10 @@ const ChatStartScreen = ({navigation}) => {
                     <AppText style={styles.infoText}>중간에 뒤로가거나 화면을 나가게 되면</AppText>
                     <AppText style={styles.infoText}>기록이 저장되지 않습니다.</AppText>
                 </View>
-                <CustomButton title={'진료 시작하기'} buttonStyle={{backgroundColor: '#fff', width: '100%'}}
+                <CustomButton disabled={moveScreen.length === 0}
+                              title={'진료 시작하기'} buttonStyle={{backgroundColor: '#fff', width: '100%'}}
                               textStyle={{color: colors.mainColor}}
-                              onPress={() => checkIsFirst(navigation)}/>
+                              onPress={() => navigation.navigate(moveScreen)}/>
 
             </ScreenContainerView>
         </ScreenContainer>
