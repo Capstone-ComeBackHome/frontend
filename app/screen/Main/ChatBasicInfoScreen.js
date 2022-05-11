@@ -13,8 +13,6 @@ import {AuthContext} from "../../context/AuthContextProviders";
 const ChatBasicInfoScreen = ({navigation}) => {
     const {colors} = useTheme();
     const {state, dispatch} = useContext(AuthContext);
-    const [nextTab, setNextTab] = useState(false);
-
 
     const [age, setAge] = useState(null);
     const [sex, setSex] = useState(null);
@@ -35,7 +33,7 @@ const ChatBasicInfoScreen = ({navigation}) => {
         } else {
             setIsBasicFill(false);
         }
-    }, [age, sex, height, weight])
+    }, [age, sex, height, weight]);
 
     const styles = StyleSheet.create({
         infoText: {
@@ -136,6 +134,7 @@ const ChatBasicInfoScreen = ({navigation}) => {
                                         style={styles.textInput}
                                         flex={1}
                                         onChangeText={text => setAge(text)}
+                                        keyboardType={'number-pad'}
                                     />
                                 </View>
                                 <View style={styles.textInputContainer}>
@@ -154,6 +153,7 @@ const ChatBasicInfoScreen = ({navigation}) => {
                                         style={styles.textInput}
                                         flex={1}
                                         onChangeText={text => setHeight(text)}
+                                        keyboardType={'decimal-pad'}
                                     />
                                 </View>
                                 <View style={styles.textInputContainer}>
@@ -163,6 +163,7 @@ const ChatBasicInfoScreen = ({navigation}) => {
                                         style={styles.textInput}
                                         flex={1}
                                         onChangeText={text => setWeight(text)}
+                                        keyboardType={'decimal-pad'}
                                     />
                                 </View>
                                 <View style={styles.textInputContainer}>
@@ -229,6 +230,7 @@ const ChatBasicInfoScreen = ({navigation}) => {
                         buttonStyle={styles.submitBtn}
                         textStyle={{color: '#fff'}}
                         title={"저장하고 채팅 시작하기"}
+                        disabled={!isBasicFill}
                         onPress={() => {
                             console.log(age, sex, height, weight);
                             saveUserData();

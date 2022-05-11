@@ -20,6 +20,7 @@ const CustomTextInput = (props) => {
                    multiline={props.multiline}
                    ref={props.inputRef}
         >
+            {props.data}
             {props.children}
         </TextInput>
     )
