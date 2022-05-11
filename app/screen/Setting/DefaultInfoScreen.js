@@ -74,7 +74,7 @@ const DefaultInfoScreen = ({navigation}) => {
 
     const saveUserData = () => {
         // 데이터 정합성
-        console.log("hi");
+
         const data = {
             age, sex, height, weight
         }
