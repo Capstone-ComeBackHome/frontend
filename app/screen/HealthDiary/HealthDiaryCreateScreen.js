@@ -140,7 +140,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
         }).then(response => response.json()).then((res) => {
             if(res.result === 'SUCCESS'){
                 console.log('일기 등록 완료!');
-                navigation.replace('HomeTab');
+                navigation.pop();
             }
         }).catch(err => console.error(err))
     }

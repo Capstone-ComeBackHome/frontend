@@ -111,37 +111,40 @@ const HealthDiaryScreen = ({navigation, userInfo}) => {
     const [diaryList, setDiaryList] = useState([]);
 
     useEffect(() => {
-        const lastTwelveMonths = [];
-        let year = new Date().getFullYear();
-        let month = new Date().getMonth() + 1;
-        for (let i = 0; i < 12; i++) {
-            const yearMonth = `${year}-${String(month).padStart(2, '0')}`;
-            lastTwelveMonths.push(yearMonth);
-            if (month === 1) {
-                month = 12;
-                year -= 1;
-            } else {
-                month--;
-            }
-        }
-        setDiaryDates(lastTwelveMonths);
-
-        // 수정해야될 것 같은데...
-        const promises = lastTwelveMonths.map(yearMonth => {
-            return fetch(`http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/calendars?yearMonth=${yearMonth}`, {
-                headers: {
-                    Authorization: `Bearer ${state.userToken.accessToken}`,
+        const unsubscribe = navigation.addListener('focus', () => {
+            const lastTwelveMonths = [];
+            let year = new Date().getFullYear();
+            let month = new Date().getMonth() + 1;
+            for (let i = 0; i < 12; i++) {
+                const yearMonth = `${year}-${String(month).padStart(2, '0')}`;
+                lastTwelveMonths.push(yearMonth);
+                if (month === 1) {
+                    month = 12;
+                    year -= 1;
+                } else {
+                    month--;
                 }
-            }).then(res => res.json())
-        })
+            }
+            setDiaryDates(lastTwelveMonths);
+
+            // 수정해야될 것 같은데...
+            const promises = lastTwelveMonths.map(yearMonth => {
+                return fetch(`http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/calendars?yearMonth=${yearMonth}`, {
+                    headers: {
+                        Authorization: `Bearer ${state.userToken.accessToken}`,
+                    }
+                }).then(res => res.json())
+            })
 
 
-        Promise.all(promises).then(results => {
-            const diaryList = results.map(result => result.data.simpleScheduleResponseList);
-            setDiaryList(diaryList);
-        })
+            Promise.all(promises).then(results => {
+                const diaryList = results.map(result => result.data.simpleScheduleResponseList);
+                setDiaryList(diaryList);
+            })
+        });
 
-    }, [])
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <ScreenContainer>
