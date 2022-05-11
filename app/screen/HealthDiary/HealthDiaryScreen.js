@@ -40,7 +40,7 @@ const AccordionView = ({title, dairyDatas}) => {
                 theme={{colors: {text: colors.mainColor, primary: '#53B3EE'}}}
                 expanded={expanded}
                 onPress={handlePress}
-                style={{backgroundColor: 'rgba(243,251,255,0.84)', paddingHorizontal: 0}}>
+                style={{backgroundColor: '#fff', paddingHorizontal: 0, borderBottomColor : colors.mainColor, borderBottomWidth: 1}}>
                 {
                     dairyDatas.map((diaryData, index) => {
                         return <DiaryData key={index} diaryData={diaryData}/>
