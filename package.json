@@ -27,6 +27,7 @@
     "react-native-calendars": "^1.1280.0",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~2.1.0",
+    "react-native-gifted-chat": "^0.16.3",
     "react-native-paper": "^4.12.0",
     "react-native-reanimated": "~2.3.1",
     "react-native-safe-area-context": "3.3.2",
@@ -39,5 +40,16 @@
   "devDependencies": {
     "@babel/core": "^7.12.9"
   },
-  "private": true
+  "private": true,
+  "description": "세종대학교 2022-1 캡스톤디자인 팀프로젝트\r - 기간 : 2022.03 - 2022.06\r - 주제 : 의료 AI 챗봇\r - 팀 명 : 컴백홈\r - 팀 구성\r   - 프론트(팀장) : 오다혜\r   - 백엔드 : 최준성\r   - AI : 이지웅, 김다슬\r ## 사용 기술\r - 프론트 : `React Native(Expo)`\r - 백엔드 : `Spring`, `AWS`\r - AI : `Flask`\r - 협업 기술(tools) : `Notion`, `postman`, `figma`\r ## 주요 기능\r ### 채팅 기반 사용자 병명 예측\r - 의의\r   - 거동이 불편하거나, 병원을 방문하기에 시공간적 여유가 없는 경우 AI와의 채팅을 통해서 자신의 증상과 관련된 병을 분석 받을 수 있음. \r - 기능\r   - 자신의 신체적인 정보(키, 몸무게 등) 및 진단 시 필요한 정보를 사용자로부터 입력 받음. \r   - 사용자가 입력한 정보에 기반하여 AI 모델이 분석 후 가장 유사도가 높은 병 3개 추천\r   - AI가 분석한 병에 대한 각종 정보를 사용자에게 제공",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Capstone-ComeBackHome/frontend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Capstone-ComeBackHome/frontend/issues"
+  },
+  "homepage": "https://github.com/Capstone-ComeBackHome/frontend#readme"
 }
