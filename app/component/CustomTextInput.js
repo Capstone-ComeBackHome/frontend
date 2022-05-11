@@ -18,6 +18,7 @@ const CustomTextInput = (props) => {
                    value={props.value}
                    keyboardType={props.keyboardType}
                    multiline={props.multiline}
+                   ref={props.inputRef}
         >
             {props.children}
         </TextInput>
