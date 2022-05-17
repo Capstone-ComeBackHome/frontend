@@ -1,15 +1,11 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useMemo} from 'react';
 import {
     StyleSheet,
-    TouchableOpacity,
     View,
     Image,
     ScrollView,
-    ImageBackground, Platform, Alert, Text, Button,
-    SafeAreaView
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
-import {Calendar} from "react-native-calendars";
 
 import AppText from '../../component/AppText';
 import ScreenContainer from '../../component/ScreenContainer';
@@ -40,7 +36,12 @@ const AccordionView = ({title, dairyDatas}) => {
                 theme={{colors: {text: colors.mainColor, primary: '#53B3EE'}}}
                 expanded={expanded}
                 onPress={handlePress}
-                style={{backgroundColor: '#fff', paddingHorizontal: 0, borderBottomColor : colors.mainColor, borderBottomWidth: 1}}>
+                style={{
+                    backgroundColor: '#fff',
+                    paddingHorizontal: 0,
+                    borderBottomColor: colors.mainColor,
+                    borderBottomWidth: 1
+                }}>
                 {
                     dairyDatas.map((diaryData, index) => {
                         return <DiaryData key={index} diaryData={diaryData}/>
@@ -70,10 +71,19 @@ const DiaryData = ({diaryData}) => {
     const Keyword = ({keyword}) => {
         return (
             <View style={styles.diseaseTag}>
-                <AppText style={{color: '#fff', fontWeight: '700', fontSize : 12}}>{keyword}</AppText>
+                <AppText style={{color: '#fff', fontWeight: '700', fontSize: 12}}>{keyword}</AppText>
             </View>
         )
     }
+    const iconMapping = useMemo(() => {
+        return {
+            GOOD : score1,
+            BETTER : score2,
+            NORMAL : score3,
+            BAD : score4,
+            WORST : score5
+        }
+    }, [])
 
     return (
         <View style={{
@@ -85,17 +95,15 @@ const DiaryData = ({diaryData}) => {
         }}>
             <AppText style={{fontWeight: '600', fontSize: 16, paddingBottom: 20}}>{diaryData.localDate}</AppText>
             <View style={{flexDirection: 'row'}}>
-                <Image source={score1} style={{marginRight: 20}}/>
+                <Image source={iconMapping[diaryData.painType]} style={{marginRight: 20}}/>
                 <View flex={1}>
                     <View style={{flexDirection: 'row', flexWrap: 'wrap', marginBottom: 20}}>
-                        <Keyword keyword={"후두염"}/>
-                        <Keyword keyword={"후두염"}/>
-                        <Keyword keyword={"후두염"}/>
-                        <Keyword keyword={"후두염"}/>
-                        <Keyword keyword={"후두염"}/>
+                        {
+                            diaryData.diseaseTagResponseList.map(({diseaseType, name}) => <Keyword keyword={name}/>)
+                        }
                     </View>
                     <View>
-                        <AppText>오늘은 적당히 아파요</AppText>
+                        <AppText>{diaryData.dailyNote}</AppText>
                     </View>
                 </View>
             </View>
@@ -138,7 +146,7 @@ const HealthDiaryScreen = ({navigation, userInfo}) => {
 
 
             Promise.all(promises).then(results => {
-                const diaryList = results.map(result => result.data.simpleScheduleResponseList);
+                const diaryList = results.map(result => result.data.scheduleResponseList);
                 setDiaryList(diaryList);
             })
         });
