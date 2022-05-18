@@ -1,12 +1,13 @@
 import React, {useState, useEffect, useCallback,} from 'react';
-import {Button, ScrollView, View,StyleSheet} from 'react-native';
+import {Button, ScrollView, View, StyleSheet} from 'react-native';
 import {useTheme} from '@react-navigation/native';
 
 import AppText from '../../component/AppText';
 import ScreenContainer from '../../component/ScreenContainer';
-import ScreenContainerView from '../../component/ScreenContainerView';
 import NavigationTop from "../../component/NavigationTop";
-import {GiftedChat, Bubble, InputToolbar} from 'react-native-gifted-chat'
+import {GiftedChat, Bubble, InputToolbar} from 'react-native-gifted-chat';
+
+import {request} from "../../api/api";
 
 
 const ChatScreen = ({navigation}) => {
@@ -23,11 +24,12 @@ const ChatScreen = ({navigation}) => {
                 },
             },
         ])
-    }, [])
+    }, []);
     const onSend = useCallback((messages = []) => {
         setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
     }, [])
 
+    const [questions, setQuestions] = useState({});
 
     return (
         <ScreenContainer>
