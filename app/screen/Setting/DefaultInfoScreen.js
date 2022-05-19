@@ -8,7 +8,7 @@ import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
 import NavigationTop from "../../component/NavigationTop";
 import {AuthContext} from "../../context/AuthContextProviders";
-import {Picker} from '@react-native-picker/picker';
+import RNPickerSelect from 'react-native-picker-select';
 
 const DefaultInfoScreen = ({navigation}) => {
     const {colors} = useTheme();
@@ -57,7 +57,7 @@ const DefaultInfoScreen = ({navigation}) => {
             flexDirection: 'row',
             alignItems: "center",
             justifyContent: 'flex-start',
-            marginVertical: 10,
+            marginVertical: 15,
         },
         selectTitle: {
             color: colors.mainColor,
@@ -131,15 +131,14 @@ const DefaultInfoScreen = ({navigation}) => {
                     </View>
                     <View style={styles.selectContainer}>
                         <AppText style={styles.selectTitle}>성별</AppText>
-                        <Picker
-                            style={{height:15,width:150}}
-                            selectedValue={selectedSex}
-                            onValueChange={(itemValue, itemIndex) =>
-                                setSelectedSex(itemValue)
-                            }>
-                            <Picker.Item label="MAN" value="MAN" />
-                            <Picker.Item label="WOMAN" value="WOMAN" />
-                        </Picker>
+                        <RNPickerSelect
+                            onValueChange={(value) => console.log(value)}
+                            placeholder={{ }}
+                            items={[
+                                { label: 'MAN', value: 'MAN' },
+                                { label: 'WOMAN', value: 'WOMAN' },
+                            ]}
+                        />
                     </View>
                     <View style={styles.textInputContainer}>
                         <AppText style={styles.inputTitle}>신장</AppText>
