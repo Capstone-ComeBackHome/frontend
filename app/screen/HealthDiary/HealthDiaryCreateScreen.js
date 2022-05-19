@@ -164,6 +164,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                                 mode={'date'}
                                 minimumDate={new Date(2020, 0, 1)}
                                 maximumDate={new Date(2030, 11, 31)}
+
                                 onChange={(_, selectDate) => setDate(selectDate)}
                             />
                         </ScreenContainerView>

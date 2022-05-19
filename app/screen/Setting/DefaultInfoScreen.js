@@ -8,6 +8,7 @@ import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
 import NavigationTop from "../../component/NavigationTop";
 import {AuthContext} from "../../context/AuthContextProviders";
+import {Picker} from '@react-native-picker/picker';
 
 const DefaultInfoScreen = ({navigation}) => {
     const {colors} = useTheme();
@@ -19,6 +20,9 @@ const DefaultInfoScreen = ({navigation}) => {
     const [weight, setWeight] = useState(null);
 
     const [isBasicFill, setIsBasicFill] = useState(false);
+
+
+    const [selectedSex, setSelectedSex] = useState();
 
     useEffect(() => {
         fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/users/essential', {
@@ -48,6 +52,18 @@ const DefaultInfoScreen = ({navigation}) => {
             alignItems: "center",
             justifyContent: 'center',
             marginVertical: 10,
+        },
+        selectContainer: {
+            flexDirection: 'row',
+            alignItems: "center",
+            justifyContent: 'flex-start',
+            marginVertical: 10,
+        },
+        selectTitle: {
+            color: colors.mainColor,
+            fontWeight: '700',
+            marginRight: 25,
+            width: '13%',
         },
         inputTitle: {
             color: colors.mainColor,
@@ -113,15 +129,17 @@ const DefaultInfoScreen = ({navigation}) => {
                             keyboardType={'number-pad'}
                         />
                     </View>
-                    <View style={styles.textInputContainer}>
-                        <AppText style={styles.inputTitle}>성별</AppText>
-                        <CustomTextInput
-                            placeholder="MAN / WOMAN"
-                            style={styles.textInput}
-                            flex={1}
-                            data={sex}
-                            onChangeText={text => setSex(text)}
-                        />
+                    <View style={styles.selectContainer}>
+                        <AppText style={styles.selectTitle}>성별</AppText>
+                        <Picker
+                            style={{height:15,width:150}}
+                            selectedValue={selectedSex}
+                            onValueChange={(itemValue, itemIndex) =>
+                                setSelectedSex(itemValue)
+                            }>
+                            <Picker.Item label="MAN" value="MAN" />
+                            <Picker.Item label="WOMAN" value="WOMAN" />
+                        </Picker>
                     </View>
                     <View style={styles.textInputContainer}>
                         <AppText style={styles.inputTitle}>신장</AppText>
