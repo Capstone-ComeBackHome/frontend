@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {View, TouchableOpacity, StyleSheet, ScrollView, Image} from 'react-native';
 import {useTheme} from '@react-navigation/native';
 
@@ -7,9 +7,24 @@ import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
 import NavigationTop from "../../component/NavigationTop";
 import ScreenDivideLineLight from "../../component/ScreenDivideLineLight";
+import {AuthContext} from "../../context/AuthContextProviders";
 
-const DiagnosisResultPastScreen = ({navigation}) => {
+const DiagnosisResultPastScreen = ({route, navigation}) => {
     const {colors} = useTheme();
+    const {state, dispatch} = useContext(AuthContext);
+    const [diseaseInfo, setDiseaseInfo] = useState(null);
+    useEffect(() => {
+        const {diseaseId} = route.params;
+        fetch(`http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/diseases/${diseaseId}`, {
+            headers: {Authorization: `Bearer ${state.userToken.accessToken}`}
+        }).then(response => response.json()).then((res) => {
+            if (res.result === 'SUCCESS') {
+                console.log(res.data);
+                setDiseaseInfo(res.data);
+            }
+        }).catch(err => console.error(err))
+    }, [])
+
     const styles = StyleSheet.create({
         inputTitle: {
             color: colors.black,
@@ -116,8 +131,8 @@ const DiseaseTouchable = ({disease, percentage, information, department1, depart
                 <AppText style={styles.titleText}>정의</AppText>
                 <AppText style={{
                     color: "#303030",
-                    fontSize: 11,
-                    fontWeight: '400',
+                    fontSize: 14,
+                    fontWeight: '500',
                     marginTop: 8,
                     marginBottom: 16
                 }}>{information}</AppText>

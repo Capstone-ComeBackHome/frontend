@@ -236,7 +236,7 @@ const ChatScreen = ({navigation}) => {
                         <CustomButton title={"분석 결과 보기"}
                                       buttonStyle={{backgroundColor : colors.blue[2]}}
                                       textStyle={{fontWeight : '700', color : colors.black[1]}}
-                                      onPress={() => navigation.navigate('ChatResult', {diseaseList: chatResult})}/>
+                                      onPress={() => navigation.navigate('DiagnosisTop3', {diseaseList: chatResult})}/>
                     </ScreenContainerView>
                 )
             }
