@@ -9,22 +9,8 @@ import NavigationTop from "../../component/NavigationTop";
 import ScreenDivideLineLight from "../../component/ScreenDivideLineLight";
 import {AuthContext} from "../../context/AuthContextProviders";
 
-const DiagnosisResultPastScreen = ({route, navigation}) => {
+const DiagnosisResultPastScreen = ({navigation}) => {
     const {colors} = useTheme();
-    const {state, dispatch} = useContext(AuthContext);
-    const [diseaseInfo, setDiseaseInfo] = useState(null);
-    useEffect(() => {
-        const {diseaseId} = route.params;
-        fetch(`http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/diseases/${diseaseId}`, {
-            headers: {Authorization: `Bearer ${state.userToken.accessToken}`}
-        }).then(response => response.json()).then((res) => {
-            if (res.result === 'SUCCESS') {
-                console.log(res.data);
-                setDiseaseInfo(res.data);
-            }
-        }).catch(err => console.error(err))
-    }, [])
-
     const styles = StyleSheet.create({
         inputTitle: {
             color: colors.black,

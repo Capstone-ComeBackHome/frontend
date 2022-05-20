@@ -58,10 +58,10 @@ const DiagnosisTop3Screen = ({route, navigation}) => {
     return (
         <ScreenContainer backgroundColor={colors.backgroundColor}>
             <NavigationTop navigation={navigation} title={"진단 결과"}/>
-            <ScreenContainerView flex={1} style={{marginTop: 31, justifyContent: 'space-between'}}>
+            <ScreenContainerView flex={1} style={{justifyContent: 'space-between'}}>
                 <ScrollView>
                     <View>
-                        <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
+                        <View style={{flexDirection: "row", justifyContent: 'space-between', marginTop: 31}}>
                             <AppText style={styles.inputTitle}>{diseaseList[0]}</AppText>
                             <AppText style={styles.otherText}>이(가) 의심됩니다.</AppText>
                         </View>
