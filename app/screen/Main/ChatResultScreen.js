@@ -9,16 +9,16 @@ import NavigationTop from "../../component/NavigationTop";
 import CustomButton from "../../component/CustomButton";
 
 
-const ChatResultScreen = () => {
+const ChatResultScreen = ({route, navigation}) => {
     const {colors} = useTheme();
-    const navigation = useNavigation();
+    const {diseaseList} = route.params;
 
     return (
         <ScreenContainer>
             <NavigationTop title={"AI 분석 결과"}/>
             <ScreenContainerView flex={1} style={{alignItems: 'center', justifyContent: 'center'}}>
                 <View style={{alignItems: 'center', justifyContent: 'space-around'}}>
-                    <CustomButton buttonStyle={{...styles.buttonStyle, backgroundColor: colors.beige[2]}}
+                    <CustomButton buttonStyle={{...styles.buttonStyle, backgroundColor: colors.blue[2]}}
                                   textStyle={styles.textStyle}
                                   onPress={() => navigation.navigate('Main', {
                                       screen: 'DiseaseInfo',
@@ -29,7 +29,7 @@ const ChatResultScreen = () => {
                             <AppText>의심이 됩니다.</AppText>
                         </View>
                     </CustomButton>
-                    <CustomButton buttonStyle={{...styles.buttonStyle, backgroundColor: colors.beige[3]}}
+                    <CustomButton buttonStyle={{...styles.buttonStyle, backgroundColor: colors.blue[3]}}
                                   textStyle={styles.textStyle}
                                   onPress={() => navigation.navigate('Main', {
                                       screen: 'DiseaseInfo',
@@ -40,7 +40,7 @@ const ChatResultScreen = () => {
                             <AppText>의심이 됩니다.</AppText>
                         </View>
                     </CustomButton>
-                    <CustomButton buttonStyle={{...styles.buttonStyle, backgroundColor: colors.beige[4]}}
+                    <CustomButton buttonStyle={{...styles.buttonStyle, backgroundColor: colors.blue[4]}}
                                   textStyle={styles.textStyle}
                                   onPress={() => navigation.navigate('Main', {
                                       screen: 'DiseaseInfo',
