@@ -16,8 +16,8 @@ const ColorTheme = {
         backgroundColor: '#ffffff',
         blue: {
             1: 'rgba(83,179,238,1.0)',
-            2: 'rgba(83,179,238,0.4)',
-            3: 'rgba(83,179,238,0.5)',
+            2: 'rgba(83,179,238,0.5)',
+            3: 'rgba(83,179,238,0.3)',
             4: 'rgba(75,155,204,0.05)',
         },
         black: {

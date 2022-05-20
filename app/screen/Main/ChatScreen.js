@@ -11,6 +11,8 @@ import {request} from "../../api/api";
 import {AuthContext} from "../../context/AuthContextProviders";
 import uuid from 'react-native-uuid';
 import questionData from '../../assets/question.json';
+import CustomButton from "../../component/CustomButton";
+import ScreenContainerView from "../../component/ScreenContainerView";
 
 const renderBubble = props => {
 
@@ -61,6 +63,7 @@ const ChatScreen = ({navigation}) => {
     const [userInfo, setUserInfo] = useState({});
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [disable, setDisable] = useState(true);
+    const [chatResult, setChatResult] = useState(null);
     const chatData = useRef({});
 
     useEffect(() => {
@@ -113,7 +116,6 @@ const ChatScreen = ({navigation}) => {
                 Weight: userInfo.weight
             }
             setUserInfo(body);
-            console.log(body);
             fetch('http://3.34.55.178:5000/predict/level2', {
                 method: 'POST',
                 headers: {
@@ -121,7 +123,6 @@ const ChatScreen = ({navigation}) => {
                 },
                 body: JSON.stringify(body)
             }).then(response => response.json()).then((res) => {
-                console.log(res);
                 setQuestions(Object.entries(questionData[res.level2]));
             }).catch(err => console.error(err))
         } else if (questions.length > 0) {
@@ -143,7 +144,6 @@ const ChatScreen = ({navigation}) => {
                         ...userInfo,
                         ...chatData.current
                     }
-                    console.log(body);
                     fetch('http://3.34.55.178:5000/predict/diagnosis', {
                         method: 'POST',
                         headers: {
@@ -151,12 +151,10 @@ const ChatScreen = ({navigation}) => {
                         },
                         body: JSON.stringify(body)
                     }).then(response => response.json()).then((res) => {
-                        // setTimeout(() => {
-                        //     console.log(res.diseaseList);
-                        //
-                        // }, 2000)
-                        console.log(res);
-                        navigation.navigate('ChatResult', {params: {diseaseList: res.diseasesList}})
+                        setTimeout(() => {
+                            setChatResult(res.diseasesList);
+                        }, 2000)
+                        // setChatResult(res.diseasesList);
                     })
                 }
             }
@@ -232,6 +230,16 @@ const ChatScreen = ({navigation}) => {
                 user={USER}
                 renderInputToolbar={disable ? () => null : undefined}
             />
+            {
+                chatResult && (
+                    <ScreenContainerView style={{marginBottom : 20}}>
+                        <CustomButton title={"분석 결과 보기"}
+                                      buttonStyle={{backgroundColor : colors.blue[2]}}
+                                      textStyle={{fontWeight : '700', color : colors.black[1]}}
+                                      onPress={() => navigation.navigate('ChatResult', {diseaseList: chatResult})}/>
+                    </ScreenContainerView>
+                )
+            }
             {
                 Platform.OS === 'android' && <KeyboardAvoidingView behavior="padding"/>
             }
