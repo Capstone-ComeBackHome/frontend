@@ -18,11 +18,11 @@ const DiseaseInfoScreen = ({route, navigation}) => {
             height : 200,
             paddingHorizontal: 20,
             justifyContent: "center",
-            backgroundColor : colors.beige[4],
+            backgroundColor : colors.blue[4],
             borderRadius : 10,
         },
         container : {
-            backgroundColor: colors.beige[2],
+            backgroundColor: colors.blue[2],
             marginVertical : 20,
             paddingVertical : 20,
             paddingHorizontal : 20,

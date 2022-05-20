@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {View, TouchableOpacity, StyleSheet, ScrollView, Image} from 'react-native';
 import {useTheme} from '@react-navigation/native';
 
@@ -7,6 +7,7 @@ import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
 import NavigationTop from "../../component/NavigationTop";
 import ScreenDivideLineLight from "../../component/ScreenDivideLineLight";
+import {AuthContext} from "../../context/AuthContextProviders";
 
 const DiagnosisResultPastScreen = ({navigation}) => {
     const {colors} = useTheme();
@@ -116,8 +117,8 @@ const DiseaseTouchable = ({disease, percentage, information, department1, depart
                 <AppText style={styles.titleText}>정의</AppText>
                 <AppText style={{
                     color: "#303030",
-                    fontSize: 11,
-                    fontWeight: '400',
+                    fontSize: 14,
+                    fontWeight: '500',
                     marginTop: 8,
                     marginBottom: 16
                 }}>{information}</AppText>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {View, TouchableOpacity, StyleSheet, ScrollView, Image} from 'react-native';
 import {useTheme} from '@react-navigation/native';
 
@@ -7,21 +7,37 @@ import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
 import NavigationTop from "../../component/NavigationTop";
 import ScreenDivideLineLight from "../../component/ScreenDivideLineLight";
+import {AuthContext} from "../../context/AuthContextProviders";
 
-const DiagnosisTop3Screen = ({navigation}) => {
+const DiagnosisTop3Screen = ({route, navigation}) => {
     const {colors} = useTheme();
+    const {state, dispatch} = useContext(AuthContext);
+    const [diseaseList, setDiseaseList] = useState(route.params.diseaseList);
+    const [diseaseInfoList, setDiseaseInfoList] = useState(null);
+
+    useEffect(() => {
+        fetch(`http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/diseases?diseaseNameList=${diseaseList[0]},${diseaseList[1]},${diseaseList[2]}`, {
+            headers: {Authorization: `Bearer ${state.userToken.accessToken}`}
+        }).then(response => response.json()).then((res) => {
+            if (res.result === 'SUCCESS') {
+                console.log(res.data);
+                setDiseaseInfoList(res.data.simpleDiseaseList);
+            }
+        }).catch(err => console.error(err))
+    }, [])
+
     const styles = StyleSheet.create({
         inputTitle: {
             color: colors.black,
             fontWeight: '700',
             fontSize: 16,
-            paddingBottom: 21
+            marginLeft : 10
         },
         otherText: {
             color: colors.mainColor,
             fontWeight: '700',
             fontSize: 16,
-            paddingBottom: 21
+            marginRight : 10
         },
         textInput: {
             fontSize: 16,
@@ -38,27 +54,35 @@ const DiagnosisTop3Screen = ({navigation}) => {
             justifyContent: 'center'
         }
     })
+
     return (
         <ScreenContainer backgroundColor={colors.backgroundColor}>
-            <NavigationTop navigation={navigation} title={"진단 결과"} />
-            <ScreenContainerView flex={1} style={{marginTop: 31, justifyContent: 'space-between'}}>
+            <NavigationTop navigation={navigation} title={"진단 결과"}/>
+            <ScreenContainerView flex={1} style={{justifyContent: 'space-between'}}>
                 <ScrollView>
                     <View>
-                        <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
-                            <AppText style={styles.inputTitle}>부정맥</AppText>
+                        <View style={{flexDirection: "row", justifyContent: 'space-between', marginTop: 31}}>
+                            <AppText style={styles.inputTitle}>{diseaseList[0]}</AppText>
                             <AppText style={styles.otherText}>이(가) 의심됩니다.</AppText>
                         </View>
                         <BlueDivideLine/>
                     </View>
                     <View style={{flexDirection: "column", marginTop: 24}}>
                         {/*space for disease info*/}
-                        <DiseaseTouchable disease={"부정맥"} percentage={"100"}
-                                          information={"너무 아프다. 진짜 너무 아프다 왜 아픈지 모르겠지만 진짜 너무너무 아프다"}
-                                          department1={"저세상"}
-                                          department2={"이승"}
-                                          navigation={navigation}
-                                          testDisease={"DiagnosisDetail"}
-                        />
+                        {diseaseInfoList && diseaseInfoList.map((diseaseInfo) => {
+                            const departments = diseaseInfo.recommendDepartment.split(',');
+                                return (
+                                    <DiseaseTouchable disease={diseaseInfo.name} percentage={"100"}
+                                                      information={diseaseInfo.definition}
+                                                      department1={departments[0]}
+                                                      department2={departments[1]}
+                                                      navigation={navigation}
+                                                      diseaseId={diseaseInfo.diseaseId}
+                                    />
+                                )
+                            }
+                        )}
+
                     </View>
                     <ScreenDivideLineLight/>
                 </ScrollView>
@@ -76,59 +100,66 @@ const BlueDivideLine = (props) => {
         <View style={{
             height: 1,
             backgroundColor: colors.blue[1],
-            borderRadius: 1
+            borderRadius: 1,
+            marginTop : 16
         }}/>
     )
 }
 
-const DiseaseTouchable = ({disease, percentage, information, department1, department2,navigation,testDisease}) => {
+const DiseaseTouchable = ({disease, information, department1, department2, navigation, diseaseId}) => {
+    const {colors} = useTheme();
     const styles = StyleSheet.create({
         container: {
             backgroundColor: "rgba(75, 155, 204, 0.05)",
-            height: 250,
             borderRadius: 5,
             paddingHorizontal: 17.07,
+            marginVertical : 10,
+            paddingVertical : 20
         },
         titleText: {
-            color: "#303030", fontSize: 16, fontWeight: '700'
+            color: "#303030",
+            fontSize: 18,
+            fontWeight: '700'
         },
-        nonTitleText: {},
+        nonTitleText: {
+            fontSize : 15,
+            fontWeight: 'bold',
+            marginVertical : 5
+        },
+        informationText : {
+            color: '#444',
+            fontSize: 14,
+            fontWeight: '500',
+            lineHeight : 20
+        },
         box: {
             flex: 1,
             height: 40,
             backgroundColor: "#53B3EE",
             borderRadius: 5,
-            paddingLeft : 14.9,
+            padding : 10,
             justifyContent: "center",
-
         },
-        boxText:{
+        boxText: {
             color: "#FFFFFF", fontSize: 14, fontWeight: '700'
         }
     })
     return (
-        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(testDisease)}>
-            <View style={{flexDirection: "row", justifyContent: "space-between", marginTop: 24}}>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('DiagnosisDetail', {diseaseId})}>
+            <View style={{flexDirection: "row", justifyContent: "space-between"}}>
                 <AppText style={styles.titleText}>{disease}</AppText>
-                <AppText style={{color: "#53B3EE", fontWeight: '700'}}>{percentage}%</AppText>
             </View>
             <View style={{marginVertical: 16}}>
-                <AppText style={styles.titleText}>정의</AppText>
-                <AppText style={{
-                    color: "#303030",
-                    fontSize: 11,
-                    fontWeight: '400',
-                    marginTop: 8,
-                    marginBottom: 16
-                }}>{information}</AppText>
+                <AppText style={styles.nonTitleText}>정의</AppText>
+                <AppText style={styles.informationText}>{information}</AppText>
             </View>
             <View>
-                <AppText style={styles.titleText}>진료과</AppText>
+                <AppText style={styles.nonTitleText}>진료과</AppText>
                 <View style={{flexDirection: "row", justifyContent: "space-between", marginTop: 8}}>
                     <View style={styles.box}>
                         <AppText style={styles.boxText}>{department1}</AppText>
                     </View>
-                    <View style={{marginHorizontal : 4}}/>
+                    <View style={{marginHorizontal: 4}}/>
                     <View style={styles.box}>
                         <AppText style={styles.boxText}>{department2}</AppText>
                     </View>

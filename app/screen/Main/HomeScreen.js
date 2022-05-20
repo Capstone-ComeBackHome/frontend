@@ -40,7 +40,7 @@ const HomeScreen = ({navigation, userInfo}) => {
                 <ScreenContainerView style={{marginVertical: 10}}>
                     <AppText style={{color: colors.mainColor, fontSize: 18, marginVertical: 20, fontWeight : '700'}}>AI 진료실</AppText>
                     <View style={{alignItems: 'center'}}>
-                        <Image source={mainBanner}/>
+                        <Image source={mainBanner} style={{width : '100%', borderRadius : 10}}/>
                         <CustomButton title={"AI 진료받기"}
                                       buttonStyle={{position: 'absolute', width: '90%', bottom: 10}}
                                       onPress={() => navigation.navigate('ChatStart')}

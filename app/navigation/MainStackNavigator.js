@@ -78,8 +78,8 @@ const MainStackNavigator = () => {
                     <Stack.Screen name="ChatStart" component={ChatStartScreen}/>
                     <Stack.Screen name="ChatBasicInfo" component={ChatBasicInfoScreen}/>
                     <Stack.Screen name="Chat" component={ChatScreen}/>
-                    <Stack.Screen name="ChatResult" component={ChatResultScreen}/>
-                    <Stack.Screen name="DiseaseInfo" component={DiseaseInfoScreen}/>
+                    {/*<Stack.Screen name="ChatResult" component={ChatResultScreen}/>*/}
+                    {/*<Stack.Screen name="DiseaseInfo" component={DiseaseInfoScreen}/>*/}
 
                     {/* 캘린더나 설정 관련 페이지 있으면 추가하기. */}
                     <Stack.Screen name="DefaultInfo" component={DefaultInfoScreen}/>
