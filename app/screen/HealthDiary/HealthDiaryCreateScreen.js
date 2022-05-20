@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
 import AppText from '../../component/AppText';
 import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
 import NavigationTop from "../../component/NavigationTop";
 import ScreenDivideLineLight from "../../component/ScreenDivideLineLight"
 import CustomButton from '../../component/CustomButton';
+import moment from 'moment';
 
 {/*Images*/
 }
@@ -148,7 +148,10 @@ const HealthDiaryCreateScreen = ({navigation}) => {
     const getDataFromOtherScreen = (data) => {
         setDisease(data);
     }
-
+    const today = moment();
+    const disableFutureDt = current => {
+        return current.isBefore(today)
+    }
     return (
         <>
             <ScreenContainer backgroundColor={colors.backgroundColor}>
@@ -161,9 +164,8 @@ const HealthDiaryCreateScreen = ({navigation}) => {
                                 testID="dateTimePicker"
                                 value={date}
                                 display={"spinner"}
-                                mode={'date'}
-                                minimumDate={new Date(2020, 0, 1)}
-                                maximumDate={new Date(2030, 11, 31)}
+                                mode='date'
+                                maximumDate={new Date()}
                                 onChange={(_, selectDate) => setDate(selectDate)}
                             />
                         </ScreenContainerView>
