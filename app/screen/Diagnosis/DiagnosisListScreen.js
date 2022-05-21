@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
     StyleSheet,
     View,
@@ -12,10 +12,39 @@ import AppText from '../../component/AppText';
 import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
 import {List} from 'react-native-paper';
+import {AuthContext} from "../../context/AuthContextProviders";
 
-const HistoryScreen = ({navigation, userInfo}) => {
+const DiagnosisListScreen = ({navigation, userInfo}) => {
     const {colors} = useTheme();
     const [expanded, setExpanded] = React.useState(false);
+
+    const {state, dispatch} = useContext(AuthContext);
+    const [diagnoses, setDiagnoses] = useState();
+
+    useEffect(() => {
+        fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/diagnoses', {
+            headers: {
+                Authorization: `Bearer ${state.userToken.accessToken}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+        }).then(response => response.json()).then((res) => {
+            if (res.result === 'SUCCESS') {
+                const diagnosisData = {};
+                res.data.diagnosisResponseList.forEach(({diagnosisId, createDate, diseaseNameList}) => {
+                    const date = createDate.substring(0, 10);
+                    if (date in diagnosisData) {
+                        diagnosisData[data].push({diagnosisId, date, diseaseNameList});
+                    } else {
+                        diagnosisData[data] = [{diagnosisId, date, diseaseNameList}];
+                    }
+                })
+                console.log(diagnosisData);
+                setDiagnoses(diagnosisData);
+            }
+        }).catch(err => console.error(err))
+    }, [])
+
 
     const handlePress = () => setExpanded(!expanded);
     const DATA = [
@@ -198,4 +227,4 @@ const DiseaseScrollHorizontal = ({DATA, day, time}) => {
     );
 }
 
-export default HistoryScreen;
+export default DiagnosisListScreen;

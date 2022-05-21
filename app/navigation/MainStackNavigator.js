@@ -6,8 +6,6 @@ import HomeTabNavigator from "./HomeTabNavigator";
 import ChatStartScreen from "../screen/Main/ChatStartScreen";
 import ChatScreen from "../screen/Main/ChatScreen";
 import ChatBasicInfoScreen from "../screen/Main/ChatBasicInfoScreen";
-import ChatResultScreen from "../screen/Main/ChatResultScreen";
-import DiseaseInfoScreen from "../screen/Main/DiseaseInfoScreen";
 
 import DefaultInfoScreen from "../screen/Setting/DefaultInfoScreen";
 import MedicalInfoScreen from "../screen/Setting/MedicalInfoScreen";
@@ -78,8 +76,6 @@ const MainStackNavigator = () => {
                     <Stack.Screen name="ChatStart" component={ChatStartScreen}/>
                     <Stack.Screen name="ChatBasicInfo" component={ChatBasicInfoScreen}/>
                     <Stack.Screen name="Chat" component={ChatScreen}/>
-                    {/*<Stack.Screen name="ChatResult" component={ChatResultScreen}/>*/}
-                    {/*<Stack.Screen name="DiseaseInfo" component={DiseaseInfoScreen}/>*/}
 
                     {/* 캘린더나 설정 관련 페이지 있으면 추가하기. */}
                     <Stack.Screen name="DefaultInfo" component={DefaultInfoScreen}/>
