@@ -48,161 +48,52 @@ const DiagnosisScreen = ({navigation, userInfo}) => {
     const {colors} = useTheme();
 
     const {state, dispatch} = useContext(AuthContext);
-    const [diagnoses, setDiagnoses] = useState(
-        {
-            '2022-05': {
-                '10': [
-                    {
-                        "diagnosisId": 2,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    },
-                    {
-                        "diagnosisId": 3,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    }
-                ],
-                '12': [
-                    {
-                        "diagnosisId": 2,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    },
-                    {
-                        "diagnosisId": 3,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    }
-                ],
-                '17': [
-                    {
-                        "diagnosisId": 2,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    },
-                    {
-                        "diagnosisId": 3,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    }
-                ],
-            },
-            '2022-08': {
-                '10': [
-                    {
-                        "diagnosisId": 2,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    },
-                    {
-                        "diagnosisId": 3,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    }
-                ],
-                '12': [
-                    {
-                        "diagnosisId": 2,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    },
-                    {
-                        "diagnosisId": 3,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    }
-                ],
-                '17': [
-                    {
-                        "diagnosisId": 2,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    },
-                    {
-                        "diagnosisId": 3,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    }
-                ],
-            },
-            '2022-12': {
-                '10': [
-                    {
-                        "diagnosisId": 2,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    },
-                    {
-                        "diagnosisId": 3,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    }
-                ],
-                '12': [
-                    {
-                        "diagnosisId": 2,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    },
-                    {
-                        "diagnosisId": 3,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    }
-                ],
-                '17': [
-                    {
-                        "diagnosisId": 2,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    },
-                    {
-                        "diagnosisId": 3,
-                        "time": "15:08:54",
-                        "diseaseNameList": ["질병1", "질병2", "질병3"]
-                    }
-                ],
-            }
-        }
-    );
+    const [diagnoses, setDiagnoses] = useState({});
 
     useEffect(() => {
-        // fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/diagnoses', {
-        //     headers: {
-        //         Authorization: `Bearer ${state.userToken.accessToken}`,
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json; charset=UTF-8'
-        //     }
-        // }).then(response => response.json()).then((res) => {
-        //     if (res.result === 'SUCCESS') {
-        //         const diagnosisData = {};
-        //         res.data.diagnosisResponseList.forEach(({diagnosisId, createDate, diseaseNameList}) => {
-        //             const yearMonth = createDate.substring(0, 7);
-        //             const date = createDate.substring(8,10);
-        //             const time = createDate.substring(11, 19);
-        //             const data = {
-        //                 diagnosisId,
-        //                 time,
-        //                 diseaseNameList
-        //             }
-        //
-        //             if (yearMonth in diagnosisData) {
-        //                 if(date in diagnosisData.yearMonth){
-        //                     diagnosisData[yearMonth][date].push(data);
-        //                 }else{
-        //                     diagnosisData[yearMonth][date] = [data];
-        //                 }
-        //             } else {
-        //                 diagnosisData[yearMonth] = {};
-        //                 diagnosisData[yearMonth][date] = [data];
-        //             }
-        //         })
-        //         console.log(diagnosisData);
-        //         setDiagnoses(diagnosisData);
-        //     }
-        // }).catch(err => console.error(err))
-    }, [])
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/diagnoses', {
+                headers: {
+                    Authorization: `Bearer ${state.userToken.accessToken}`,
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            }).then(response => response.json()).then((res) => {
+                if (res.result === 'SUCCESS') {
+                    const diagnosisData = {};
+                    console.log(res.data.diagnosisResponseList);
+                    res.data.diagnosisResponseList.forEach(({diagnosisId, createdDate, diseaseNameList}) => {
+                        let dateObj = new Date(createdDate.substring(0,19) + '+00:00');
+                        let timeString = dateObj.toLocaleString("ko-KR").split('.')[3];
+
+                        const yearMonth = createdDate.substring(0, 7);
+                        const date = createdDate.substring(8,10);
+                        const time = timeString.substring(1);
+                        const data = {
+                            diagnosisId,
+                            time,
+                            diseaseNameList
+                        }
+
+                        if (yearMonth in diagnosisData) {
+                            if(date in diagnosisData[yearMonth]){
+                                diagnosisData[yearMonth][date].push(data);
+                            }else{
+                                diagnosisData[yearMonth][date] = [data];
+                            }
+                        } else {
+                            diagnosisData[yearMonth] = {};
+                            diagnosisData[yearMonth][date] = [data];
+                        }
+                    })
+
+                    setDiagnoses(diagnosisData);
+                }
+            }).catch(err => console.error(err))
+        })
+
+        return unsubscribe;
+    }, [navigation])
 
     return (
         <ScreenContainer>
@@ -319,7 +210,7 @@ const DiseaseScrollHorizontal = ({day, dailyDiagnosis}) => {
                 <AppText style={styles.day}>{day}일</AppText>
                 <AppText style={styles.dayCnt}>진단 {dailyDiagnosis.length}회</AppText>
             </View>
-            <ScrollView horizontal={true}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 {
                     dailyDiagnosis.map((diagnosis, index) => <Item key={index} diagnosis={diagnosis}/>)
                 }
