@@ -31,13 +31,13 @@ const DiagnosisTop3Screen = ({route, navigation}) => {
             color: colors.black,
             fontWeight: '700',
             fontSize: 16,
-            marginLeft : 10
+            marginLeft: 10
         },
         otherText: {
             color: colors.mainColor,
             fontWeight: '700',
             fontSize: 16,
-            marginRight : 10
+            marginRight: 10
         },
         textInput: {
             fontSize: 16,
@@ -69,10 +69,11 @@ const DiagnosisTop3Screen = ({route, navigation}) => {
                     </View>
                     <View style={{flexDirection: "column", marginTop: 24}}>
                         {/*space for disease info*/}
-                        {diseaseInfoList && diseaseInfoList.map((diseaseInfo) => {
-                            const departments = diseaseInfo.recommendDepartment.split(',');
+                        {diseaseInfoList && diseaseInfoList.map((diseaseInfo, index) => {
+                                const departments = diseaseInfo.recommendDepartment.split(',');
                                 return (
-                                    <DiseaseTouchable disease={diseaseInfo.name} percentage={"100"}
+                                    <DiseaseTouchable key={index}
+                                                      disease={diseaseInfo.name} percentage={"100"}
                                                       information={diseaseInfo.definition}
                                                       department1={departments[0]}
                                                       department2={departments[1]}
@@ -101,7 +102,7 @@ const BlueDivideLine = (props) => {
             height: 1,
             backgroundColor: colors.blue[1],
             borderRadius: 1,
-            marginTop : 16
+            marginTop: 16
         }}/>
     )
 }
@@ -113,8 +114,8 @@ const DiseaseTouchable = ({disease, information, department1, department2, navig
             backgroundColor: "rgba(75, 155, 204, 0.05)",
             borderRadius: 5,
             paddingHorizontal: 17.07,
-            marginVertical : 10,
-            paddingVertical : 20
+            marginVertical: 10,
+            paddingVertical: 20
         },
         titleText: {
             color: "#303030",
@@ -122,22 +123,22 @@ const DiseaseTouchable = ({disease, information, department1, department2, navig
             fontWeight: '700'
         },
         nonTitleText: {
-            fontSize : 15,
+            fontSize: 15,
             fontWeight: 'bold',
-            marginVertical : 5
+            marginVertical: 5
         },
-        informationText : {
+        informationText: {
             color: '#444',
             fontSize: 14,
             fontWeight: '500',
-            lineHeight : 20
+            lineHeight: 20
         },
         box: {
             flex: 1,
             height: 40,
             backgroundColor: "#53B3EE",
             borderRadius: 5,
-            padding : 10,
+            padding: 10,
             justifyContent: "center",
         },
         boxText: {
