@@ -29,12 +29,6 @@ const ChatStartScreen = ({navigation}) => {
         }).catch(err => console.error(err))
     }, [])
 
-    const checkIsFirst = async (navigation) => {
-        const token = await SecureStore.getItemAsync('token');
-        const {accessToken, refreshToken} = JSON.parse(token);
-        navigation.navigate('ChatBasicInfo');
-    }
-
     return (
         <ScreenContainer backgroundColor={colors.mainColor}>
             <ScreenContainerView flex={1} style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -49,8 +43,7 @@ const ChatStartScreen = ({navigation}) => {
                 <CustomButton disabled={moveScreen.length === 0}
                               title={'진료 시작하기'} buttonStyle={{backgroundColor: '#fff', width: '100%'}}
                               textStyle={{color: colors.mainColor}}
-                              onPress={() => navigation.navigate(moveScreen)}/>
-
+                              onPress={() => navigation.replace(moveScreen)}/>
             </ScreenContainerView>
         </ScreenContainer>
     );
@@ -63,4 +56,5 @@ const styles = StyleSheet.create({
         marginVertical: 2
     }
 })
+
 export default ChatStartScreen;

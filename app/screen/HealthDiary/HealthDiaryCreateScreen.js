@@ -125,7 +125,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
             diseaseTagRequestList: disease,
             dailyNote: memo,
             painType: conditionState[painType].painType,
-            localDate: toStringByFormatting(date),
+            scheduleData: toStringByFormatting(date),
         }
         const body = JSON.stringify(data);
         console.log(data);

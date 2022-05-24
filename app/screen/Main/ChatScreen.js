@@ -151,9 +151,27 @@ const ChatScreen = ({navigation}) => {
                         },
                         body: JSON.stringify(body)
                     }).then(response => response.json()).then((res) => {
-                        setTimeout(() => {
-                            setChatResult(res.diseasesList);
-                        }, 2000)
+                        const diseaseNameList = res.diseasesList;
+                        const body = JSON.stringify({diseaseNameList : diseaseNameList});
+
+                        fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/diagnoses', {
+                            method: 'POST',
+                            headers: {
+                                Authorization: `Bearer ${state.userToken.accessToken}`,
+                                Accept: 'application/json',
+                                'Content-Type': 'application/json; charset=UTF-8'
+                            },
+                            body: body
+                        }).then(response => response.json()).then((res) => {
+                            console.log(res);
+                            if(res.result === 'SUCCESS'){
+                                console.log(diseaseNameList);
+                                setChatResult(diseaseNameList);
+                            }
+                        }).catch(err => console.error(err))
+                        // setTimeout(() => {
+                        //     setChatResult(res.diseasesList);
+                        // }, 2000)
                         // setChatResult(res.diseasesList);
                     })
                 }
@@ -236,7 +254,7 @@ const ChatScreen = ({navigation}) => {
                         <CustomButton title={"분석 결과 보기"}
                                       buttonStyle={{backgroundColor : colors.blue[2]}}
                                       textStyle={{fontWeight : '700', color : colors.black[1]}}
-                                      onPress={() => navigation.navigate('DiagnosisTop3', {diseaseList: chatResult})}/>
+                                      onPress={() => navigation.replace('DiagnosisTop3', {diseaseList: chatResult})}/>
                     </ScreenContainerView>
                 )
             }

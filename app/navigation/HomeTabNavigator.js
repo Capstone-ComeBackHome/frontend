@@ -6,7 +6,7 @@ import {Icon} from 'react-native-elements';
 import HomeScreen from "../screen/Main/HomeScreen";
 import HealthDiaryScreen from "../screen/HealthDiary/HealthDiaryScreen";
 import SettingScreen from "../screen/Setting/SettingScreen";
-import HistoryScreen from "../screen/History/HistoryScreen";
+import DiagnosisScreen from "../screen/Diagnosis/DiagnosisScreen";
 
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContextProviders";
@@ -79,7 +79,7 @@ const HomeTabNavigator = () => {
                     tabBarLabel: () => null
                 }}
             >
-                {props => <HistoryScreen {...props} userInfo={userInfo}/>}
+                {props => <DiagnosisScreen {...props} userInfo={userInfo}/>}
             </Tab.Screen>
             <Tab.Screen
                 name="Diary"

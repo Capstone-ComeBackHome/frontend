@@ -108,7 +108,7 @@ const ChatBasicInfoScreen = ({navigation}) => {
         }).then(response => response.json()).then((res) => {
             console.log(res);
             if(res.result === 'SUCCESS'){
-                navigation.navigate('Chat');
+                navigation.replace('Chat');
             }
         }).catch(err => console.error(err))
     }
