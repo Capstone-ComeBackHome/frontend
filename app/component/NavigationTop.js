@@ -17,7 +17,7 @@ const NavigationTop = ({title, backgroundColor, textColor}) => {
             <View style={{
                 backgroundColor: backgroundColor ? backgroundColor :colors.mainColor,
                 justifyContent: 'center',
-                paddingVertical: 5,
+                paddingVertical: 8,
             }}>
                 <StatusBar style={Platform.OS === 'android' && "light"} backgroundColor={'rgba(83,179,238, 1.0)'}/>
                 <View flexDirection="row" style={{
@@ -31,7 +31,7 @@ const NavigationTop = ({title, backgroundColor, textColor}) => {
                             <BackIcon width={24} height={24} style={{color: textColor ? textColor : '#fff'}}/>
                         </TouchableOpacity>
                     </View>
-                    <AppText style={{color: textColor ? textColor : '#fff', fontSize: 16, fontWeight: 'bold'}}>
+                    <AppText style={{color: textColor ? textColor : '#fff', fontSize: 18, fontWeight: 'bold'}}>
                         {title}
                     </AppText>
                 </View>
