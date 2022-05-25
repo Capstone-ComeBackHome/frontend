@@ -112,7 +112,7 @@ const DiagnosisScreen = ({navigation, userInfo}) => {
             </View>
             <ScrollView>
                 <ScreenContainerView>
-                    <View style={{marginVertical: 30}}>
+                    <View style={{marginTop: 20}}>
                         {
                             diagnoses && Object.entries(diagnoses).map(([yearMonth, monthlyDiagnoses], index) =>
                                 <AccordionView key={index} yearMonth={yearMonth} monthlyDiagnoses={monthlyDiagnoses}/>
