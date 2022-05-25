@@ -85,6 +85,7 @@ const DiaryData = ({diaryData}) => {
         }
     }, [])
 
+    const [date, setDate] = useState(diaryData.scheduleDate.split('-'));
     return (
         <View style={{
             backgroundColor: colors.blue[4],
@@ -93,13 +94,13 @@ const DiaryData = ({diaryData}) => {
             padding: 20,
             marginVertical: 20
         }}>
-            <AppText style={{fontWeight: '600', fontSize: 16, paddingBottom: 20}}>{diaryData.localDate}</AppText>
+            <AppText style={{fontWeight: '600', fontSize: 16, paddingBottom: 20}}>{date[1]}월 {date[2]}일</AppText>
             <View style={{flexDirection: 'row'}}>
                 <Image source={iconMapping[diaryData.painType]} style={{marginRight: 20}}/>
                 <View flex={1}>
                     <View style={{flexDirection: 'row', flexWrap: 'wrap', marginBottom: 20}}>
                         {
-                            diaryData.diseaseTagResponseList.map(({diseaseType, name}) => <Keyword keyword={name}/>)
+                            diaryData.diseaseTagResponseList.map(({diseaseType, name}, index) => <Keyword index={index} keyword={name}/>)
                         }
                     </View>
                     <View>
@@ -174,12 +175,13 @@ const HealthDiaryScreen = ({navigation, userInfo}) => {
                 <ScreenContainerView style={{marginTop: 20}}>
                     {
                         diaryList && diaryList.map((diaryDatas, index) => {
-                            //// 있는 것만 보여주기
-                            // if(diaryDatas.length > 0){
-                            //     return <AccordionView key={index} title={diaryDates[index]} dairyDatas={diaryDatas}/>
-                            // }
+                            // 있는 것만 보여주기
+                            if(diaryDatas.length > 0){
+                                console.log(diaryDatas);
+                                return <AccordionView key={index} title={diaryDates[index]} dairyDatas={diaryDatas}/>
+                            }
 
-                            return <AccordionView key={index} title={diaryDates[index]} dairyDatas={diaryDatas}/>
+                            // return <AccordionView key={index} title={diaryDates[index]} dairyDatas={diaryDatas}/>
                         })
                     }
                 </ScreenContainerView>

@@ -125,7 +125,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
             diseaseTagRequestList: disease,
             dailyNote: memo,
             painType: conditionState[painType].painType,
-            scheduleData: toStringByFormatting(date),
+            scheduleDate: toStringByFormatting(date),
         }
         const body = JSON.stringify(data);
         console.log(data);
@@ -138,6 +138,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
             },
             body: body
         }).then(response => response.json()).then((res) => {
+            console.log(res);
             if(res.result === 'SUCCESS'){
                 console.log('일기 등록 완료!');
                 navigation.pop();
