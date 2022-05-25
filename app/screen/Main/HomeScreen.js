@@ -32,8 +32,12 @@ const HomeScreen = ({navigation, userInfo}) => {
                 borderBottomLeftRadius: 12,
                 borderBottomRightRadius: 12,
             }}>
-                <ScreenContainerView style={{height : 101 ,marginBottom : 23,}}>
-                    <AppText style={{marginTop : 70,color: "#fff", fontSize: 20, fontWeight : '700'}}>{userInfo.name + ' 님'}</AppText>
+                <ScreenContainerView style={{height: 101, marginBottom: 23, paddingTop : 70, justifyContent: 'space-between', flexDirection : 'row', alignItems: 'center'}}>
+                    <AppText style={{
+                        color: "#fff",
+                        fontSize: 20,
+                        fontWeight: '700'
+                    }}>{userInfo.name} 님</AppText>
                 </ScreenContainerView>
             </View>
             <ScrollView>

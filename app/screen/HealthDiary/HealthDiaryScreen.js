@@ -3,7 +3,7 @@ import {
     StyleSheet,
     View,
     Image,
-    ScrollView,
+    ScrollView, TouchableOpacity,
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
 
@@ -20,6 +20,8 @@ import score3 from '../../assets/images/disease/score3.png';
 import score4 from '../../assets/images/disease/score4.png';
 import score5 from '../../assets/images/disease/score5.png';
 import {AuthContext} from "../../context/AuthContextProviders";
+
+import ChartIcon from '../../assets/images/bar-chart-alt.svg';
 
 const AccordionView = ({title, dairyDatas}) => {
     const {colors} = useTheme();
@@ -162,13 +164,13 @@ const HealthDiaryScreen = ({navigation, userInfo}) => {
                 borderBottomLeftRadius: 12,
                 borderBottomRightRadius: 12,
             }}>
-                <ScreenContainerView style={{height: 101, marginBottom: 23,}}>
+                <ScreenContainerView style={{height: 101, marginBottom: 23, paddingTop : 70, justifyContent: 'space-between', flexDirection : 'row', alignItems: 'center'}}>
                     <AppText style={{
-                        marginTop: 70,
                         color: "#fff",
                         fontSize: 20,
                         fontWeight: '700'
                     }}>{userInfo.name + ' 님의 건강일기'}</AppText>
+                    <TouchableOpacity onPress={() => navigation.navigate('HealthDiaryChart')}><ChartIcon /></TouchableOpacity>
                 </ScreenContainerView>
             </View>
             <ScrollView>

@@ -7,6 +7,7 @@ import AppText from '../../component/AppText';
 import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
 import {AuthContext} from "../../context/AuthContextProviders";
+import ChartIcon from "../../assets/images/bar-chart-alt.svg";
 
 const SettingScreen = ({navigation, userInfo}) => {
     const {colors} = useTheme();
@@ -15,12 +16,15 @@ const SettingScreen = ({navigation, userInfo}) => {
         <ScreenContainer>
             <View style={{
                 backgroundColor: colors.mainColor,
-                paddingVertical: 20,
                 borderBottomLeftRadius: 12,
                 borderBottomRightRadius: 12,
             }}>
-                <ScreenContainerView>
-                    <AppText style={{color: "#fff", fontSize: 20, fontWeight : '700'}}>{userInfo.name + ' 님'}</AppText>
+                <ScreenContainerView style={{height: 101, marginBottom: 23, paddingTop : 70, justifyContent: 'space-between', flexDirection : 'row', alignItems: 'center'}}>
+                    <AppText style={{
+                        color: "#fff",
+                        fontSize: 20,
+                        fontWeight: '700'
+                    }}>{userInfo.name} 님</AppText>
                 </ScreenContainerView>
             </View>
             <ScreenContainerView>

@@ -102,13 +102,12 @@ const DiagnosisScreen = ({navigation, userInfo}) => {
                 borderBottomLeftRadius: 12,
                 borderBottomRightRadius: 12,
             }}>
-                <ScreenContainerView style={{height: 101, marginBottom: 23,}}>
+                <ScreenContainerView style={{height: 101, marginBottom: 23, paddingTop : 70, justifyContent: 'space-between', flexDirection : 'row', alignItems: 'center'}}>
                     <AppText style={{
-                        marginTop: 70,
                         color: "#fff",
                         fontSize: 20,
-                        fontWeight: '700',
-                    }}>{userInfo.name + ' 님의 AI 진료 내역'}</AppText>
+                        fontWeight: '700'
+                    }}>{userInfo.name} 님의 AI 진료 내역</AppText>
                 </ScreenContainerView>
             </View>
             <ScrollView>

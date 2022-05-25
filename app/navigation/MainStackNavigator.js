@@ -10,7 +10,8 @@ import ChatBasicInfoScreen from "../screen/Main/ChatBasicInfoScreen";
 import DefaultInfoScreen from "../screen/Setting/DefaultInfoScreen";
 import MedicalInfoScreen from "../screen/Setting/MedicalInfoScreen";
 import HealthDiaryCreateScreen from "../screen/HealthDiary/HealthDiaryCreateScreen";
-import HealthDiarySelectPain from "../screen/HealthDiary/HealthDiarySelectPain"
+import HealthDiarySelectPain from "../screen/HealthDiary/HealthDiarySelectPain";
+import HealthDiaryChartScreen from "../screen/HealthDiary/HealthDiaryChartScreen";
 import AuthStackNavigator from "./AuthStackNavigator";
 import DiagnosisTop3Screen from "../screen/Diagnosis/DiagnosisTop3Screen";
 import DiagnosisDetailScreen from "../screen/Diagnosis/DiagnosisDetailScreen";
@@ -84,6 +85,7 @@ const MainStackNavigator = () => {
                     {/*건강일기 페이지*/}
                     <Stack.Screen name="HealthDiaryCreate" component={HealthDiaryCreateScreen}/>
                     <Stack.Screen name="HealthDiarySelectPain" component={HealthDiarySelectPain}/>
+                    <Stack.Screen name="HealthDiaryChart" component={HealthDiaryChartScreen}/>
 
                     {/*AI 진단 페이지*/}
                     <Stack.Screen name="DiagnosisTop3" component={DiagnosisTop3Screen}/>
