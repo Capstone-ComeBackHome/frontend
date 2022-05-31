@@ -145,7 +145,6 @@ const ChatScreen = ({navigation}) => {
                 },
                 body: JSON.stringify(body)
             }).then(response => response.json()).then((res) => {
-                console.log(res);
                 setQuestions(res.QuestionsList);
                 setQuestionOrder(res.QuestionsOrderList);
             }).catch(err => console.error(err))
@@ -190,6 +189,7 @@ const ChatScreen = ({navigation}) => {
                             },
                             body: body
                         }).then(response => response.json()).then((res) => {
+                            console.log('post 완료');
                             console.log(res);
                             if(res.result === 'SUCCESS'){
                                 console.log(diseaseNameList);
@@ -219,8 +219,6 @@ const ChatScreen = ({navigation}) => {
             //     setDisable(false);
             // }, 1000)
             const order = questionOrder[currentQuestion];
-            console.log(order)
-            console.log(questions[order]);
             onSend([
                 {
                     _id: uuid.v4(),
@@ -228,7 +226,6 @@ const ChatScreen = ({navigation}) => {
                     user: AI,
                 },
             ]);
-            console.log('send!');
             setDisable(false);
         }
     }, [questionOrder, currentQuestion])
