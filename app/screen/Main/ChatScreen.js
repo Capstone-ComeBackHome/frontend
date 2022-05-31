@@ -59,10 +59,12 @@ const ChatScreen = ({navigation}) => {
     const {colors} = useTheme();
     const {state, dispatch} = useContext(AuthContext);
     const [messages, setMessages] = useState([]);
-    const [questions, setQuestions] = useState([]);
+    const [questions, setQuestions] = useState(null);
+    const [questionOrder, setQuestionOrder] = useState([]);
     const [userInfo, setUserInfo] = useState({});
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [disable, setDisable] = useState(true);
+    const [firstChatResult, setFirstChatResult] = useState();
     const [chatResult, setChatResult] = useState(null);
     const chatData = useRef({});
 
@@ -72,6 +74,12 @@ const ChatScreen = ({navigation}) => {
         }).then(response => response.json()).then((res) => {
             if (res.result === 'SUCCESS') {
                 setUserInfo(res.data);
+                setFirstChatResult({
+                    Age: res.data.age,
+                    Sex: res.data.sex === 'MAN' ? '남성' : '여성',
+                    Height: res.data.height,
+                    Weight: res.data.weight
+                })
             }
         }).catch(err => console.error(err))
 
@@ -108,14 +116,28 @@ const ChatScreen = ({navigation}) => {
     useEffect(async () => {
         if (messages.length === 4) { // 유저가 처음 입력했을 때
             setDisable(true);
+            setFirstChatResult(data => ({
+                ...data,
+                'Chief complaint': messages[0].text
+            }))
+
+            setTimeout(() => {
+                onSend([
+                    {
+                        _id: uuid.v4(),
+                        text: '언제부터 아프셨나요?',
+                        user: AI,
+                    },
+                ])
+                setDisable(false);
+            }, 0);
+        } else if(messages.length === 6){
+            setDisable(true);
             const body = {
-                'Chief complaint': messages[0].text,
-                Age: userInfo.age,
-                Sex: userInfo.sex === 'MAN' ? '남성' : '여성',
-                Height: userInfo.height,
-                Weight: userInfo.weight
+                ...firstChatResult,
+                Onset : messages[0].text
             }
-            setUserInfo(body);
+
             fetch('http://3.34.55.178:5000/predict/level2', {
                 method: 'POST',
                 headers: {
@@ -123,13 +145,18 @@ const ChatScreen = ({navigation}) => {
                 },
                 body: JSON.stringify(body)
             }).then(response => response.json()).then((res) => {
-                setQuestions(Object.entries(questionData[res.level2]));
+                console.log(res);
+                setQuestions(res.QuestionsList);
+                setQuestionOrder(res.QuestionsOrderList);
             }).catch(err => console.error(err))
-        } else if (questions.length > 0) {
+
+            setFirstChatResult(body);
+        }
+        else if (questionOrder.length > 0) {
             if (messages[0].user.name === 'USER') {
                 setDisable(true);
-                chatData.current = {...chatData.current, [questions[currentQuestion][0]]: messages[0].text};
-                if (currentQuestion < questions.length - 1) {
+                chatData.current = {...chatData.current, [questionOrder[currentQuestion]]: messages[0].text};
+                if (currentQuestion < questionOrder.length - 1) {
                     setCurrentQuestion(cur => cur + 1);
                 } else {
                     onSend([
@@ -141,7 +168,7 @@ const ChatScreen = ({navigation}) => {
                     ])
 
                     const body = {
-                        ...userInfo,
+                        ...firstChatResult,
                         ...chatData.current
                     }
                     fetch('http://3.34.55.178:5000/predict/diagnosis', {
@@ -180,7 +207,7 @@ const ChatScreen = ({navigation}) => {
     }, [messages]);
 
     useEffect(() => {
-        if (questions.length > 0) {
+        if (questionOrder.length > 0) {
             // setTimeout(() => {
             //     onSend([
             //         {
@@ -191,42 +218,20 @@ const ChatScreen = ({navigation}) => {
             //     ])
             //     setDisable(false);
             // }, 1000)
+            const order = questionOrder[currentQuestion];
+            console.log(order)
+            console.log(questions[order]);
             onSend([
                 {
                     _id: uuid.v4(),
-                    text: questions[currentQuestion][1],
+                    text: questions[order],
                     user: AI,
                 },
-            ])
+            ]);
+            console.log('send!');
             setDisable(false);
         }
-    }, [questions, currentQuestion])
-
-    const generateAnswer = async (message) => {
-        try {
-            // const response = await fetch(CHAT_URL, {
-            //     method: 'POST',
-            //     headers: {
-            //         Authorization: ENDPOINT_KEY,
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({
-            //         question: message,
-            //     })
-            // })
-            // const json = await response.json();
-            // const responseMessages = {
-            //     _id: uuid.v4(),
-            //     text: json.answers[0].answer,
-            //     createdAt: new Date(),
-            //     user: BOT,
-            // }
-            // /* レスポンスをmessagesに追加 */
-            // setMessages(previousMessages => GiftedChat.append(previousMessages, responseMessages))
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    }, [questionOrder, currentQuestion])
 
     const onSend = useCallback((msg = []) => {
         setMessages(previousMessages => GiftedChat.append(previousMessages, msg));
