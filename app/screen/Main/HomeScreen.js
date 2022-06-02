@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {Image, ScrollView, StyleSheet, TouchableOpacity, View,Button} from "react-native";
-import {useTheme} from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
 
 import ScreenContainer from '../../component/ScreenContainer';
 import ScreenContainerView from '../../component/ScreenContainerView';
@@ -17,15 +17,40 @@ import score4 from '../../assets/images/disease/score4.png';
 import score5 from '../../assets/images/disease/score5.png';
 import {AuthContext} from "../../context/AuthContextProviders";
 
-
+const ResentDiagnosis = ({diagnose}) => {
+    const {month, date, time, diseaseNameList} = diagnose;
+    const navigation = useNavigation();
+    const {colors} = useTheme();
+    return (
+        <TouchableOpacity
+            onPress={() => navigation.navigate('DiagnosisTop3', {diseaseList : diseaseNameList})}
+            style={{backgroundColor : colors.blue[4], borderRadius : 10, padding : 20, marginTop : 20}}>
+            <View style={{flexDirection : "row", alignItems : "flex-start", justifyContent : "space-between"}}>
+                <View style={{flexDirection : "row", alignItems : 'center'}}>
+                    <AppText style={{fontSize : 18, fontWeight : '600'}}>{diseaseNameList[0]}</AppText>
+                    <MaterialIcons name="keyboard-arrow-right" size={32} color={colors.blue[1]}/>
+                </View>
+                <View style={{alignItems: 'flex-end'}}>
+                    <AppText>{month}월 {date}일</AppText>
+                    <AppText>{time}</AppText>
+                </View>
+            </View>
+            <View style={{width : '100%', height : 2, backgroundColor : colors.black[3], marginTop : 20, marginBottom : 8}}></View>
+            <View style={{flexDirection : 'row', alignItems : 'center', justifyContent : 'space-between'}}>
+                <AppText style={{color : colors.black[2]}}>다른 진료 결과</AppText>
+                <AppText style={{color : colors.black[2]}}>{diseaseNameList[1]}, {diseaseNameList[2]}</AppText>
+            </View>
+        </TouchableOpacity>
+    )
+}
 const HomeScreen = ({navigation, userInfo}) => {
     const {colors} = useTheme();
     const {state, dispatch} = useContext(AuthContext);
-    const [diagnoses, setDiagnoses] = useState({});
+    const [diagnoses, setDiagnoses] = useState();
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/diagnoses', {
+            fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/diagnoses?size=3', {
                 headers: {
                     Authorization: `Bearer ${state.userToken.accessToken}`,
                     Accept: 'application/json',
@@ -33,32 +58,20 @@ const HomeScreen = ({navigation, userInfo}) => {
                 }
             }).then(response => response.json()).then((res) => {
                 if (res.result === 'SUCCESS') {
-                    const diagnosisData = {};
-                    res.data.diagnosisResponseList.forEach(({diagnosisId, createdDate, diseaseNameList}) => {
-                        let date = new Date(createdDate);
-                        date.setTime(date.getTime() + 9 * 60 * 60 * 1000);
-                        console.log(date.toLocaleString("ko-KR"));
-                        // let timeString = dateObj.toLocaleString("ko-KR").split('.')[3];
-                        // console.log(timeString);
-                        // const yearMonth = createdDate.substring(0, 7);
-                        // const date = createdDate.substring(8,10);
-                        // const time = timeString.substring(1);
-                        // const data = {
-                        //     diagnosisId,
-                        //     time,
-                        //     diseaseNameList
-                        // }
-                        //
-                        // if (yearMonth in diagnosisData) {
-                        //     if(date in diagnosisData[yearMonth]){
-                        //         diagnosisData[yearMonth][date].push(data);
-                        //     }else{
-                        //         diagnosisData[yearMonth][date] = [data];
-                        //     }
-                        // } else {
-                        //     diagnosisData[yearMonth] = {};
-                        //     diagnosisData[yearMonth][date] = [data];
-                        // }
+                    const diagnosisData = res.data.diagnosisResponseList.map(({diagnosisId, createdDate, diseaseNameList}) => {
+                        let dateobj = new Date(createdDate);
+                        dateobj.setTime(dateobj.getTime() + 9 * 60 * 60 * 1000);
+                        const timeString = dateobj.toLocaleString("ko-KR").split('. ');
+                        const month = timeString[1];
+                        const date = timeString[2];
+                        const time = timeString[3];
+                        const data = {
+                            month,
+                            date,
+                            time,
+                            diseaseNameList
+                        }
+                        return data;
                     })
 
                     setDiagnoses(diagnosisData);
@@ -101,23 +114,24 @@ const HomeScreen = ({navigation, userInfo}) => {
                         {/* 안드로이드의 경우 화면 전환시 너무 안이쁜데요?*/}
                         <AppText style={{color: colors.mainColor, fontSize: 18, fontWeight : '700'}}>최근 진단 내역</AppText>
                     </View>
-                    <TouchableOpacity style={{backgroundColor : colors.blue[4], borderRadius : 10, padding : 20, marginVertical : 20}}>
-                        <View style={{flexDirection : "row", alignItems : "flex-start", justifyContent : "space-between"}}>
-                            <View style={{flexDirection : "row", alignItems : 'center'}}>
-                                <AppText style={{fontSize : 18, fontWeight : '600'}}>부정맥</AppText>
-                                <MaterialIcons name="keyboard-arrow-right" size={32} color={colors.blue[1]}/>
-                            </View>
-                            <View style={{alignItems: 'flex-end'}}>
-                                <AppText>5월 13일 금요일</AppText>
-                                <AppText>오후 9:10</AppText>
-                            </View>
-                        </View>
-                        <View style={{width : '100%', height : 2, backgroundColor : colors.black[3], marginTop : 20, marginBottom : 8}}></View>
-                        <View style={{flexDirection : 'row', alignItems : 'center', justifyContent : 'space-between'}}>
-                            <AppText style={{color : colors.black[2]}}>다른 진료 결과</AppText>
-                            <AppText style={{color : colors.black[2]}}>여드름, 홍조</AppText>
-                        </View>
-                    </TouchableOpacity>
+                    {/*<TouchableOpacity style={{backgroundColor : colors.blue[4], borderRadius : 10, padding : 20, marginVertical : 20}}>*/}
+                    {/*    <View style={{flexDirection : "row", alignItems : "flex-start", justifyContent : "space-between"}}>*/}
+                    {/*        <View style={{flexDirection : "row", alignItems : 'center'}}>*/}
+                    {/*            <AppText style={{fontSize : 18, fontWeight : '600'}}>부정맥</AppText>*/}
+                    {/*            <MaterialIcons name="keyboard-arrow-right" size={32} color={colors.blue[1]}/>*/}
+                    {/*        </View>*/}
+                    {/*        <View style={{alignItems: 'flex-end'}}>*/}
+                    {/*            <AppText>5월 13일 금요일</AppText>*/}
+                    {/*            <AppText>오후 9:10</AppText>*/}
+                    {/*        </View>*/}
+                    {/*    </View>*/}
+                    {/*    <View style={{width : '100%', height : 2, backgroundColor : colors.black[3], marginTop : 20, marginBottom : 8}}></View>*/}
+                    {/*    <View style={{flexDirection : 'row', alignItems : 'center', justifyContent : 'space-between'}}>*/}
+                    {/*        <AppText style={{color : colors.black[2]}}>다른 진료 결과</AppText>*/}
+                    {/*        <AppText style={{color : colors.black[2]}}>여드름, 홍조</AppText>*/}
+                    {/*    </View>*/}
+                    {/*</TouchableOpacity>*/}
+                    {diagnoses && diagnoses.map(diagnose => <ResentDiagnosis diagnose={diagnose}/>)}
                 </ScreenContainerView>
             </ScrollView>
         </ScreenContainer>
