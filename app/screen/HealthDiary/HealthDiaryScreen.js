@@ -179,7 +179,6 @@ const HealthDiaryScreen = ({navigation, userInfo}) => {
                         diaryList && diaryList.map((diaryDatas, index) => {
                             // 있는 것만 보여주기
                             if(diaryDatas.length > 0){
-                                console.log(diaryDatas);
                                 return <AccordionView key={index} title={diaryDates[index]} dairyDatas={diaryDatas}/>
                             }
 

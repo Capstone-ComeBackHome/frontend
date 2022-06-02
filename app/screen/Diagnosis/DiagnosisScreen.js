@@ -61,14 +61,13 @@ const DiagnosisScreen = ({navigation, userInfo}) => {
             }).then(response => response.json()).then((res) => {
                 if (res.result === 'SUCCESS') {
                     const diagnosisData = {};
-                    console.log(res.data.diagnosisResponseList);
                     res.data.diagnosisResponseList.forEach(({diagnosisId, createdDate, diseaseNameList}) => {
-                        let dateObj = new Date(createdDate.substring(0,19) + '+00:00');
-                        let timeString = dateObj.toLocaleString("ko-KR").split('.')[3];
-
-                        const yearMonth = createdDate.substring(0, 7);
-                        const date = createdDate.substring(8,10);
-                        const time = timeString.substring(1);
+                        let dateobj = new Date(createdDate);
+                        dateobj.setTime(dateobj.getTime() + 9 * 60 * 60 * 1000);
+                        const timeString = dateobj.toLocaleString("ko-KR").split('. ');
+                        const yearMonth = `${timeString[0]}-${timeString[1]}`;
+                        const date = timeString[2];
+                        const time = timeString[3];
                         const data = {
                             diagnosisId,
                             time,
@@ -181,11 +180,6 @@ const DiseaseScrollHorizontal = ({day, dailyDiagnosis}) => {
         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('DiagnosisTop3', {diseaseList : diagnosis.diseaseNameList})}>
             <View style={{flexDirection: "row", justifyContent: "space-between"}}>
                 <AppText style={styles.time}>{diagnosis.time}</AppText>
-                {/*<View style={{flexDirection: "row"}}>*/}
-                {/*    <View style={styles.smallBorder}><AppText style={styles.smallText}>"11"</AppText></View>*/}
-                {/*    <View style={{marginLeft: 8}}/>*/}
-                {/*    <View style={styles.smallBorder}><AppText style={styles.smallText}>"11"</AppText></View>*/}
-                {/*</View>*/}
             </View>
             <AppText style={styles.diseaseName}>{diagnosis.diseaseNameList[0]}</AppText>
             <View style={{
