@@ -156,7 +156,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
     return (
         <>
             <ScreenContainer backgroundColor={colors.backgroundColor}>
-                <NavigationTop navigation={navigation} title={"건강일기"}/>
+                <NavigationTop navigation={navigation} title={"아픔일기"}/>
                 <KeyboardAvoidingView flex={1} behavior={"padding"}>
                     <ScrollView>
                         <ScreenContainerView style={{marginTop: 20}}>

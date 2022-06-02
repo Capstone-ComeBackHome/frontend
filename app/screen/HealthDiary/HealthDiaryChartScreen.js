@@ -95,7 +95,7 @@ const HealthDiaryChartScreen = ({navigation}) => {
     return (
         <>
             <ScreenContainer backgroundColor={colors.backgroundColor}>
-                <NavigationTop navigation={navigation} title={"건강일기 분석 차트"}/>
+                <NavigationTop navigation={navigation} title={"아픔일기 분석 차트"}/>
                 <ScrollView>
                     <ScreenContainerView style={styles.chartContainer}>
                         <AppText style={styles.title}>최근 한 달 부위 별 증상 정도</AppText>

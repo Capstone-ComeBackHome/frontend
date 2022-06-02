@@ -169,7 +169,7 @@ const HealthDiaryScreen = ({navigation, userInfo}) => {
                         color: "#fff",
                         fontSize: 20,
                         fontWeight: '700'
-                    }}>{userInfo.name + ' 님의 건강일기'}</AppText>
+                    }}>{userInfo.name + ' 님의 아픔일기'}</AppText>
                     <TouchableOpacity onPress={() => navigation.navigate('HealthDiaryChart')}><ChartIcon /></TouchableOpacity>
                 </ScreenContainerView>
             </View>
@@ -189,7 +189,7 @@ const HealthDiaryScreen = ({navigation, userInfo}) => {
             </ScrollView>
 
             <ScreenContainerView style={{marginBottom: 25}}>
-                <CustomButton title={"새로운 건강일기 쓰기"} onPress={() => navigation.navigate('HealthDiaryCreate')}/>
+                <CustomButton title={"새로운 아픔일기 쓰기"} onPress={() => navigation.navigate('HealthDiaryCreate')}/>
             </ScreenContainerView>
         </ScreenContainer>
     );

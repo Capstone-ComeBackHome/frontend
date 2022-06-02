@@ -82,7 +82,7 @@ const MainStackNavigator = () => {
                     <Stack.Screen name="DefaultInfo" component={DefaultInfoScreen}/>
                     <Stack.Screen name="MedicalInfo" component={MedicalInfoScreen}/>
 
-                    {/*건강일기 페이지*/}
+                    {/*아픔일기 페이지*/}
                     <Stack.Screen name="HealthDiaryCreate" component={HealthDiaryCreateScreen}/>
                     <Stack.Screen name="HealthDiarySelectPain" component={HealthDiarySelectPain}/>
                     <Stack.Screen name="HealthDiaryChart" component={HealthDiaryChartScreen}/>
