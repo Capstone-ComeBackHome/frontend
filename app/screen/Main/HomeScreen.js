@@ -131,7 +131,7 @@ const HomeScreen = ({navigation, userInfo}) => {
                     {/*        <AppText style={{color : colors.black[2]}}>여드름, 홍조</AppText>*/}
                     {/*    </View>*/}
                     {/*</TouchableOpacity>*/}
-                    {diagnoses && diagnoses.map(diagnose => <ResentDiagnosis diagnose={diagnose}/>)}
+                    {diagnoses && diagnoses.map((diagnose, index) => <ResentDiagnosis index={index} diagnose={diagnose}/>)}
                 </ScreenContainerView>
             </ScrollView>
         </ScreenContainer>

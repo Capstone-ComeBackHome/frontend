@@ -1,16 +1,13 @@
 import React, {useState, useEffect, useCallback, useContext, useRef,} from 'react';
-import {Button, ScrollView, View, StyleSheet, Platform} from 'react-native';
+import {View, Platform} from 'react-native';
 import {useTheme} from '@react-navigation/native';
 
-import AppText from '../../component/AppText';
 import ScreenContainer from '../../component/ScreenContainer';
 import NavigationTop from "../../component/NavigationTop";
-import {GiftedChat, Bubble, InputToolbar} from 'react-native-gifted-chat';
+import {GiftedChat, Bubble} from 'react-native-gifted-chat';
 
-import {request} from "../../api/api";
 import {AuthContext} from "../../context/AuthContextProviders";
 import uuid from 'react-native-uuid';
-import questionData from '../../assets/question.json';
 import CustomButton from "../../component/CustomButton";
 import ScreenContainerView from "../../component/ScreenContainerView";
 
@@ -62,6 +59,7 @@ const ChatScreen = ({navigation}) => {
     const [questions, setQuestions] = useState(null);
     const [questionOrder, setQuestionOrder] = useState([]);
     const [userInfo, setUserInfo] = useState({});
+    const [userAdditionalInfo, setUserAdditionalInfo] = useState({});
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [disable, setDisable] = useState(true);
     const [firstChatResult, setFirstChatResult] = useState();
@@ -80,6 +78,14 @@ const ChatScreen = ({navigation}) => {
                     Height: res.data.height,
                     Weight: res.data.weight
                 })
+            }
+        }).catch(err => console.error(err))
+
+        fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/users/medicine', {
+            headers: {Authorization: `Bearer ${state.userToken.accessToken}`}
+        }).then(response => response.json()).then((res) => {
+            if (res.result === 'SUCCESS') {
+                setUserAdditionalInfo(res.data);
             }
         }).catch(err => console.error(err))
 
@@ -189,10 +195,7 @@ const ChatScreen = ({navigation}) => {
                             },
                             body: body
                         }).then(response => response.json()).then((res) => {
-                            console.log('post 완료');
-                            console.log(res);
                             if(res.result === 'SUCCESS'){
-                                console.log(diseaseNameList);
                                 setChatResult(diseaseNameList);
                             }
                         }).catch(err => console.error(err))

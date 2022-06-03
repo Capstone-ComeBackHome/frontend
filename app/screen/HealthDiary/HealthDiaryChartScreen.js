@@ -52,8 +52,10 @@ const HealthDiaryChartScreen = ({navigation}) => {
                 console.log(res.data);
                 const typeToScore = {'WORST': 1, 'BAD': 2, 'NORMAL': 3, 'BETTER': 4, 'GOOD': 5}
                 const lineChartData = [];
+                const diseaseList = [];
                 for (let i = 1; i <= 3; i++) {
                     const key = `top${i}`;
+                    diseaseList.push(res.data[key][0].diseaseName);
                     lineChartData.push(res.data[key].map(({painType, scheduleDate}) => {
                         return {
                             score: typeToScore[painType],
@@ -61,10 +63,7 @@ const HealthDiaryChartScreen = ({navigation}) => {
                         }
                     }))
                 }
-
-                console.log(lineChartData);
                 setLineData(lineChartData);
-
             }
         }).catch(err => console.error(err))
 
@@ -81,7 +80,7 @@ const HealthDiaryChartScreen = ({navigation}) => {
                 // })
                 // console.log(data);
                 // setBubbleData(data);
-                console.log(bubbleResponseList);
+                // console.log(bubbleResponseList);
                 const bubble = bubbleResponseList.map((data, index) => ({
                     x: data.diseaseType,
                     y: data.count,
