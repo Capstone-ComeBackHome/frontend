@@ -129,7 +129,7 @@ const HealthDiaryChartScreen = ({navigation}) => {
                                     width={windowWidth} theme={VictoryTheme.material}>
                                     {
                                         lineData && lineData.map((data, index) =>
-                                            <VictoryLine data={data} x="date" y="score" style={{ data: { stroke: chartColor[index] } }}/>
+                                            <VictoryLine key={index} data={data} x="date" y="score" style={{ data: { stroke: chartColor[index] } }}/>
                                         )
                                     }
                                 </VictoryChart>

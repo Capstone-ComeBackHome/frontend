@@ -46,7 +46,7 @@ const AccordionView = ({title, dairyDatas}) => {
                 }}>
                 {
                     dairyDatas.map((diaryData, index) => {
-                        return <DiaryData key={index} diaryData={diaryData}/>
+                        return <DiaryData key={new Date() + index} diaryData={diaryData}/>
                     })
                 }
             </List.Accordion>
