@@ -52,10 +52,10 @@ const SettingScreen = ({navigation, userInfo}) => {
                     <AppText style={{...styles.title, flex : 1}}>의료 정보</AppText>
                     <Icon type="ionicon" name={'chevron-forward-outline'} size={26} color={colors.mainColor}/>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.menu} onPress={() => navigation.navigate('MedicalInfo')}>
-                    <AppText style={{...styles.title, flex : 1}}>이용약관 정보</AppText>
-                    <Icon type="ionicon" name={'chevron-forward-outline'} size={26} color={colors.mainColor}/>
-                </TouchableOpacity>
+                {/*<TouchableOpacity style={styles.menu} onPress={() => navigation.navigate('MedicalInfo')}>*/}
+                {/*    <AppText style={{...styles.title, flex : 1}}>이용약관 정보</AppText>*/}
+                {/*    <Icon type="ionicon" name={'chevron-forward-outline'} size={26} color={colors.mainColor}/>*/}
+                {/*</TouchableOpacity>*/}
             </ScreenContainerView>
         </ScreenContainer>
     );
