@@ -20,7 +20,7 @@ import score3 from '../../assets/images/disease/score3.png';
 import score4 from '../../assets/images/disease/score4.png';
 import score5 from '../../assets/images/disease/score5.png';
 import {AuthContext} from "../../context/AuthContextProviders";
-import {VictoryChart, VictoryScatter, VictoryLine, VictoryTheme} from "victory-native";
+import {VictoryChart, VictoryScatter, VictoryLine, VictoryAxis, VictoryTheme} from "victory-native";
 
 const HealthDiaryChartScreen = ({navigation}) => {
     const {colors} = useTheme();
@@ -49,7 +49,7 @@ const HealthDiaryChartScreen = ({navigation}) => {
             headers: {Authorization: `Bearer ${state.userToken.accessToken}`}
         }).then(response => response.json()).then((res) => {
             if (res.result === 'SUCCESS') {
-                console.log(res.data);
+                // console.log(res.data);
                 const typeToScore = {'WORST': 1, 'BAD': 2, 'NORMAL': 3, 'BETTER': 4, 'GOOD': 5}
                 const lineChartData = [];
                 const diseaseList = [];
@@ -63,6 +63,8 @@ const HealthDiaryChartScreen = ({navigation}) => {
                         }
                     }))
                 }
+                // console.log(diseaseList);
+                // console.log(lineChartData);
                 setLineData(lineChartData);
             }
         }).catch(err => console.error(err))
@@ -72,24 +74,36 @@ const HealthDiaryChartScreen = ({navigation}) => {
         }).then(response => response.json()).then((res) => {
             if (res.result === 'SUCCESS') {
                 const {bubbleResponseList} = res.data;
-                // const data = []
-                // let sum = bubbleResponseList.reduce((prev, curr) => prev + curr.count, 0);
-                // bubbleResponseList.forEach(({count, diseaseType, painAverage}) => {
-                //     data.labels.push(diseaseType);
-                //     data.data.push(count/sum);
-                // })
-                // console.log(data);
-                // setBubbleData(data);
-                // console.log(bubbleResponseList);
                 const bubble = bubbleResponseList.map((data, index) => ({
                     x: data.diseaseType,
                     y: data.count,
-                    amount: data.painAverage * 100
+                    amount: data.painAverage
                 }))
                 setBubbleData(bubble);
             }
         }).catch(err => console.error(err))
     }, [])
+
+    const data = [
+        { x: "2016-06-03T01:00:00", y: 2 },
+        { x: "2016-06-03T02:00:00", y: 3 },
+        { x: "2016-06-03T03:00:00", y: 5 },
+        { x: "2016-06-04T01:00:00", y: 2 },
+        { x: "2016-06-04T05:00:00", y: 2 },
+        { x: "2016-06-04T06:00:00", y: 3 }
+    ];
+
+    let data2 = [
+        { x: "2016-06-03T03:00:00", y: 2 },
+        { x: "2016-06-04T01:00:00", y: 2 }
+    ];
+
+
+    let xTickValues = data.map(d => {
+        return new Date(d.x);
+    });
+
+    xTickValues = xTickValues.filter((d, i) => i % 2 === 0);
 
     return (
         <>
@@ -104,10 +118,11 @@ const HealthDiaryChartScreen = ({navigation}) => {
                                         <VictoryScatter data={bubbleData}
                                                         style={{data: {fill: colors.blue[2]}}}
                                                         theme={VictoryTheme.material}
-                                                        domain={{y: [0, 5]}}
+                                                        domain={{amount: [0, 5]}}
                                                         bubbleProperty="amount"
                                                         maxBubbleSize={30}
-                                                        minBubbleSize={5}/>
+                                                        minBubbleSize={10}
+                                        />
                                     </VictoryChart>
                                 </>
                             )
@@ -119,9 +134,15 @@ const HealthDiaryChartScreen = ({navigation}) => {
                         {
                             lineData &&
                             <VictoryChart width={windowWidth} theme={VictoryTheme.material} domain={{y: [0, 5]}}>
-                                <VictoryLine data={lineData[0]} x="date" y="score"/>
-                                <VictoryLine data={lineData[1]} x="date" y="score"/>
-                                <VictoryLine data={lineData[2]} x="date" y="score"/>
+                                {/*<VictoryAxis*/}
+                                {/*    scale={{ x: "time" }}*/}
+                                {/*    tickValues={xTickValues}*/}
+                                {/*    tickFormat={t => new Date(t).getHours()}*/}
+                                {/*/>*/}
+                                {/*<VictoryAxis dependentAxis />*/}
+                                <VictoryLine data={lineData[0]} x="date" y="score" style={{ data: { stroke: "orange" } }}/>
+                                <VictoryLine data={lineData[1]} x="date" y="score" style={{ data: { stroke: "red" } }}/>
+                                <VictoryLine data={lineData[2]} x="date" y="score" style={{ data: { stroke: "blue" } }}/>
                             </VictoryChart>
                         }
                     </ScreenContainerView>

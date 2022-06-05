@@ -150,6 +150,7 @@ const HealthDiaryScreen = ({navigation, userInfo}) => {
 
             Promise.all(promises).then(results => {
                 const diaryList = results.map(result => result.data.scheduleResponseList);
+                // console.log(diaryList);
                 setDiaryList(diaryList);
             })
         });
