@@ -2,7 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {
     StyleSheet,
     ScrollView,
-    Dimensions
+    Dimensions,
+    View
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
 import AppText from '../../component/AppText';
@@ -21,19 +22,24 @@ import score4 from '../../assets/images/disease/score4.png';
 import score5 from '../../assets/images/disease/score5.png';
 import {AuthContext} from "../../context/AuthContextProviders";
 import {VictoryChart, VictoryScatter, VictoryLine, VictoryAxis, VictoryTheme} from "victory-native";
+import moment from "moment";
 
 const HealthDiaryChartScreen = ({navigation}) => {
     const {colors} = useTheme();
     const {state, dispatch} = useContext(AuthContext);
     const [bubbleData, setBubbleData] = useState(null);
     const [lineData, setLineData] = useState(null);
+    const [minDate, setMinDate] = useState();
+    const [maxDate, setMaxDate] = useState();
+    const [diseaseList, setDiseaseList] = useState();
 
     const styles = StyleSheet.create({
         title: {
-            color: colors.black[1],
             fontWeight: '700',
-            fontSize: 16,
-            marginBottom: 20
+            fontSize: 22,
+            marginBottom: 20,
+            color: colors.blue[1],
+            alignSelf : 'flex-start'
         },
         chartContainer: {
             marginVertical: 30,
@@ -44,31 +50,7 @@ const HealthDiaryChartScreen = ({navigation}) => {
     const windowHeight = Dimensions.get('window').height;
 
     useEffect(() => {
-        // 꺾은선 그래프(3달치)
-        fetch(`http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/calendars/statistics/line`, {
-            headers: {Authorization: `Bearer ${state.userToken.accessToken}`}
-        }).then(response => response.json()).then((res) => {
-            if (res.result === 'SUCCESS') {
-                // console.log(res.data);
-                const typeToScore = {'WORST': 1, 'BAD': 2, 'NORMAL': 3, 'BETTER': 4, 'GOOD': 5}
-                const lineChartData = [];
-                const diseaseList = [];
-                for (let i = 1; i <= 3; i++) {
-                    const key = `top${i}`;
-                    diseaseList.push(res.data[key][0].diseaseName);
-                    lineChartData.push(res.data[key].map(({painType, scheduleDate}) => {
-                        return {
-                            score: typeToScore[painType],
-                            date: scheduleDate
-                        }
-                    }))
-                }
-                // console.log(diseaseList);
-                // console.log(lineChartData);
-                setLineData(lineChartData);
-            }
-        }).catch(err => console.error(err))
-
+        // 버블 차트(1달치)
         fetch(`http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/calendars/statistics/bubble`, {
             headers: {Authorization: `Bearer ${state.userToken.accessToken}`}
         }).then(response => response.json()).then((res) => {
@@ -82,34 +64,81 @@ const HealthDiaryChartScreen = ({navigation}) => {
                 setBubbleData(bubble);
             }
         }).catch(err => console.error(err))
+
+        // 꺾은선 그래프(3달치)
+        fetch(`http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/calendars/statistics/line`, {
+            headers: {Authorization: `Bearer ${state.userToken.accessToken}`}
+        }).then(response => response.json()).then((res) => {
+            if (res.result === 'SUCCESS') {
+                const typeToScore = {'WORST': 1, 'BAD': 2, 'NORMAL': 3, 'BETTER': 4, 'GOOD': 5}
+                const lineChartData = [];
+                const diseases = [];
+                const dateList = [];
+                for (let i = 1; i <= 3; i++) {
+                    const key = `top${i}`;
+                    diseases.push(res.data[key][0].diseaseName);
+                    lineChartData.push(res.data[key].map(({painType, scheduleDate}) => {
+                        const [year, month, day] = scheduleDate.split('-');
+                        const date = new Date(year, month - 1, day);
+                        dateList.push(date);
+                        return {
+                            score: typeToScore[painType],
+                            date
+                        }
+                    }))
+                }
+                setLineData(lineChartData);
+                setDiseaseList(diseases);
+                setMaxDate(new Date(Math.max(...dateList)));
+                setMinDate(new Date(Math.min(...dateList)));
+            }
+        }).catch(err => console.error(err))
     }, [])
 
-    const data = [
-        { x: "2016-06-03T01:00:00", y: 2 },
-        { x: "2016-06-03T02:00:00", y: 3 },
-        { x: "2016-06-03T03:00:00", y: 5 },
-        { x: "2016-06-04T01:00:00", y: 2 },
-        { x: "2016-06-04T05:00:00", y: 2 },
-        { x: "2016-06-04T06:00:00", y: 3 }
-    ];
-
-    let data2 = [
-        { x: "2016-06-03T03:00:00", y: 2 },
-        { x: "2016-06-04T01:00:00", y: 2 }
-    ];
-
-
-    let xTickValues = data.map(d => {
-        return new Date(d.x);
-    });
-
-    xTickValues = xTickValues.filter((d, i) => i % 2 === 0);
-
+    const chartColor = [colors.blue[1], '#ff8848', '#17bb82'];
     return (
         <>
             <ScreenContainer backgroundColor={colors.backgroundColor}>
                 <NavigationTop navigation={navigation} title={"아픔일기 분석 차트"}/>
                 <ScrollView>
+                    <ScreenContainerView style={styles.chartContainer}>
+                        <AppText style={styles.title}>최근 3개월 간 자주 나타난 증상</AppText>
+                        {
+                            lineData
+                            &&
+                            <>
+                                <View style={{flexDirection : 'row', marginTop : 20}}>
+                                    {
+                                        diseaseList && diseaseList.map((disease, index) => {
+                                            return<View key={index} style={{flexDirection : 'row', marginHorizontal : 16}}>
+                                                <AppText style={{fontSize: 20, color : colors.black[2]}}>
+                                                    <AppText style={{color : chartColor[index]}}>{index + 1}</AppText>
+                                                    위 </AppText>
+                                                <AppText style={{fontSize : 16}} key={index}>{disease}</AppText>
+                                            </View>
+                                        })
+                                    }
+                                </View>
+
+                                <VictoryChart
+                                    scale={{ x: "time" }}
+                                    //     domain={{ x: [minDate, maxDate] }}
+                                    animate={{
+                                        duration: 300,
+                                    }}
+                                    width={windowWidth} theme={VictoryTheme.material}>
+                                    {
+                                        lineData && lineData.map((data, index) =>
+                                            <VictoryLine data={data} x="date" y="score" style={{ data: { stroke: chartColor[index] } }}/>
+                                        )
+                                    }
+                                </VictoryChart>
+
+                            </>
+
+                        }
+                    </ScreenContainerView>
+                    <ScreenDivideLineLight/>
                     <ScreenContainerView style={styles.chartContainer}>
                         <AppText style={styles.title}>최근 한 달 부위 별 증상 정도</AppText>
                         {
@@ -127,24 +156,12 @@ const HealthDiaryChartScreen = ({navigation}) => {
                                 </>
                             )
                         }
-                    </ScreenContainerView>
-                    <ScreenDivideLineLight/>
-                    <ScreenContainerView style={styles.chartContainer}>
-                        <AppText style={styles.title}>최근 세 달 간 가장 높은 빈도 질병의 증상 추이 </AppText>
-                        {
-                            lineData &&
-                            <VictoryChart width={windowWidth} theme={VictoryTheme.material} domain={{y: [0, 5]}}>
-                                {/*<VictoryAxis*/}
-                                {/*    scale={{ x: "time" }}*/}
-                                {/*    tickValues={xTickValues}*/}
-                                {/*    tickFormat={t => new Date(t).getHours()}*/}
-                                {/*/>*/}
-                                {/*<VictoryAxis dependentAxis />*/}
-                                <VictoryLine data={lineData[0]} x="date" y="score" style={{ data: { stroke: "orange" } }}/>
-                                <VictoryLine data={lineData[1]} x="date" y="score" style={{ data: { stroke: "red" } }}/>
-                                <VictoryLine data={lineData[2]} x="date" y="score" style={{ data: { stroke: "blue" } }}/>
-                            </VictoryChart>
-                        }
+                        <AppText style={{marginTop : 10, alignSelf: 'flex-end'}}>
+                            <View>
+                                <AppText style={{marginBottom: 10, fontSize: 14}}>-  y : 부위 별 증상 발현 빈도수</AppText>
+                                <AppText style={{fontSize: 14}}>-  버블의 크기 : 아픔 평균치</AppText>
+                            </View>
+                        </AppText>
                     </ScreenContainerView>
                 </ScrollView>
             </ScreenContainer>
