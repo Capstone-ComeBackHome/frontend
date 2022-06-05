@@ -106,7 +106,6 @@ const ChatBasicInfoScreen = ({navigation}) => {
             },
             body : body
         }).then(response => response.json()).then((res) => {
-            console.log(res);
             if(res.result === 'SUCCESS'){
                 navigation.replace('Chat');
             }
@@ -232,7 +231,6 @@ const ChatBasicInfoScreen = ({navigation}) => {
                         title={"저장하고 채팅 시작하기"}
                         disabled={!isBasicFill}
                         onPress={() => {
-                            console.log(age, sex, height, weight);
                             saveUserData();
                         }}
                     />

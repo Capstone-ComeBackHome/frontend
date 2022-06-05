@@ -125,7 +125,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
             diseaseTagRequestList: disease,
             dailyNote: memo,
             painType: conditionState[painType].painType,
-            scheduleData: toStringByFormatting(date),
+            scheduleDate: toStringByFormatting(date),
         }
         const body = JSON.stringify(data);
         console.log(data);
@@ -138,6 +138,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
             },
             body: body
         }).then(response => response.json()).then((res) => {
+            console.log(res);
             if(res.result === 'SUCCESS'){
                 console.log('일기 등록 완료!');
                 navigation.pop();
@@ -155,7 +156,7 @@ const HealthDiaryCreateScreen = ({navigation}) => {
     return (
         <>
             <ScreenContainer backgroundColor={colors.backgroundColor}>
-                <NavigationTop navigation={navigation} title={"건강일기"}/>
+                <NavigationTop navigation={navigation} title={"아픔일기"}/>
                 <KeyboardAvoidingView flex={1} behavior={"padding"}>
                     <ScrollView>
                         <ScreenContainerView style={{marginTop: 20}}>

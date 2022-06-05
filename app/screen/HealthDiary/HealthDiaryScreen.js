@@ -3,7 +3,7 @@ import {
     StyleSheet,
     View,
     Image,
-    ScrollView,
+    ScrollView, TouchableOpacity,
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
 
@@ -20,6 +20,8 @@ import score3 from '../../assets/images/disease/score3.png';
 import score4 from '../../assets/images/disease/score4.png';
 import score5 from '../../assets/images/disease/score5.png';
 import {AuthContext} from "../../context/AuthContextProviders";
+
+import ChartIcon from '../../assets/images/bar-chart-alt.svg';
 
 const AccordionView = ({title, dairyDatas}) => {
     const {colors} = useTheme();
@@ -44,7 +46,7 @@ const AccordionView = ({title, dairyDatas}) => {
                 }}>
                 {
                     dairyDatas.map((diaryData, index) => {
-                        return <DiaryData key={index} diaryData={diaryData}/>
+                        return <DiaryData key={new Date() + index} diaryData={diaryData}/>
                     })
                 }
             </List.Accordion>
@@ -85,6 +87,7 @@ const DiaryData = ({diaryData}) => {
         }
     }, [])
 
+    const [date, setDate] = useState(diaryData.scheduleDate.split('-'));
     return (
         <View style={{
             backgroundColor: colors.blue[4],
@@ -93,13 +96,13 @@ const DiaryData = ({diaryData}) => {
             padding: 20,
             marginVertical: 20
         }}>
-            <AppText style={{fontWeight: '600', fontSize: 16, paddingBottom: 20}}>{diaryData.localDate}</AppText>
+            <AppText style={{fontWeight: '600', fontSize: 16, paddingBottom: 20}}>{date[1]}월 {date[2]}일</AppText>
             <View style={{flexDirection: 'row'}}>
                 <Image source={iconMapping[diaryData.painType]} style={{marginRight: 20}}/>
                 <View flex={1}>
                     <View style={{flexDirection: 'row', flexWrap: 'wrap', marginBottom: 20}}>
                         {
-                            diaryData.diseaseTagResponseList.map(({diseaseType, name}) => <Keyword keyword={name}/>)
+                            diaryData.diseaseTagResponseList.map(({diseaseType, name}, index) => <Keyword index={index} keyword={name}/>)
                         }
                     </View>
                     <View>
@@ -147,6 +150,7 @@ const HealthDiaryScreen = ({navigation, userInfo}) => {
 
             Promise.all(promises).then(results => {
                 const diaryList = results.map(result => result.data.scheduleResponseList);
+                // console.log(diaryList);
                 setDiaryList(diaryList);
             })
         });
@@ -161,32 +165,32 @@ const HealthDiaryScreen = ({navigation, userInfo}) => {
                 borderBottomLeftRadius: 12,
                 borderBottomRightRadius: 12,
             }}>
-                <ScreenContainerView style={{height: 101, marginBottom: 23,}}>
+                <ScreenContainerView style={{height: 101, marginBottom: 23, paddingTop : 70, justifyContent: 'space-between', flexDirection : 'row', alignItems: 'center'}}>
                     <AppText style={{
-                        marginTop: 70,
                         color: "#fff",
                         fontSize: 20,
                         fontWeight: '700'
-                    }}>{userInfo.name + ' 님의 건강일기'}</AppText>
+                    }}>{userInfo.name + ' 님의 아픔일기'}</AppText>
+                    <TouchableOpacity onPress={() => navigation.navigate('HealthDiaryChart')}><ChartIcon /></TouchableOpacity>
                 </ScreenContainerView>
             </View>
             <ScrollView>
                 <ScreenContainerView style={{marginTop: 20}}>
                     {
                         diaryList && diaryList.map((diaryDatas, index) => {
-                            //// 있는 것만 보여주기
-                            // if(diaryDatas.length > 0){
-                            //     return <AccordionView key={index} title={diaryDates[index]} dairyDatas={diaryDatas}/>
-                            // }
+                            // 있는 것만 보여주기
+                            if(diaryDatas.length > 0){
+                                return <AccordionView key={index} title={diaryDates[index]} dairyDatas={diaryDatas}/>
+                            }
 
-                            return <AccordionView key={index} title={diaryDates[index]} dairyDatas={diaryDatas}/>
+                            // return <AccordionView key={index} title={diaryDates[index]} dairyDatas={diaryDatas}/>
                         })
                     }
                 </ScreenContainerView>
             </ScrollView>
 
             <ScreenContainerView style={{marginBottom: 25}}>
-                <CustomButton title={"새로운 건강일기 쓰기"} onPress={() => navigation.navigate('HealthDiaryCreate')}/>
+                <CustomButton title={"새로운 아픔일기 쓰기"} onPress={() => navigation.navigate('HealthDiaryCreate')}/>
             </ScreenContainerView>
         </ScreenContainer>
     );

@@ -70,7 +70,7 @@ const DiagnosisDetailScreen = ({route, navigation}) => {
             <ScreenContainer backgroundColor={colors.backgroundColor}>
                 <NavigationTop navigation={navigation} title={`질환 상세 정보 : ${diseaseInfo.name}`} backgroundColor={"#fff"} textColor={colors.blue[1]}/>
                 <ScreenContainerView flex={1} style={{justifyContent: 'space-between'}}>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={{flexDirection: "row", justifyContent: 'space-between', marginTop: 31}}>
                             <AppText style={styles.diagnosisTitle}>{diseaseInfo.name}</AppText>
                             <AppText style={styles.otherText}>이(가) 의심됩니다.</AppText>
