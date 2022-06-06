@@ -1,10 +1,11 @@
 {
   "expo": {
-    "name": "capston-project",
-    "slug": "capston-project",
+    "name": "Apzima",
+    "slug": "Apzima",
     "version": "0.1.0",
+    "scheme": "apzima",
     "orientation": "portrait",
-    "icon": "./app/assets/icon.png",
+    "icon": "./app/assets/images/appicon.png",
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "contain",
@@ -27,14 +28,16 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ohda.ohda"
+      "bundleIdentifier": "com.ohda.Apzima",
+      "buildNumber": "0.1.0"
     },
     "android": {
-      "package": "com.ohda.ohda",
+      "package": "com.ohda.Apzima",
       "adaptiveIcon": {
-        "foregroundImage": "./app/assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./app/assets/images/appicon.png",
+        "backgroundColor": "#53B3EE"
+      },
+      "versionCode": 14
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
