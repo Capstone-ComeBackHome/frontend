@@ -70,7 +70,7 @@ const HealthDiaryChartScreen = ({navigation}) => {
             headers: {Authorization: `Bearer ${state.userToken.accessToken}`}
         }).then(response => response.json()).then((res) => {
             if (res.result === 'SUCCESS') {
-                const typeToScore = {'WORST': 1, 'BAD': 2, 'NORMAL': 3, 'BETTER': 4, 'GOOD': 5}
+                const typeToScore = {'WORST': 5, 'BAD': 4, 'NORMAL': 3, 'BETTER': 2, 'GOOD': 1}
                 const lineChartData = [];
                 const diseases = [];
                 const dateList = [];
@@ -87,6 +87,7 @@ const HealthDiaryChartScreen = ({navigation}) => {
                         }
                     }))
                 }
+                console.log(lineChartData);
                 setLineData(lineChartData);
                 setDiseaseList(diseases);
                 setMaxDate(new Date(Math.max(...dateList)));
@@ -122,7 +123,7 @@ const HealthDiaryChartScreen = ({navigation}) => {
 
                                 <VictoryChart
                                     scale={{ x: "time" }}
-                                    //     domain={{ x: [minDate, maxDate] }}
+                                    domain={{ y: [0, 5] }}
                                     animate={{
                                         duration: 300,
                                     }}

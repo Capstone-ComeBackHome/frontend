@@ -61,7 +61,7 @@ const ChatScreen = ({navigation}) => {
     const [userInfo, setUserInfo] = useState({});
     const [userAdditionalInfo, setUserAdditionalInfo] = useState({});
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [disable, setDisable] = useState(true);
+    const [disable, setDisable] = useState(false);
     const [firstChatResult, setFirstChatResult] = useState();
     const [chatResult, setChatResult] = useState(null);
     const chatData = useRef({});
@@ -115,13 +115,13 @@ const ChatScreen = ({navigation}) => {
                     user: AI,
                 },
             ])
-            setDisable(false);
+            // setDisable(false);
         }, 3000);
     }, []);
 
     useEffect(async () => {
         if (messages.length === 4) { // 유저가 처음 입력했을 때
-            setDisable(true);
+            // setDisable(true);
             setFirstChatResult(data => ({
                 ...data,
                 'Chief complaint': messages[0].text
@@ -135,10 +135,10 @@ const ChatScreen = ({navigation}) => {
                         user: AI,
                     },
                 ])
-                setDisable(false);
+                // setDisable(false);
             }, 0);
         } else if(messages.length === 6){
-            setDisable(true);
+            // setDisable(true);
             const body = {
                 ...firstChatResult,
                 Onset : messages[0].text
@@ -159,7 +159,7 @@ const ChatScreen = ({navigation}) => {
         }
         else if (questionOrder.length > 0) {
             if (messages[0].user.name === 'USER') {
-                setDisable(true);
+                // setDisable(true);
                 chatData.current = {...chatData.current, [questionOrder[currentQuestion]]: messages[0].text};
                 if (currentQuestion < questionOrder.length - 1) {
                     setCurrentQuestion(cur => cur + 1);
@@ -184,6 +184,7 @@ const ChatScreen = ({navigation}) => {
                         body: JSON.stringify(body)
                     }).then(response => response.json()).then((res) => {
                         const diseaseNameList = res.diseasesList;
+                        console.log(diseaseNameList);
                         const body = JSON.stringify({diseaseNameList : diseaseNameList});
 
                         fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/diagnoses', {
@@ -195,6 +196,7 @@ const ChatScreen = ({navigation}) => {
                             },
                             body: body
                         }).then(response => response.json()).then((res) => {
+                            console.log("결과", res);
                             if(res.result === 'SUCCESS'){
                                 setChatResult(diseaseNameList);
                             }
@@ -211,16 +213,6 @@ const ChatScreen = ({navigation}) => {
 
     useEffect(() => {
         if (questionOrder.length > 0) {
-            // setTimeout(() => {
-            //     onSend([
-            //         {
-            //             _id: uuid.v4(),
-            //             text: questions[currentQuestion][1],
-            //             user: AI,
-            //         },
-            //     ])
-            //     setDisable(false);
-            // }, 1000)
             const order = questionOrder[currentQuestion];
             onSend([
                 {
@@ -229,7 +221,7 @@ const ChatScreen = ({navigation}) => {
                     user: AI,
                 },
             ]);
-            setDisable(false);
+            // setDisable(false);
         }
     }, [questionOrder, currentQuestion])
 
@@ -263,9 +255,9 @@ const ChatScreen = ({navigation}) => {
                     </ScreenContainerView>
                 )
             }
-            {
-                Platform.OS === 'android' && <KeyboardAvoidingView behavior="padding"/>
-            }
+            {/*{*/}
+            {/*    Platform.OS === 'android' && <KeyboardAvoidingView behavior="padding"/>*/}
+            {/*}*/}
         </ScreenContainer>
     );
 }

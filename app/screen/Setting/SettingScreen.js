@@ -36,7 +36,21 @@ const SettingScreen = ({navigation, userInfo}) => {
                         marginVertical: 20
                     }}>
                         <AppText style={styles.title}>소셜 로그인 정보</AppText>
-                        <Button title={'로그아웃'} onPress={() => dispatch({type: 'SIGN_OUT'})}/>
+                        <Button title={'로그아웃'} onPress={() =>
+                            fetch('http://ec2-3-37-4-131.ap-northeast-2.compute.amazonaws.com:8080/api/v1/logout', {
+                                method: 'POST',
+                                headers: {
+                                    Authorization: `Bearer ${state.userToken.accessToken}`,
+                                    refreshToken: `Bearer ${state.userToken.refreshToken}`,
+                                    Accept: 'application/json',
+                                    'Content-Type': 'application/json; charset=UTF-8'
+                                }
+                            }).then(response => response.json()).then((res) => {
+                                if (res.result === 'SUCCESS') {
+                                    dispatch({type: 'SIGN_OUT'});
+                                }
+                            }).catch(err => console.error(err))
+                        }/>
                     </View>
                     <View styles={{flexDirection: 'row', alignItems: 'center', marginVertical: 20}}>
                         <AppText style={styles.infoText}>{userInfo.authProvider}</AppText>
